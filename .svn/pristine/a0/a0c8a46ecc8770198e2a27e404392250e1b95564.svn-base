@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Change Password";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div ng-controller="UserController as userCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="{{UIURL}}"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Change Password</strong>
+        </li>
+    </ol>
+    <h2>Change Password</h2>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        My Details
+                    </div>
+
+                    <div class="panel-options">
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="changePassword(changePass)">
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Old Password</label>
+
+                            <div class="col-sm-5">
+                                <input type="password" class="form-control" ng-model="changePass.oldpassword">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">New Password</label>
+
+                            <div class="col-sm-5">
+                                <input type="password" minlength="6" class="form-control" ng-model="changePass.newpassword" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Confirm New Password</label>
+
+                            <div class="col-sm-5" style="font-family: 'Raleway', sans-serif; font-size: 16px; color:red;">
+                                <input type="password" minlength="6" class="form-control" ng-model="changePass.newpasswordc" required>
+                                <br />
+                                <h5 ng-show="changePass.newpasswordc != changePass.newpassword">Password not match!</h5>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-5">
+                                <button type="submit" class="btn btn-default" ng-disabled="changePass.newpassword != changePass.newpasswordc">Update</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

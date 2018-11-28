@@ -1,0 +1,379 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+<style>
+    .mobile-only{
+        margin-top: 15px;
+    }
+</style>
+
+<div ng-controller="CMSController as cmsCtrl" ng-init="getHomepage()">
+    <!--wrapper_index_three-->
+    <div id="particles-js" ng-show="!isMobile">
+        <div class="wrapper_index_three" style="height: 90vh;">
+            <div class="wrapper-inner">
+                <!--text-box-->
+                <div class="text_box_three hidden-xs">
+                    <h3 style="color:#413827">
+                        GET YOUR TICKET NOW!
+                    </h3>
+                </div>
+                <div class="container" ng-controller="LookupController as lookupCtrl">
+                    <!--main-fill-->
+                    <div class="col-sm-12 col-md-6">
+                        <div class="main-fill animate-reveal">
+                            <!--tabs-->
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="plan-your-journey">Plan Your Journey <span style="text-align: left;"><a title="Route Map" style="padding-left: 6px;color:#ab3c3c; padding-bottom:5px;" href="#" data-toggle="modal" data-target="#route"><i class="fa fa-info-circle" aria-hidden="true"></i></a></span></h3>
+                                    <div id="route" class="modal fade" role="dialog">
+                                        <div class="modal-dialog" style="width:100%;">
+                                            <div class="modal-content" style="background:transparent; margin-left:0%; margin-top:5%; box-shadow:0 5px 15px transparent; border: 1px solid transparent; -webkit-box-shadow: 0 5px 15px transparent; ">
+                                                <div class="modal-body" style="background:transparent;">
+                                                    <button type="button" style="cursor: pointer;background: #ea1d24; border: 2px solid #ffffff;padding: 10px 15px;position: absolute;right: 0%;top: 0%;border-radius: 30px;opacity: 1;color:#ffffff;" class="close" data-dismiss="modal">&times;</button>
+                                                    <img src="~/Content/assets/img/KTMB_ROUTE.png" style="width: 100%;" class="img-responsive">
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div id="searching">
+                                        <ul class="nav nav-tabs small">
+                                            <li class="active"><a href="#taboneway" data-toggle="tab"><div class="icon"></div>&nbsp;<i class="fa fa-train"></i> One Way <div class="icon2"></div></a></li>
+                                            <li><a href="#tabreturn" data-toggle="tab"><div class="icon"></div>&nbsp; <i class="fa fa-train"></i> Return <div class="icon2"></div>&nbsp;</a></li>
+                                        </ul>
+                                    </div>
+                                    @*<ul class="nav nav-tabs">
+                                            <li class="active"><a href="#taboneway" data-toggle="tab"><div class="icon"></div>&nbsp;<i class="fa fa-train"></i> One Way <div class="icon2"></div></a></li>
+                                            <li><a href="#tabreturn" data-toggle="tab"><div class="icon"></div>&nbsp; <i class="fa fa-train"></i> Return <div class="icon2"></div>&nbsp;</a></li>
+                                        </ul>*@
+                                </div>
+                                <!--panel-body-->
+                                <div class="panel-body" ng-controller="TicketController as ticketCtrl">
+                                    <!--tab-content-->
+                                    <div class="tab-content">
+                                        <!--start taboneway-->
+                                        <div class="tab-pane fade in active" id="taboneway">
+                                            <form ng-submit="searchTrain(journey, '0')">
+                                                <ul class="list-inline list-unstyled">
+                                                    <li style="width:100%;" class="">
+                                                        <select class="select-one col-md-3" ng-mouseover="getOriginList()"
+                                                                ng-model="journey.origin"
+                                                                ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in origins" ng-change="getDestinationList(journey.origin)" required>
+                                                            <option value=''>Origin</option>
+                                                        </select>
+                                                    </li>
+                                                    <li style="width:100%;" class="">
+                                                        <select class="select-one col-md-3"
+                                                                ng-model="journey.destination"
+                                                                ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in destinations" required>
+                                                            <option value=''>Destination</option>
+                                                        </select>
+                                                    </li>
+                                                    <li style="width:100%;" class="">
+                                                        <div class="form-group" ng-controller="DateController">
+                                                            <input type="text" style="color:#2c2c2c;" class="form-control" placeholder="Departure Date" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="journey.departuredate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" ng-change="setMinDate()" />
+                                                        </div>
+                                                    </li>
+                                                    <li style="width:100%;" class="">
+                                                        <select class="select-one col-md-3" ng-model="journey.departureth" required>
+                                                            <option value=''>Departure Time Range</option>
+                                                            <option value='EM'>12:00 AM - 06:59 AM</option>
+                                                            <option value='MO'>07:00 AM - 11:59 AM</option>
+                                                            <option value='NO'>12:00 PM - 06:59 PM</option>
+                                                            <option value='NI'>07:00 PM - 11:59 PM</option>
+                                                        </select>
+                                                    </li>
+                                                    <li class=""><input type="hidden" name="dummyonly"></li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                                <!--<h3>Who's Travelling?</h3>-->
+                                                <ul class="list-inline list-unstyled">
+                                                    <li style="width:50%;" class="">
+                                                        <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.noadult" ng-init="journey.noadult='1'" required>
+                                                            <option value="0">0 Adult</option>
+                                                            <option value="1">1 Adult</option>
+                                                            <option value="2">2 Adults</option>
+                                                            <option value="3">3 Adults</option>
+                                                            <option value="4">4 Adults</option>
+                                                            <option value="5">5 Adults</option>
+                                                            <option value="6">6 Adults</option>
+                                                        </select>
+                                                    </li>
+                                                    <li style="width:50%;" class="">
+                                                        <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.nochild" ng-init="journey.nochild='0'" required>
+                                                            <option value="0">0 Child</option>
+                                                            <option value="1">1 Child</option>
+                                                            <option value="2">2 Children</option>
+                                                            <option value="3">3 Children</option>
+                                                            <option value="4">4 Children</option>
+                                                            <option value="5">5 Children</option>
+                                                            <option value="6">6 Children</option>
+                                                        </select>
+                                                        <div class="i_note">4 - 12 years</div>
+                                                    </li>
+                                                    <li style="width:50%;" class="">
+                                                        <input type="submit" class="btn btn-clear3-travel" ng-disabled="journey.nochild == '0' && journey.noadult== '0'" value="Search" />
+
+                                                    </li>
+                                                    <li style="width:50%;" class="">
+                                                        <button class="btn btn-clear4-travel" ng-click="journey={}; journey.nochild='0'; journey.noadult='1';">Clear</button>
+                                                    </li>
+                                                </ul>
+                                            </form>
+                                        </div>
+                                        <!--end taboneway-->
+                                        <!--start tabreturn-->
+                                        <div class="tab-pane fade in" id="tabreturn">
+                                            <form ng-submit="searchTrain(journey, '1')">
+                                                <!-- <p style="text-align: left;"><a title="Route Map" style="padding-left: 6px;color:#ffe900; padding-bottom:5px;" href="#" data-toggle="modal" data-target="#route2">Info &nbsp;<i class="fa fa-info-circle" aria-hidden="true"></i></a></p>-->
+                                                <div id="route2" class="modal fade" role="dialog">
+                                                    <div class="modal-dialog" style="width:100%;">
+                                                        <div class="modal-content" style="background:transparent; margin-left:10%; margin-top:15%; box-shadow:0 5px 15px transparent; border: 1px solid transparent; -webkit-box-shadow: 0 5px 15px transparent; ">
+                                                            <div class="modal-body" style="background:transparent;">
+                                                                <button type="button" style="cursor:pointer;background:#ea1d24; border:2px solid #ffffff;padding:5px 10px;position:absolute;right:9%;top:-2%;border-radius:30px;opacity:1;color:#ffffff;" class="close" data-dismiss="modal">&times;</button>
+                                                                <img src="~/Content/assets//img/routemap_ktmb2.png" class="img-responsive">
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <ul class="list-inline list-unstyled" ng-controller="DateController">
+                                                    <li style="width:100%;">
+                                                        <select class="select-one col-md-3"
+                                                                ng-model="journey.origin" ng-mouseover="getOriginList()"
+                                                                ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in origins" ng-change="getDestinationList(journey.origin)" required>
+                                                            <option value=''>Origin</option>
+                                                        </select>
+                                                    </li>
+                                                    <li style="width:100%;">
+                                                        <select class="select-one col-md-3"
+                                                                ng-model="journey.destination"
+                                                                ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in destinations" required>
+                                                            <option value=''>Destination</option>
+                                                        </select>
+                                                    </li>
+                                                    <li style="width:50%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" placeholder="Departure Date" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="journey.departuredate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" ng-change="setMinDate()" />
+                                                        </div>
+                                                    </li>
+                                                    <li style="width:50%;" class="">
+                                                        <select class="select-one col-md-3" ng-model="journey.departureth" required>
+                                                            <option value=''>Departure Time Range</option>
+                                                            <option value='EM'>12:00 AM - 06:59 AM</option>
+                                                            <option value='MO'>07:00 AM - 11:59 AM</option>
+                                                            <option value='NO'>12:00 PM - 06:59 PM</option>
+                                                            <option value='NI'>07:00 PM - 11:59 PM</option>
+                                                        </select>
+                                                    </li>
+                                                    <li style="width:50%;">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" placeholder="Return Date" uib-datepicker-popup="dd/MM/yyyy" ng-click="open2()" ng-model="journey.returndate" is-open="popup2.opened" datepicker-options="{minDate: journey.departuredate}" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                        </div>
+                                                    </li>
+                                                    <li style="width:50%;" class="">
+                                                        <select class="select-one col-md-3" ng-model="journey.returnth" required>
+                                                            <option value=''>Return Time Range</option>
+                                                            <option value='EM'>12:00 AM - 06:59 AM</option>
+                                                            <option value='MO'>07:00 AM - 11:59 AM</option>
+                                                            <option value='NO'>12:00 PM - 06:59 PM</option>
+                                                            <option value='NI'>07:00 PM - 11:59 PM</option>
+                                                        </select>
+                                                    </li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                                <ul class="list-inline list-unstyled">
+                                                    <li style="width:50%;">
+                                                        <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.noadult" ng-init="journey.noadult='1'" required>
+                                                            <option value="0">0 Adult</option>
+                                                            <option value="1">1 Adult</option>
+                                                            <option value="2">2 Adults</option>
+                                                            <option value="3">3 Adults</option>
+                                                            <option value="4">4 Adults</option>
+                                                            <option value="5">5 Adults</option>
+                                                            <option value="6">6 Adults</option>
+                                                        </select>
+                                                    </li>
+                                                    <li style="width:50%;">
+                                                        <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.nochild" ng-init="journey.nochild='0'" required>
+                                                            <option value="0">0 Child</option>
+                                                            <option value="1">1 Child</option>
+                                                            <option value="2">2 Children</option>
+                                                            <option value="3">3 Children</option>
+                                                            <option value="4">4 Children</option>
+                                                            <option value="5">5 Children</option>
+                                                            <option value="6">6 Children</option>
+                                                        </select>
+                                                        <div class="i_note">4 - 12 years</div>
+                                                    </li>
+                                                    <li style="width:50%;">
+                                                        <input type="submit" class="btn btn-clear3-travel" ng-disabled="journey.nochild == '0' && journey.noadult== '0'" value="Search" />
+                                                    </li>
+                                                    <li style="width:50%;">
+                                                        <button class="btn btn-clear4-travel" ng-click="journey={}; journey.nochild='0'; journey.noadult='1';">Clear</button>
+                                                    </li>
+                                                </ul>
+                                            </form>
+                                        </div>
+                                        <!--end tabreturn-->
+                                    </div>
+                                </div>
+                                <!--end panel body-->
+                            </div>
+                            <!--end tabs-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--wrapper index-->
+    <div class="container">
+        <div class="row">
+            <!--start slider-->
+            <div class="col-md-12 col-sm-12" ng-init="getAnnouncement(164, true)"  ng-show="!isMobile">
+                <div class="marquee2">
+                    <p><a href="{{UIURL}}/portal/full4/{{164}}" target="_blank" style="color:black;">Announcement &nbsp;&nbsp;</a><i class="fa fa-lg fa-bullhorn" aria-hidden="true"></i>   ({{notice.ContentList.length}})</p>
+                    <marquee style="position:absolute; padding:15px; margin-right:20%;" scrollamount="3">
+                        <a ng-repeat="item in notice.ContentList" href="{{intranetURL}}{{item.LinkToEn}}" target="_blank">{{item.TitleEn | uppercase}}</a>
+                    </marquee>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-9 col-sm-12" ng-show="!isMobile">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active" ng-repeat="slide in homepageContent.Slider | limitTo : 1">
+                            <a href="{{intranetURL}}{{slide.url}}" target="_blank">
+                                <img class="first-slide img-responsive" style="width:100%; height:100%;" ng-src="{{intranetURL}}{{slide.img_my}}" alt="First slide">
+                            </a>
+                        </div>
+                        <div class="item" ng-repeat="slide in homepageContent.Slider | limitTo : homepageContent.Slider.length : 1">
+                            <a href="{{intranetURL}}{{slide.url}}" target="_blank">
+                                <img class="first-slide img-responsive" style="width:100%; height:100%;" ng-src="{{intranetURL}}{{slide.img_my}}" alt="Second slide">
+                            </a>
+                        </div>
+                    </div>
+                    <a class="left carousel-control hidden-xs" href="#myCarousel" role="button" data-slide="prev">
+                        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control hidden-xs " href="#myCarousel" role="button" data-slide="next">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            <!--end slider-->
+
+            @*<br />
+
+            <div class="col-md-3 hidden-sm" ng-show="isMobile">
+                <!--start mobile booking ads-->
+                <a href="https://intranet.ktmb.com.my/ktmb_mw" class="btn btn-success" style="width:100%;"><b>PROCEED TO MOBILE BOOKING</b></a>
+                <!--end mobile booking ads-->
+            </div>*@
+            
+            <div class="col-md-3 hidden-sm">
+                <!--start mobile apss ads-->
+                <div class="tour_p=ak" style="max-height: none;">
+                    <a ng-href="{{homepageContent.Mobile.url}}" target="_blank">
+                        <img ng-class="{ 'mobile-only': isMobile }" style="width:100%; height:100%;" ng-src="{{intranetURL}}{{homepageContent.Mobile.img_en}}" alt="tour img" class="img-responsive">
+                    </a>
+                </div>
+                <!--end mobile apss ads-->
+            </div>
+            
+        </div>
+    </div>
+
+    <hr><br>
+
+    <div class="clearfix"></div>
+
+    <div class="clearfix"></div>
+    @*<br /><br />*@
+
+    <!---repeat promotion get from cms-->
+    <div class="container" ng-init="getPromotion()">
+        <div class="row">
+            <div data-js-module="filtering-demo">
+                <div class="grid-view less-margin">
+                    <div class="col-sm-6 col-md-3 col-xs-6 transition hotels" data-category="transition" ng-repeat="promosi in Promotion.Promosi">
+                        <div class="img-box">
+                            <div class="pro-img">
+                                <img ng-src="{{intranetURL}}{{promosi.ImgEn}}" alt="hotels" class="img-responsive">
+                                <p class="ads-promo"></p>
+                                <div class="overflow-outer">
+                                    <div class="overflow-inner">
+                                        <h3><a href="{{promosi.LinkToEn}}" target="_blank">{{promosi.TitleEn | uppercase}}</a></h3>
+                                        <p></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="our-work-wrapper sizefont">
+        <div class="container">
+            <div class="row">
+                <!--our-work-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="our-work ">
+                        <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+                            <img src="~/Content/assets/img/calendar.png">
+                        </div>
+                        <h4 class="sizefont">Train Schedule</h4>
+                        <p class="sizefont">
+                            Always be in the know! Train times, routes, and stations
+                        </p>
+                        <a href="{{UIURL}}/portal/trainschedule" target="_blank" class="btn btn-read-more">CLICK HERE</a>
+                    </div>
+                </div>
+                <!--end our-work-->
+                <!--our-work-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="our-work sizefont">
+                        <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+                            <img src="~/Content/assets/img/frieght2.png">
+                        </div>
+                        <h4 class="sizefont">Freight Online</h4>
+                        <p class="sizefont">
+                            Connecting your business anywhere and everywhere &nbsp;
+                            &nbsp;
+                        </p>
+                        <a href="https://intranet.ktmb.com.my/fol/logon.aspx" target="_blank" class="btn btn-read-more">CLICK HERE</a>
+                    </div>
+                </div>
+                <!--end our-work-->
+                <!--our-work-->
+                <div class="col-md-4 col-sm-6">
+                    <div class="our-work sizefont">
+                        <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+                            <img src="~/Content/assets/img/consession.png">
+                        </div>
+                        <h4 class="sizefont">KTMB Card</h4>
+                        <p class="sizefont">
+                            Get your KTMB Card now to enjoy great discount! &nbsp;
+                        </p>
+                        <a href="http://staff.ktmb.com.my/cardMain/" target="_blank" class="btn btn-read-more">CLICK HERE</a>
+                    </div>
+                </div>
+                <!--end our-work-->
+            </div>
+        </div>
+    </div>
+    <!--end static advertisement - long term-->
+</div>

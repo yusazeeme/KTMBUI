@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Agent Report";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="{{UIURL}}/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li>
+        Report Management
+    </li>
+    <li class="active">
+        <strong>Agent Report</strong>
+    </li>
+</ol>
+
+<h2>Agent Report</h2>
+<br>
+
+
+<div class="row" ng-controller="UserController as userCtrl">
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-primary" data-collapsed="0" style="background-color:#0053a0; border-color: #0053a0; color:whitesmoke;">
+            <div class="panel-body">
+
+                <form role="form" class="form-horizontal" style="margin-top: 15px;" ng-submit="getAgentReport(rpt)">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="from" class="col-sm-4 control-label font-white">Date (From)</label>
+                            <div class="col-sm-8" ng-controller="DateController">
+                                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="rpt.fromDate" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="to" class="col-sm-4 control-label font-white">Date (To)</label>
+                            <div class="col-sm-8" ng-controller="DateController">
+                                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="rpt.toDate" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="payment-type" class="col-sm-4 control-label font-white">Payment Type</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="rpt.paymentType">
+                                    <option value=''>Select Payment Type</option>
+                                    <option value="C">Credit Card</option>
+                                    <option value="U">Maybank2U</option>
+                                    <option value="B">MyBSN</option>
+                                    <option value="L">Ledger</option>
+                                    <option value="D">Mobile</option>
+                                    <option value="A">All</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" ng-controller="LookupController as lookupCtrl" ng-init="getAgentList()">
+                        <div class="form-group">
+                            <label for="status" class="col-sm-4 control-label font-white">Agent Name</label>
+                            <div class="col-sm-8">
+                                <select class="form-control"
+                                        ng-model="rpt.agent"
+                                        ng-options="ejen.AGENTCODE as ejen.AGENTNAME for ejen in agent.agentList | orderBy :'+AGENTNAME'" required>
+                                    <option value=''>Select Agent</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="payment-type" class="col-sm-4 control-label font-white">Payment Status</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="rpt.status">
+                                    <option value=''>Select Payment Status</option>
+                                    <option value="S">Successful</option>
+                                    <option value="U">Unsuccessful</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-8 col-sm-4">
+                            <button type="submit" class="btn btn btn-warning" style="color:black;"><i class="glyphicon glyphicon-search"></i>Search</button>
+                            <button type="reset" class="btn btn-success"><i class="glyphicon glyphicon-refresh"></i>Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table datatable="ng" class="table table-bordered font-black">
+            <thead>
+                <tr>
+                    <th>Tran. Date</th>
+                    <th>Ref.id</th>
+                    <th>Train No.</th>
+                    <th>Fare (MYR)</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Agent Id</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="odd gradeX" ng-repeat="res in result.userRepList">
+                    <td class="center">{{res.TWT_BOOKING}}</td>
+                    <td class="center">{{res.TWT_REFID}}</td>
+                    <td class="center">{{res.TWT_TRAIN}}</td>
+                    <td class="center">{{res.Jumlah}}</td>
+                    <td class="center">{{res.TWT_DEPARTURE}}</td>
+                    <td class="center">{{res.TWT_ARRIVAL}}</td>
+                    <td class="center">{{res.TWT_USERID}}</td>
+                    <td class="center">
+                        <!--contoh tiket print-->
+                        <a href="#" class="btn btn-info btn-sm btn-icon icon-left">
+                            <i class="entypo-info"></i>
+                            info
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Article";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="CMSController as cmsCtrl" ng-init="getContent(@ViewBag.Id)">
+    <!--inner body start from here-->
+    <div class="inner-body">
+
+        <div class="team-about-us animate-reveal">
+            <h2>{{content.SingleContent.TitleEn}}</h2>
+        </div>
+
+        <div class="bread-crumb">
+            <ol class="breadcrumb">
+                <li><a href="{{UIURL}}">Home</a></li>
+                <li class="active"><a href="{{UIURL}}">{{content.SingleContent.TitleEn}}</a></li>
+            </ol>
+        </div>
+
+        <!--start content-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12" style="padding:45px; margin:0 auto; text-align:justify;line-height:1.8em;">
+                    <div ng-bind-html="content.SingleContent.ContentEn"></div>
+                </div>
+            </div>
+        </div>
+        <!--end content-->
+    </div>
+
+    <br /><br />
+</div>
+<!--inner body end from here-->

@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Tender";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('tender_quotation')">
+    <div class="container">
+        <div class="row">
+            <!--start breadcrumb-->
+            <!--<div class="row">-->
+            <div class="col-md-12">
+                <div class="bread-crumb">
+                    <h2>Tender & Quotation</h2>
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active">Tender & Quotation</li>
+                    </ol>
+                </div>
+            </div>
+            <!--</div>-->
+            <!--end breadcrumb-->
+            <!--start table media release-->
+            <div class="col-md-12">
+                <div class="panel panel-default table-panel">
+                    <!--<div class="panel-heading">&nbsp;</div>-->
+                    <div class="panel-body">
+                        <div class="table-content-box">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        @*<th>No</th>*@
+                                        <th>Title</th>
+                                        <th style="text-align: center;">Date Closing</th>
+                                        <th><i class="fa fa-file-text" aria-hidden="true"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="tender in content | filter: {contenttype:'tender_content'}" ">
+                                        <td>{{tender.param.title}}</td>
+                                        <td>{{tender.param.date}}</td>
+                                        <td>{{tender.param.fileLink}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="dataTables_paginate">
+                    <ul id="yw0" class="pagination">
+                        <li class="first hidden"><a href="/ktmb/index.php?r=portal/full3&amp;id=dms2VjJFUFRtR0djdDd2L2sxSXB2Zz09">&lt;&lt; Pertama</a></li>
+                        <li class="previous hidden"><a href="#">&lt; Previously</a></li>
+                        <li class="page active"><a href="#">1</a></li>
+                        <li class="page"><a href="#">2</a></li>
+                        <li class="page"><a href="#">3</a></li>
+                        <li class="next"><a href="#">Next &gt;</a></li>
+                        <li class="last"><a href="#">Last &gt;&gt;</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end table media release-->
+        </div>
+    </div>
+</div>
+<!--inner body end from here-->

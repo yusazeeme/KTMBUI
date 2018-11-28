@@ -1,0 +1,347 @@
+﻿(function () {
+    var app = angular.module('coach', []);
+
+    app.controller('CoachController', ["$scope", "$http", '$window', 'growl', 'apiURL', '$rootScope', '$cookies', 'baseURL', 'DTOptionsBuilder', '$sce', function ($scope, $http, $window, growl, apiURL, $rootScope, $cookies, baseURL, DTOptionsBuilder, $sce) {
+        console.log("CoachController logged on.");
+
+
+        $scope.sa = {};
+        $scope.getSlotParam = function (id) {
+            console.log("CoachController.getSlotParam triggered.");
+            angular.forEach($scope.slotArr.SlotArrList, function (pm) {
+                if (pm.Id == id) {
+                    console.log(pm);
+                    $scope.sa = pm;
+                }
+            });
+        };
+
+        $scope.createUpdateSlotArr = function (sa) {
+            console.log("CoachController.createUpdateSlotArr triggered.");
+            $rootScope.spinnerShow = true;
+
+            var data = {
+                securitytoken: $cookies.get("UI_TOKEN"),
+                Id: sa.Id,
+                ArrgName: sa.ArrgName,
+                ArrgLink: sa.ArrgLink
+
+            };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/CREATEORUPDATESLOTARR',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.error) {
+                    growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                }
+                else {
+                    growl.success('Slot Arrangement updated!', { title: 'SUCCESS!', ttl: '10000' });
+                    $scope.getSlotArr();
+                    $rootScope.spinnerShow = false;
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                growl.error(response.error, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.getSlotArr = function () {
+            console.log("CoachController.getSlotArr triggered.");
+            $rootScope.spinnerShow = true;
+            var data = {
+                securitytoken: $cookies.get('UI_TOKEN')
+            }
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/GETSLOTARRGMT',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                if (response.data.error) {
+                    growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                }
+                else {
+                    $scope.slotArr = response.data;
+                    $rootScope.spinnerShow = false;
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                growl.error(response.error, { title: 'ERROR!' });
+            });
+        };
+
+
+        $scope.deleteSlotArr = function (ID) {
+            console.log("CoachController.deleteSlotArr triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    Id: ID
+                };
+                console.log(data);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/REMOVESLOTARR',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $rootScope.spinnerShow = false;
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else {
+                        growl.success('Slot Arrangement removed!', { title: 'SUCCESS!' });
+                        $scope.getSlotArr();
+                        $rootScope.spinnerShow = false;
+                    }
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.sr = {};
+        $scope.getSlotRuleParam = function (id) {
+            console.log("CoachController.getSlotRuleParam triggered.");
+            angular.forEach($scope.slotRule.SlotRuleList, function (pm) {
+                if (pm.PKcolumn == id) {
+                    console.log(pm);
+                    $scope.sr = pm;
+                }
+            });
+        };
+
+        if ($scope.sr.IsValid == true) {
+            $scope.sr.IsValid = True;
+            console.log($scope.sr.IsValid);
+        }
+
+        $scope.createUpdateSlotRule = function (sr) {
+            console.log("CoachController.createUpdateSlotRule triggered.");
+            $rootScope.spinnerShow = true;
+            console.log(sr);
+
+            //var fromDay = sr.dateFrom.getDate();
+            //var fromMonth = (sr.dateFrom.getMonth() + 1);
+            //fromDay = fromDay.toString().length != 2 ? '0' + fromDay : fromDay;
+            //fromMonth = fromMonth.toString().length != 2 ? '0' + fromMonth : fromMonth;
+            //var dateFrom = fromDay + '/' + fromMonth + '/' + sr.dateFrom.getFullYear();
+
+            //var fromDay = sr.dateTo.getDate();
+            //var fromMonth = (sr.dateTo.getMonth() + 1);
+            //fromDay = fromDay.toString().length != 2 ? '0' + fromDay : fromDay;
+            //fromMonth = fromMonth.toString().length != 2 ? '0' + fromMonth : fromMonth;
+            //var dateTo = fromDay + '/' + fromMonth + '/' + sr.dateTo.getFullYear();
+
+            var data = {
+                securitytoken: $cookies.get("UI_TOKEN"),
+                PKcolumn: sr.PKcolumn,
+                TrainNumber: sr.TrainNumber,
+                CoachCode: sr.CoachCode,
+                LabelName: sr.LabelName,
+                RuleName: sr.RuleName,
+                LayoutCode: sr.LayoutCode,
+                DateFrom: sr.DateFrom,
+                DateTo: sr.DateTo,
+                IsValid: sr.IsValid
+
+            };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/CREATEORUPDATESLOTRULE',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.error) {
+                    growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                }
+                else {
+                    growl.success('Slot Rule updated!', { title: 'SUCCESS!', ttl: '10000' });
+                    $scope.getSlotRule();
+                    $rootScope.spinnerShow = false;
+                }
+                $scope.getSlotRule
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                growl.error(response.error, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.getSlotRule = function () {
+            console.log("CoachController.getSlotRule triggered.");
+            $rootScope.spinnerShow = true;
+            var data = {
+                securitytoken: $cookies.get('UI_TOKEN')
+            }
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/GETSLOTRULE',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.error) {
+                    growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                }
+                else {
+                    $scope.slotRule = response.data;
+                    $rootScope.spinnerShow = false;
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                growl.error(response.error, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.deleteSlotRule = function (ID) {
+            console.log("CoachController.deleteSlotRule triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    PKcolumn: ID
+                };
+                console.log(data);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/REMOVESLOTRULE',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $rootScope.spinnerShow = false;
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else {
+                        growl.success('Slot Rule removed!', { title: 'SUCCESS!' });
+                        $scope.getSlotRule();
+                        $rootScope.spinnerShow = false;
+                    }
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+        
+        $scope.srd = {};
+        $scope.getSlotDetails = function (id) {
+            console.log("CoachController.getSlotDetails triggered.");
+            angular.forEach($scope.slotDetails.SlotRuleDetailList, function (pm) {
+                if (pm.PKcolumn == id) {
+                    console.log(pm);
+                    $scope.srd = pm;
+                }
+            });
+        };
+
+        $scope.createUpdateSlotRuleDetail = function (srd) {
+            console.log("CoachController.createUpdateSlotRuleDetail triggered.");
+            $rootScope.spinnerShow = true;
+
+            var data = {
+                securitytoken: $cookies.get("UI_TOKEN"),
+                PKcolumn: srd.PKcolumn,
+                RuleID: srd.RuleID,
+                ArrgmtID: srd.ArrgmtID,
+                HideSlot: srd.HideSlot,
+                SlotName: srd.SlotName
+
+            };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/CREATEORUPDATESLOTRULEDETAIL',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.error) {
+                    growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                }
+                else {
+                    growl.success('Slot rule details updated!', { title: 'SUCCESS!', ttl: '10000' });
+                    $scope.getSlotRuleDetail();
+                    $rootScope.spinnerShow = false;
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                growl.error(response.error, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.getSlotRuleDetail = function () {
+            console.log("CoachController.getSlotRuleDetail triggered.");
+            $rootScope.spinnerShow = true;
+            var data = {
+                securitytoken: $cookies.get('UI_TOKEN')
+            }
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/GETSLOTRULEDETAIL',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                if (response.data.error) {
+                    growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                }
+                else {
+                    $scope.slotDetails = response.data;
+                    $rootScope.spinnerShow = false;
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                growl.error(response.error, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.deleteSlotRuleDetail = function (ID) {
+            console.log("CoachController.deleteSlotRuleDetail triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    PKcolumn: ID
+                };
+                console.log(data);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/REMOVESLOTRULEDETAIL',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $rootScope.spinnerShow = false;
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else {
+                        growl.success('Sloat rule detail removed!', { title: 'SUCCESS!' });
+                        $scope.getSlotRuleDetail();
+                        $rootScope.spinnerShow = false;
+                    }
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+
+
+    }]);
+
+})();

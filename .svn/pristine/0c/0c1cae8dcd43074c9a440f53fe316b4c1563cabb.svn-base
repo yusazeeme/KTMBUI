@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+
+namespace KTMB.eTicketing.UI.API
+{
+    public class UploadController : ApiController
+    {
+        [HttpPost]
+        public string UploadFile()
+        {
+            var file = HttpContext.Current.Request.Files.Count > 0 ? HttpContext.Current.Request.Files[0] : null;
+            var fileName = String.Empty;
+            if (file != null && file.ContentLength > 0)
+            {
+                fileName = Path.GetFileName(Guid.NewGuid() + Path.GetExtension(file.FileName));
+
+                var path = Path.Combine(
+                    HttpContext.Current.Server.MapPath("~/Uploads"),
+                    fileName
+                );
+
+                file.SaveAs(path);
+            }
+
+            return file != null ? "/Uploads/" + fileName : null;
+        }
+    }
+}

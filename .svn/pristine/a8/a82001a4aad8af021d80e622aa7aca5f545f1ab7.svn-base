@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewBag.Title = "Content";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div ng-controller="CMSController as cmsCtrl" ng-init="getContent(@ViewBag.Id)">
+
+    <!--inner body start from here-->
+    <div class="inner-body">
+        <div ng-show="content.Article.type=='article'">
+            <div class="container">
+                <!--start breadcrumb-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="bread-crumb">
+                            <ol class="breadcrumb pull-right">
+                                <li><a href="/">Home</a></li>
+                                <li ng-repeat="bc in content.MenuHierarchy | orderBy :'+id'" ng-class="{ 'active': bc.id == @ViewBag.Id }">
+                                    @*<a href="/portal/content/{{bc.id}}">{{bc.title_en}}</a>*@
+                                    <a ng-href="{{bc.id == @ViewBag.Id ? 'javascript:;' : '/portal/content/' + bc.id}}">{{bc.title_my}}</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!--end breadcrumb-->
+            </div>
+
+            <!--start content-->
+            <div class="container" ng-show="content.Menu.url!=='portal/left'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="team-about-us animate-reveal">
+                            <h2>{{content.Article.title_my}}</h2>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div ng-bind-html="content.Article.content_my"></div>
+                    </div>
+                </div>
+            </div>
+            <!--end content-->
+
+            <div class="container railway-font" ng-show="content.Menu.url=='portal/left'">
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <div class="team-about-us animate-reveal">
+                            <h2>{{content.Article.title_my}}</h2>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-xs-12">
+                        <div class="left-group">
+                            <div class="list-group left-menu">
+                                <a ng-class="{ 'list-group-item hvr-skew': sibling.Menu.id != @ViewBag.Id, 'list-group-item hvr-skew active': sibling.Menu.id == @ViewBag.Id }" href="/portal/content/{{sibling.Menu.id}}"
+                                   ng-repeat="sibling in siblings.SubMenu"><h5 class="nospace"><b>{{sibling.Menu.title_my}}</b></h5></a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                        <div ng-bind-html="content.Article.content_my"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- For media release, content.Menu.type = 'atas' -> need to change to 'lain' in order to allow this section to be generated -->
+        <!-- Content.ArticleFamily.length > 1 condition can be later removed after changes above is amended -->
+        <div ng-show="content.Article.type=='link'">
+            <div class="container">
+                <div class="row">
+                    <!--start breadcrumb-->
+                    <!--<div class="row">-->
+                    <div class="col-md-12">
+                        <div class="bread-crumb">
+                            <h2>{{content.Menu.title_my}}</h2>
+                            <ol class="breadcrumb pull-right">
+                                <li><a href="/">Home</a></li>
+                                <li ng-repeat="bc in content.MenuHierarchy | orderBy :'+id'" ng-class="{ 'active': bc.id == @ViewBag.Id }">                                    
+                                    <a ng-href="{{bc.id == @ViewBag.Id ? 'javascript:;' : '/portal/content/' + bc.id}}">{{bc.title_my}}</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <!--end breadcrumb-->
+                    <!--start table media release-->
+                    <div class="col-md-12">
+                        <div class="panel panel-default table-panel">
+                            <!--<div class="panel-heading">&nbsp;</div>-->
+                            <div class="panel-body">
+                                <div class="table-content-box">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th style="text-align: center; min-width:160px">Document Date</th>
+                                                <th><i class="fa fa-file-text" aria-hidden="true"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in content.ArticleFamily | orderBy :'-doc_date'">
+                                                <td>{{item.title_my}}</td>
+                                                <td style="text-align: center; min-width:160px" ng-bind="item.doc_date | date:'MMM dd, yyyy'"></td>
+                                                <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="http://intranet4.ktmb.com.my{{item.url}}"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end table media release-->
+                </div>
+            </div>
+        </div>
+
+        <br /><br />
+    </div>
+    <!--inner body end from here-->
+
+    @section footer{
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="inner-footer1">
+                        <h4>Contact Us</h4>
+                        <!--<a href="index.html"><img src="assets/img/logo.png" alt="logo" class="img-responsive"></a>-->
+                        <p class="footer-content">
+                            Ibu Pejabat KTM BERHAD,  <br />
+                            Jalan Sultan Hishamuddin,  <br />
+                            50621 Kuala Lumpur.
+                        </p>
+                        <br>
+                        <p class="footer-text"><span><a href="#"><i class="fa fa-phone"></i></a></span> Call center:  +603 - 2267 1200<br />(Operation Time : 0830 - 1730)</p>
+                        <p class="footer-text"><span><a href="#"><i class="fa fa-envelope"></i></a></span>  Email: callcenter@ktmb.com.my</p>
+                        <div class="inner-footer">
+                            <ul class="list-unstyled list-inline">
+                                <li>
+                                    <a href="/user/login"> <span class="social-icon"><i class="fa fa-sign-in"></i></span></a>
+                                </li>
+                                <li>
+                                    <a ng-href={{url.param.facebook}}> <span class="social-icon"><i class="fa fa-facebook-f"></i></span></a>
+                                </li>
+                                <li>
+                                    <a ng-href={{url.param.twitter}}> <span class="social-icon"><i class="fa fa-twitter"></i></span></a>
+                                </li>
+                                <li>
+                                    <a ng-href={{url.param.instagram}}> <span class="social-icon"><i class="fa fa-instagram"></i></span></a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div ng-controller="CMSController as cmsCtrl" ng-init="getMenu()">
+                    <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="menu in allMenu | orderBy :'+sort'" ng-show="menu.Menu.type == 'bawah'">
+                        <div class="list-of-nav">
+                            <div class="inner-footer1">
+                                <h4>{{menu.Menu.title_my}}</h4>
+                                <ul class="list-unstyled">
+                                    <li ng-repeat="submenu in menu.SubMenu | orderBy :'+sort'" ng-show="submenu.Menu.type == 'bawah'">
+                                        <a href="{{submenu.Menu.url}}" ng-hide="submenu.Menu.url == 'portal/full2'"> {{submenu.Menu.title_my}}</a>
+                                        <a href="/portal/content/{{submenu.Menu.id}}" ng-show="submenu.Menu.url == 'portal/full2'"> {{submenu.Menu.title_my}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>

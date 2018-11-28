@@ -1,0 +1,60 @@
+﻿ 
+@{
+    ViewBag.Title = "ContactUs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--inner body start from here-->
+<div class="inner-body">
+    <div class="map_v1">
+        <div id="map">
+        </div>
+        <div class="map-diraction">
+            <i class="fa fa-caret-down"></i>
+            <!--<img src="assets/img/plane-icon-map.jpg" alt="plane">-->
+            <p>
+                Ibu Pejabat KTM BERHAD <br>
+                Jalan Sultan Hishamuddin,<br>
+                50621 Kuala Lumpur.
+            </p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="C_social_v2 animate-reveal">
+                    <div class="pull-left"><span><i class="fa fa-map-marker"></i></span></div>
+                    <div class="pull-right">
+                        <h4>Address</h4>
+                        <p>
+                            Ibu Pejabat KTM BERHAD  <br>
+                            Jalan Sultan Hishamuddin,<br>
+                            50621 Kuala Lumpur.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="C_social_v2 animate-reveal">
+                    <div class="pull-left"><span class="primary"><i class="fa fa-phone"></i></span></div>
+                    <div class="pull-right">
+                        <h4>Phone</h4>
+                        <p>
+                            Office: +603 - 2263 1111 <br>
+                            Call Center: +603 - 2267 1200
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="C_social_v2 animate-reveal">
+                    <div class="pull-left"><span class="secondry"><i class="fa fa-envelope-o"></i></span></div>
+                    <div class="pull-right">
+                        <h4>Email Address</h4>
+                        <p>  callcenter@ktmb.com.my</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--inner body end from here-->

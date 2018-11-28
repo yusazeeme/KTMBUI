@@ -1,0 +1,217 @@
+﻿
+@{
+    ViewBag.Title = "View Booking";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div ng-controller="UserController as userCtrl" ng-init="getTicketType()">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="{{UIURL}}"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Manage Favorite List</strong>
+        </li>
+    </ol>
+    <h2>Manage Favorite List</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-default" ng-click="singleFav = {}">Add New Favorite</a>
+        </div>
+    </div>
+
+    <div class="row top-buffer">
+        <div class="col-md-12" ng-init="getFavoriteList()">
+            <table datatable="ng" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>IC/Passport No</th>
+                        <th>Gender</th>
+                        <th>Passenger Type</th>
+                        <th>Ticket Type</th>
+                        <th>Consession ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="person in FavoriteList | orderBy :'-IC'">
+                        <td>{{person.FullName}}</td>
+                        <td>{{person.IC}}</td>
+                        <td>{{person.Gender === "M" ? "Male" : "Female"}}</td>
+                        <td>{{person.AdultChild === "A" ? "Adult" : "Child"}}</td>
+                        <td>
+                            <span ng-repeat="tt in ticketTypeList" ng-show="tt.CODE == person.TicketType">
+                                {{tt.DESCRIPTION}}
+                            </span>
+                        </td>
+                        <td>{{person.KonsesiID}}</td>
+                        <td style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#modal-2" class="btn btn-success" ng-click="getFavorite(person.ID)"><i class="fa fa-refresh"></i></a>
+                            <button type="button" class="btn btn-red" confirmed-click="deleteFav(person.ID)" ng-confirm-click="Are you sure to remove this person from your favorite list?"><i class="fa fa-trash-o"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Manage Favorite</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="addFav(singleFav)">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Name</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="singleFav.FullName" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">IC/Passport</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" maxlength="12" class="form-control" ng-model="singleFav.IC" required>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-controller="DateController">
+                                <label for="field-2" class="col-sm-3 control-label">Date Of Birth</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="singleFav.dob"
+                                           is-open="popup1.opened" required
+                                           close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Gender</label>
+
+                                <div class="col-sm-9">
+                                    <select class="form-control" ng-model="singleFav.Gender" required>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Ticket Type</label>
+
+                                <div class="col-sm-9">
+                                    <select class="form-control"
+                                            ng-model="singleFav.TicketType"
+                                            ng-options="ticketType.CODE as ticketType.DESCRIPTION for ticketType in ticketTypeList" required>
+                                        <option value=''>Type of Ticket</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Consession ID</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="singleFav.KonsesiID ">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 (Basic)-->
+    <div class="modal fade" id="modal-2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Manage Favorite</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="updateFav(singleFav)">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Name</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="singleFav.FullName" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">IC/Passport</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" maxlength="12" class="form-control" ng-model="singleFav.IC" required>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-controller="DateController">
+                                <label for="field-2" class="col-sm-3 control-label">Date Of Birth</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="singleFav.dob"
+                                           is-open="popup1.opened" required close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Gender</label>
+
+                                <div class="col-sm-9">
+                                    <select class="form-control" ng-model="singleFav.Gender" required>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Ticket Type</label>
+
+                                <div class="col-sm-9">
+                                    <select class="form-control" ng-init="getTicketType()"
+                                            ng-model="singleFav.TicketType"
+                                            ng-options="ticketType.CODE as ticketType.DESCRIPTION for ticketType in ticketTypeList" required>
+                                        <option value=''>Type of Ticket</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Consession ID</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="singleFav.KonsesiID">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-green">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

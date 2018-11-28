@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div ng-controller="UserController as userCntrl" ng-init="signOut()">
+    <div class="inner-body" ng-init="getUserInfo()">
+        <div class="login_wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+                        <div class="login-widget animte-reavel">
+                            <div class="sec-img">
+                                <h3>Admin Login</h3>
+                            </div>
+
+                            <div class="login-box">
+                                <form ng-submit="signIn(user, '1', UIURL+'/user/admindashboard')">
+                                    <div class="form-group">
+                                        <span><i class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" ng-model="user.username" placeholder="Username*" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <span><i class="fa fa-lock"></i></span>
+                                        <input type="password" class="form-control" ng-model="user.password" placeholder="Password*" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <span><i class="fa fa-tag"></i></span>
+                                        <select class="form-control" ng-model="user.type" ng-init="user.type = '3'" required>
+                                            <option value=''>Select User Type</option>
+                                            <option value="3">STAR User</option>
+                                            <option value="4">Admin</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-actions clearfix">
+                                        <div class="submit-form" style="text-align: right">
+                                            <button class="btn submit-btn">Login</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

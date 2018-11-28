@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "OurServices";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body">
+    <div class="container">
+        <div class="row">
+            <!--start breadcrumb-->
+            <!--<div class="row">-->
+            <div class="col-md-12">
+                <div class="bread-crumb">
+                    <h2>Our Services</h2>
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="/ticket/home">Home</a></li>
+                        <li><a href="javascript:;">About Us</a></li>
+                        <li class="active">Our Services</li>
+                    </ol>
+                </div>
+            </div>
+            <!--</div>-->
+            <!--end breadcrumb-->
+            <!--            <div class="col-md-12">
+                            name_pakg
+                            <div class="name_pakg text-center animate-reveal"><br> OUR SERVICES</div>
+                        </div>-->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <!--find_flight_box-->
+                <div class="find_flight_box animate-reveal">
+                    <div class="img-box">
+                        <img src="/Content/assets/img/logo-ets.jpg" alt="img">
+                    </div>
+                    <a href="#" class="clearfix">
+                        <h4>ETS</h4>
+                        <p>Nunc et venenatis nibh, sed accumsan libero Quisque</p>
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <!--find_flight_box-->
+                <div class="find_flight_box animate-reveal">
+                    <div class="img-box">
+                        <img src="/Content/assets/img/logo-intercity.jpg" alt="img">
+                    </div>
+                    <a href="#" class="clearfix">
+                        <h4>Intercity</h4>
+                        <p>Nunc et venenatis nibh, sed accumsan libero Quisque</p>
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <!--find_flight_box-->
+                <div class="find_flight_box animate-reveal">
+                    <div class="img-box">
+                        <img src="/Content/assets/img/logo-komuter.jpg" alt="img">
+                    </div>
+                    <a href="#" class="clearfix">
+                        <h4>Commuter</h4>
+                        <p>Nunc et venenatis nibh, sed accumsan libero Quisque</p>
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <!--find_flight_box-->
+                <div class="find_flight_box animate-reveal">
+                    <div class="img-box">
+                        <img src="/Content/assets/img/logo-kargo.jpg" alt="img">
+                    </div>
+                    <a href="#" class="clearfix">
+                        <h4>Cargo</h4>
+                        <p>accumsan libero Quisque Rytra</p>
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <!--find_flight_box-->
+                <div class="find_flight_box animate-reveal">
+                    <div class="img-box">
+                        <img src="/Content/assets/img/logo-myra.jpg" alt="img">
+                    </div>
+                    <a href="#" class="clearfix">
+                        <h4>MyRA Academy</h4>
+                        <p>accumsan libero Quisque </p>
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-4 hidden-sm col-xs-12">
+                <!--find_flight_box-->
+                <div class="find_flight_box animate-reveal">
+                    <div class="img-box">
+                        <img src="/Content/assets/img/logo-multi.jpg" alt="img">
+                    </div>
+                    <a href="#" class="clearfix">
+                        <h4>Multimodal Freight</h4>
+                        <p>accumsan libero Quisque </p>
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <!--find_flight_box-->
+                <div class="find_flight_box animate-reveal">
+                    <div class="img-box">
+                        <img src="/Content/assets/img/logo-ktmd.jpg" alt="img">
+                    </div>
+                    <a href="http://www.ktmd.com.my/" class="clearfix">
+                        <h4>KTM Distribution</h4>
+                        <p>Nunc et venenatis nibh, sed accumsan libero Quisque</p>
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <!--find_flight_box-->
+                <div class="find_flight_box animate-reveal">
+                    <div class="img-box">
+                        <img src="/Content/assets/img/logo-ktmp.jpg" alt="img">
+                    </div>
+                    <a href="http://www.ktmparking.com.my/" class="clearfix">
+                        <h4>KTM Parking</h4>
+                        <p>accumsan libero Quisque </p>
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+
+                </div>
+            </div>
+            <!--end-->
+        </div>
+    </div>
+
+</div>
+<!--inner body end from here-->

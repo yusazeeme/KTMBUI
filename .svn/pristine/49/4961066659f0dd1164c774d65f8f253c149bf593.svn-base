@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Unlock User";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+
+<h2>Unlock User</h2>
+
+<div ng-controller="UserController as userCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="index.html"><i class="fa-home"></i>Home</a>
+        </li>
+        <li>
+            <a href="forms-main.html">Forms</a>
+        </li>
+        <li class="active">
+
+            <strong>Unlock User</strong>
+        </li>
+    </ol>
+    <h2>Unlock User</h2>
+    <br />
+
+    <div class="row" ng-init="getUnlockUser()">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Unlock User
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                        </div>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>User Id</th>
+                                    <th>Username</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in lockedUser">
+                                    <td>{{user.UserID}}</td>
+                                    <td>{{user.UserName}}</td>
+                                    <td>{{user.Status}}</td>
+                                    <td>
+                                        <a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" class="entypo-lock" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-2" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="unlockUser(user)">
+                        <div class="modal-header" ng-model="user.UserID">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" >Are you sure you want to unlocked?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info"  >Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

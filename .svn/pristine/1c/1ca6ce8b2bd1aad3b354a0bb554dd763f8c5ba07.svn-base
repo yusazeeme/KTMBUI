@@ -1,0 +1,355 @@
+﻿
+@{
+    ViewBag.Title = "Select";
+}
+
+<style>
+    .hover_img a {
+        position: relative;
+    }
+
+        .hover_img a span {
+            position: absolute;
+            display: none;
+            z-index: 99;
+        }
+
+        .hover_img a:hover span {
+            display: block;
+        }
+</style>
+
+<div class="container" ng-controller="TicketController as ticketCtrl" ng-init="getCoach(); checkQueue();">
+    <div class="row" ng-init="generateTripDate()">
+        <div class="col-md-12" style="margin:5% 0; margin-bottom:10%;">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li>
+                        <a href="{{UIURL}}" class="active"> <span class="step">1</span> <span class="title">Search Train</span> </a>
+                    </li>
+                    <li class="active">
+                        <a href="#"> <span class="step">2</span> <span class="title">Select Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">3</span> <span class="title">Passenger Info</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">4</span> <span class="title">Select Seat</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">5</span> <span class="title">Payment</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <!--wajib ada-->
+        <header></header>
+        <!--Start Departure-->
+
+        <form ng-submit="proceedBooking()">
+            <div class="col-md-12">
+                <!--start content and scrolling-->
+                <main class="clearfix">
+                    <!--start sidebar-->
+                    <aside id="sidebar" style="margin-top:-1%;">
+                        <div class="inside">
+                            <div class="flight_detail_sidebar white-box" style="margin-top:37%;">
+                                <div class="details-text">
+                                    <h4>
+                                        Journey Summary
+                                        <br />
+                                        <small ng-show="!returnList.length"> (One Way)</small>
+                                        <small ng-show="returnList.length"> (Return)</small>
+                                        <br />
+                                    </h4>
+                                </div>
+                                <div class="railway-font">
+                                    <small>GRAND TOTAL (MYR)</small>
+                                    <div class="alert alert-info"><h2 class="price-info">{{totalCost}}</h2></div>
+                                </div>
+
+                                <div ng-repeat="st in selectedTrip | orderBy :'+DepartureTime'">
+                                    <hr />
+                                    <div class="title-direction">
+                                        <h4>{{st.OriginName}} - {{st.DestinationName}}</h4>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            Fare:
+                                            <span class="pull-right" ng-show="st.TotalAdult != '0'">
+                                                Adult : {{st.TotalAdult}} x {{st.SeatFareAdult}} MYR
+                                            </span>
+                                            <span class="pull-right" ng-show="st.TotalChild != '0'">
+                                                Child : {{st.TotalChild}} x {{st.SeatFareChild}} MYR
+                                            </span>
+                                        </span>
+                                    </div>
+                                    @*<div class="LTT">
+                                            <span class="skin-clr">
+                                                Admin Charge
+                                                <span class="pull-right">
+                                                    {{st.TotalPassenger}} x {{st.SingleCharge}} MYR
+                                                </span>
+                                            </span>
+                                        </div>*@
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            Total
+                                            <span class="pull-right">
+                                                {{st.NormalPrice.replace('MYR', '')}} MYR
+                                            </span>
+                                        </span>
+                                    </div>
+                                    @*<div class="LTT">
+                                            <small>*price inclusive with GST</small>
+                                        </div>*@
+                                </div>
+
+                                <hr />
+                                <div class="railway-font">
+                                    <input type="submit" class="btn btn-proceed-travel btn-lg" value="PROCEED &raquo;" ng-disabled="!readyToProceed" />
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                    <!--end sidebar-->
+                    <!-- start main content-->
+                    <div class="main_content" id="content" ng-init="waitingTime()">
+                        <div id="tabbing">
+                            <ul class="nav-tabs nav" role="tablist">
+                                <li role="presentation"
+                                    ng-repeat="onwardDate in OnwardTripDateList | orderBy :'+tripDate'"
+                                    ng-class="{'active':onwardDate.isactive === true}">
+                                    <a href="#tab4" role="tab" data-toggle="tab" ng-click="changeTravellingDate(false, onwardDate.tripDate)">
+                                        {{onwardDate.tripDate | date:'dd MMM, EEE'}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content" ng-repeat="owl in onwardList">
+                            <!---!!!!!! id="tab1" dapat data dari atas-->
+                            <div role="tabpanel" class="tab-pane active" id="tab4">
+                                <!--start depart-->
+                                <div class="bread-crumb animate-reveal change-position" style="background-color: #ffcc00;">
+                                    <h2>{{owl.OriginName}} - {{owl.DestinationName}}</h2>
+                                </div>
+
+                                <div class="flight_box_detail white-box animate-reveal tengah" ng-show="!owl.TripList.length && stopwaiting">
+                                    Please wait...
+                                </div>
+
+                                <div class="flight_box_detail white-box animate-reveal tengah" ng-show="!owl.TripList.length && !stopwaiting">
+                                    Sorry, there is no trip OR not yet schedule. Please select other date.
+                                </div>
+
+                                <div class="flight_box_detail white-box animate-reveal tengah" ng-repeat="trip in owl.TripList | orderBy :'+DepartureTime'">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="details-text">
+                                                        <br>
+                                                        <h4>
+                                                            {{trip.TrainName}}<br ng-if="trip.HasLowFare" />
+                                                            <a href="#" class="btn btn-stop" ng-show="trip.HasLowFare">low fare</a>
+                                                            <br />
+                                                            <small>({{trip.TrainNumber}})</small> - <small>({{trip.CoachName}})</small>
+                                                            @*<span class="hover_img">
+                                                                    <a href="#">
+                                                                        <i class="fa fa-camera-retro"></i>
+                                                                        <span><img ng-src="{{trip.PicURL}}" alt="image" /></span>
+                                                                    </a>
+                                                                </span>*@
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <p ng-show="!trip.CanBook">Departure time less than 4 hours, please proceed to counter to purchase the ticket.</p>
+                                                    <div class="select-sec" style="margin-bottom: 10px;">
+                                                        <input type="radio" name="{{owl.OriginCode}}_{{owl.DestinationCode}}_{{owl.Sequence}}" id="{{trip.TempId}}" value="{{trip.TempId}}" ng-model="$parent.selectedtrip" ng-change='bookingOnClick(trip.TempId, false)' ng-disabled="!trip.IsShow || !trip.CanBook">
+                                                        <label>
+                                                            <div class="select_title">{{trip.Currency}} {{trip.SeatFareAdult}} (Adult)</div>
+                                                            <div class="select_title" ng-show="trip.TotalChild!=0">{{trip.Currency}} {{trip.SeatFareChild}} (Child)</div>
+                                                            <div class="select_seat" ng-show="!trip.CoachCode.includes('ADN')">{{trip.NormalSeatLeft}} seat(s) left</div>
+                                                            <div class="select_seat" ng-show="trip.CoachCode.includes('ADN')">{{trip.NormalSeatLeft}} berth(s) left</div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-md-4" ng-show="trip.HasLowFare">
+                                                        <div class="select-sec" style="margin-bottom: 10px;">
+                                                            <input type="radio" name="{{owl.OriginCode}}_{{owl.DestinationCode}}_{{owl.Sequence}}" id="{{trip.TempId}}" value="{{trip.TempId}}_LF" ng-model="$parent.selectedtrip" ng-change='bookingOnClick(trip.TempId, true)' ng-disabled="!trip.IsShow">
+                                                            <label>
+                                                                <div class="select_title">{{trip.LowFarePrice}}</div>
+                                                                <div class="select_seat" ng-show="!trip.CoachCode.includes('ADN')">{{trip.LowFareSeatLeft}} seat left</div>
+                                                                <div class="select_seat" ng-show="trip.CoachCode.includes('ADN')">{{trip.LowFareSeatLeft}} berth left</div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" ng-show="!trip.HasLowFare">
+                                                        <div class="select-sec transparent-color">
+                                                            <a href="#" target="_blank" class="btn btn-default disabled">
+                                                                Low Fare <br><br>
+                                                                <span class="pri grey">Not Available<br></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="LTT">
+                                                        <span class="skin-clr"> <i class="fa fa-clock-o"></i> Duration</span><br>
+                                                        <span class="time">{{trip.Duration}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="LTT">
+                                                        <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-share"></i> Departure</span><br>
+                                                        <span class="time">{{trip.DepartureTime}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="LTT no-border">
+                                                        <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-flag-checkered"></i> Arrival</span><br>
+                                                        <span class="time">{{trip.ArrivalTime}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end depart-->
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div style="margin-top:6%">&nbsp;</div>
+                        </div>
+
+                        <!--start return-->
+                        <div id="tabbing" class="return-date">
+                            <ul class="nav-tabs nav" role="tablist">
+                                <li role="presentation"
+                                    ng-repeat="returnDate in ReturnTripDateList | orderBy :'+tripDate'"
+                                    ng-class="{'active':returnDate.isactive === true}">
+                                    <a href="#tab4" role="tab" data-toggle="tab" ng-click="changeTravellingDate(true, returnDate.tripDate)">
+                                        {{returnDate.tripDate | date:'dd MMM, EEE'}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content" ng-repeat="rl in returnList">
+                            <!---!!!!!! id="tab1" dapat data dari atas-->
+                            <div role="tabpanel" class="tab-pane active" id="tab5">
+                                <div class="bread-crumb animate-reveal change-position" style="background-color:#0053a0;">
+                                    <!--Return tukar color-->
+                                    <h2 style="color:#ffcc00;">{{rl.OriginName}} - {{rl.DestinationName}}</h2>
+                                </div>
+
+                                <div class="flight_box_detail white-box animate-reveal tengah" ng-show="!selectedTrip.length">
+                                    Please select onward train first...
+                                </div>
+
+                                <div ng-show="selectedTrip.length">
+                                    <div class="flight_box_detail white-box animate-reveal tengah" ng-show="!rl.TripList.length && stopwaiting">
+                                        Please wait...
+                                    </div>
+
+                                    <div class="flight_box_detail white-box animate-reveal tengah" ng-show="!rl.TripList.length && !stopwaiting">
+                                        Sorry, there is no trip OR not yet schedule. Please select other date.
+                                    </div>
+
+                                    <div class="flight_box_detail white-box animate-reveal tengah" ng-repeat="trip in rl.TripList | orderBy :'+DepartureTime'">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="details-text">
+                                                            <br>
+                                                            <h4>
+                                                                {{trip.TrainName}}<br ng-if="trip.HasLowFare" />
+                                                                <a href="#" class="btn btn-stop" ng-show="trip.HasLowFare">low fare</a>
+                                                                <br />
+                                                                <small>({{trip.TrainNumber}})</small> - <small>({{trip.CoachName}})</small>
+                                                                @*<span class="hover_img">
+                                                                        <a href="#">
+                                                                            <i class="fa fa-camera-retro"></i>
+                                                                            <span><img ng-src="{{trip.PicURL}}" alt="image" /></span>
+                                                                        </a>
+                                                                    </span>*@
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <p ng-show="!trip.CanBook">Departure time less than 4 hours, please proceed to counter to purchase the ticket.</p>
+                                                        <div class="select-sec" style="margin-bottom: 10px;">
+                                                            <input type="radio" name="{{rl.OriginCode}}_{{rl.DestinationCode}}_{{rl.Sequence}}" id="{{trip.TempId}}" value="{{trip.TempId}}" ng-model="$parent.selectedtrip" ng-change='bookingOnClick(trip.TempId, false)' ng-disabled="!trip.IsShow || !trip.CanBook">
+                                                            <label>
+                                                                <div class="select_title">{{trip.Currency}} {{trip.SeatFareAdult}} (Adult)</div>
+                                                                <div class="select_title" ng-show="trip.TotalChild!=0">{{trip.Currency}} {{trip.SeatFareChild}} (Child)</div>
+                                                                <div class="select_seat" ng-show="!trip.CoachCode.includes('ADN')">{{trip.NormalSeatLeft}} seat(s) left</div>
+                                                                <div class="select_seat" ng-show="trip.CoachCode.includes('ADN')">{{trip.NormalSeatLeft}} berth(s) left</div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="col-md-4" ng-show="trip.HasLowFare">
+                                                            <div class="select-sec" style="margin-bottom: 10px;">
+                                                                <input type="radio" name="{{rl.OriginCode}}_{{rl.DestinationCode}}_{{rl.Sequence}}" id="{{trip.TempId}}" value="{{trip.TempId}}_LF" ng-model="$parent.selectedtrip" ng-change='bookingOnClick(trip.TempId, true)' ng-disabled="!trip.IsShow">
+                                                                <label>
+                                                                    <div class="select_title">{{trip.LowFarePrice}}</div>
+                                                                    <div class="select_seat" ng-show="!trip.CoachCode.includes('ADN')">{{trip.LowFareSeatLeft}} seat left</div>
+                                                                    <div class="select_seat" ng-show="trip.CoachCode.includes('ADN')">{{trip.LowFareSeatLeft}} berth left</div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4" ng-show="!trip.HasLowFare">
+                                                            <div class="select-sec transparent-color">
+                                                                <a href="#" target="_blank" class="btn btn-default disabled">
+                                                                    Low Fare <br><br>
+                                                                    <span class="pri grey">Not Available<br></span>
+                                                                </a>
+                                                            </div>
+                                                        </div>*@
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="LTT">
+                                                            <span class="skin-clr"> <i class="fa fa-clock-o"></i> Duration</span><br>
+                                                            <span class="time">{{trip.Duration}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="LTT">
+                                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-share"></i> Departure</span><br>
+                                                            <span class="time">{{trip.DepartureTime}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="LTT no-border">
+                                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-flag-checkered"></i> Arrival</span><br>
+                                                            <span class="time">{{trip.ArrivalTime}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end depart-->
+                            </div>
+                        </div>
+                        <!--end return-->
+                    </div>
+                    <!-- end main content-->
+
+                </main>
+                <!--end content and scrolling-->
+                <!--End Departure-->
+            </div>
+            <!--End Departure-->
+        </form>
+    </div>
+</div>
+

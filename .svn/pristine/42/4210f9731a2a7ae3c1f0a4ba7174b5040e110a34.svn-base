@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = "Parameter Setting";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+
+<div>
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Parameter Setting</strong>
+        </li>
+    </ol>
+
+    <h2>Parameter Setting</h2>
+    <br />
+    
+    <div class="row" ng-controller="UserController as userCtrl" >
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-primary" >
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-default" ng-click="param = {}">Add New Parameter</a>
+                    </div>
+                </div>
+                <table datatable="ng" class="table table-bordered font-black" ng-init="getParameter(true)">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Value</th>
+                            <th>User Update</th>
+                            <th>Date Update</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd gradeX" ng-repeat="res in parameter.paramList">
+                            <td class="center">{{res.Name}}</td>
+                            <td class="center">{{res.Descr}}</td>
+                            <td class="center">{{res.Value}}</td>
+                            <td class="center">{{res.user_upd}}</td>
+                            <td class="center">{{res.date_upd}}</td>
+                            <td style="width:80px">
+                                <a href="#" data-toggle="modal" data-target="#modal-2" class="btn btn-success" ng-click="getParam(res.Name)"><i class="fa fa-refresh"></i> </a>
+                                <button type="button" class="btn btn-red" confirmed-click="deleteParam(res.Name)" ng-confirm-click="Are you sure to remove this parameter?"><i class="fa fa-close"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog">
+            <div class="modal-content" ng-controller="UserController as userCtrl">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add New Parameter</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="addParameter(param, true)">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Name</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="param.Name" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="param.Descr" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Value</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="param.Value" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Basic Modal</h4>
+                </div>
+
+                <div class="modal-body">
+                    Hello I am a Modal!
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 (Basic)-->
+    <div class="modal fade" id="modal-2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Update Parameter</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="updateParameter(param, true)">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Name</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="param.Name" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="param.Descr" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Value</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="param.Value" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-green">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

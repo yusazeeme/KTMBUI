@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "Time Of Travel";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="{{UIURL}}/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li class="active">
+        <strong>Train Setting</strong>
+    </li>
+</ol>
+
+<div class="panel-heading" data-collapsed="0" style="background-color:#0053a0; border-color: #0053a0; color:whitesmoke;">
+
+    <h2 style="color:whitesmoke;">Popular Train Setting</h2>
+</div>
+
+<div class="row" ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div class="row" ng-controller="TrainController">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-default" ng-click="add()">Add New</a>
+                </div>
+            </div>
+            <table class="table table-bordered font-black">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Train Number</th>
+                        <th>Rate (%)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="odd gradeX" ng-repeat="object in trainList">
+                        <td class="center">{{object.ID}}</td>
+                        <td class="center">{{object.trainNumber}}</td>
+                        <td class="center">{{object.Rate}}</td>
+                        <td style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-success" ng-click="edit(object)"><i class="fa fa-edit"></i> </a>
+                            <button type="button" class="btn btn-red" confirmed-click="" ng-confirm-click="Are you sure to remove this parameter?"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add New Loyalty Setting</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="save()">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Train Number</label>
+                                <div class="col-sm-8">
+                                    <select type="text" class="form-control" required ng-model="form.train">
+                                        <option value="">
+                                            Select Train Number
+                                        </option>
+                                        <option value="123">123</option>
+                                        <option value="1234">1234</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Rate</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required ng-model="form.Rate">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel-heading" data-collapsed="0" style="background-color:#0053a0; border-color: #0053a0; color:whitesmoke;">
+
+    <h2 style="color:whitesmoke;">Origin Destination Setting</h2>
+</div>
+
+<div class="row" ng-controller="OriginController">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <a href="#" data-toggle="modal" data-target="#modal-2" class="btn btn-default" ng-click="add()">Add New</a>
+                </div>
+            </div>
+            <table class="table table-bordered font-black">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Date Start</th>
+                        <th>Date End</th>
+                        <th>Rate (%)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="odd gradeX" ng-repeat="object in originList">
+                        <td class="center">{{object.ID}}</td>
+                        <td class="center">{{object.origin}}</td>
+                        <td class="center">{{object.destination}}</td>
+                        <td class="center">{{object.dateStart}}</td>
+                        <td class="center">{{object.dateEnd}}</td>
+                        <td class="center">{{object.Rate}}</td>
+                        <td style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#modal-2" class="btn btn-success" ng-click="edit(object)"><i class="fa fa-edit"></i> </a>
+                            <button type="button" class="btn btn-red" confirmed-click="" ng-confirm-click="Are you sure to remove this parameter?"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add New Origin / Destination</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="save()">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Origin</label>
+                                <div class="col-sm-8">
+                                    <select type="text" class="form-control" required ng-model="form.origin">
+                                        <option value="">
+                                            Select Origin
+                                        </option>
+                                        <option value="A">Gemas</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Destination</label>
+                                <div class="col-sm-8">
+                                    <select type="text" class="form-control" required ng-model="form.destination">
+                                        <option value="">
+                                            Select Destination
+                                        </option>
+                                        <option value="A">KL Sentral</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Effective Start Date</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input readonly type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="form.dateStart" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Effective End Date</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input readonly type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="form.dateEnd" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Rate</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required ng-model="form.Rate">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

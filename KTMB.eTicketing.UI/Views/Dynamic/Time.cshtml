@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "Time Of Travel";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="{{UIURL}}/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li class="active">
+        <strong>Peak Date Setting</strong>
+    </li>
+</ol>
+
+<h2>Peak Date Setting</h2>
+<br />
+
+<div class="row" ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div class="row" ng-controller="DynamicController as dynamicCtrl" ng-init="LoadDate()">
+    <div class="col-lg-12 col-md-12 col-sm-12" >
+        <div class="panel panel-primary" >
+            <div class="panel-heading" data-collapsed="0" style="background-color:#0053a0; border-color: #0053a0; color:whitesmoke;">
+                
+                <div class="col-sm-6" style="margin-top: 15px;">
+                    <div class="form-group">
+                        <label for="payment-type" class="col-sm-4 control-label font-white">Selected Year</label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option selected="selected" value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6" style="margin-top: 15px;">
+                    <div class="form-group">
+                        <label for="payment-type" class="col-sm-4 control-label font-white">Selected Month</label>
+                        <div class="col-sm-8">
+                            <select class="form-control">
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8 col-sm-4"  style="margin-top: 15px;margin-bottom: 15px;">
+                        <button type="submit" class="btn btn btn-warning" style="color:black;"><i class="glyphicon glyphicon-search"></i> Search</button>
+                        <button type="reset" class="btn btn-success" data-toggle="modal" data-target="#modal-1" ng-click="add()"><i class="glyphicon glyphicon-plus"></i> Add New</button>
+                    </div>
+                </div>
+                
+            </div>
+            <table class="table table-bordered font-black">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Time of travel</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Rate (%)</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="odd gradeX" ng-repeat="object in timeoftravel">
+                        <td class="center">{{object.Id}}</td>
+                        <td class="center">{{object.PeakType}}</td>
+                        <td class="center">{{object.DateStart}}</td>
+                        <td class="center">{{object.DateEnd}}</td>
+                        <td class="center">{{object.Rate}}</td>
+                        <td class="center">{{object.Status}}</td>
+                        <td style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-success"  ng-click="edit(object)"><i class="fa fa-edit"></i> </a>
+                            <button type="button" class="btn btn-red" confirmed-click="" ng-confirm-click="Are you sure to remove this parameter?"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add New Loyalty Setting</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="save()">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Type Of travel</label>
+                                <div class="col-sm-8">
+                                    <select type="text" class="form-control" required ng-model="form.PeakType">
+                                        <option value="">
+                                            Select Type of travel
+                                        </option>
+                                        <option value="Off">Off Peak</option>
+                                        <option value="Peak">Peak</option>
+                                        <option value="Super">Super Peak</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel Start Date</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input readonly type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="form.DateStart" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel End Date</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input readonly type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="form.DateEnd" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Rate</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required ng-model="form.Rate">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

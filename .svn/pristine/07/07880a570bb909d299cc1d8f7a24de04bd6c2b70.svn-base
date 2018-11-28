@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Reset Password";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-controller="UserController as userCntrl">
+    <div class="inner-body">
+        <div class="login_wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+                        <div class="login-widget animte-reavel">
+                            <div class="sec-img">
+                                <h3>Reset Password</h3>
+                            </div>
+
+                            <div class="login-box">
+                                <form ng-submit="resetPasswordV2(fp)">
+                                    <div class="form-group">
+                                        <span><i class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" ng-model="fp.username" placeholder="Registered Username*" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <span><i class="fa fa-info"></i></span>
+                                        <input type="number" class="form-control" ng-model="fp.ic" placeholder="Ic Number*" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <span><i class="fa fa-key"></i></span>
+                                        <input type="text" class="form-control" ng-model="fp.password" placeholder="New Password*" required>
+                                    </div>
+                                    <div class="form-group" style="font-family: 'Raleway', sans-serif; font-size: 16px; color:red;">
+                                        <span><i class="fa fa-key"></i></span>
+                                        <input type="text" class="form-control" ng-model="fp.confirmpassword" placeholder="Confirm New Password*" required>
+                                        <h5 ng-show="fp.password != fp.confirmpassword">Password not match!</h5>
+                                    </div>
+                                    <div class="form-actions clearfix">
+                                        <div class="submit-form" style="text-align: right">
+                                            <button class="btn submit-btn" type="submit">Reset Password</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="register">
+                                <p ng-show="isGuest!=true">All good? <a href="{{UIURL}}/user/login">Log in now</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

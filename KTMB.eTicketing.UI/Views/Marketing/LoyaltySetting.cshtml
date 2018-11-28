@@ -1,0 +1,295 @@
+﻿
+@{
+    ViewBag.Title = "Loyalty Setting";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="{{UIURL}}/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li class="active">
+        <strong>Loyalty Setting</strong>
+    </li>
+</ol>
+
+<h2>Loyalty Setting</h2>
+<br />
+
+<div class="row" ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div class="row" ng-controller="MarketingController as marketingCtrl">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-default">Add New Loyalty Setting</a>
+                </div>
+            </div>
+            <table class="table table-bordered font-black">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Priority Level</th>
+                        <th>Point value per RM</th>
+                        <th>Point Expired in Days</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Travel Day Start</th>
+                        <th>Travel Day End</th>
+                        <th>Train No</th>
+                        <th>Coach Code</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="odd gradeX">
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#modal-2" class="btn btn-success"><i class="fa fa-edit"></i> </a>
+                            <button type="button" class="btn btn-red" confirmed-click="" ng-confirm-click="Are you sure to remove this parameter?"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-1" ng-controller="DateController">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add New Loyalty Setting</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Priority Level</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Point Value per RM</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Point Expired in Days</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel Start Date</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel End Date</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel Day Start</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel Day End</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Train Number</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Coach Code</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Status</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 (Basic)-->
+    <div class="modal fade" id="modal-2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Update Loyalty Setting</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">ID</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" ng-model="" required readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Priority Level</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Point Value per RM</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Point Expired in Days</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel Start Date</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel End Date</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel Day Start</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Travel Day End</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Train Number</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Coach Code</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Status</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Created By</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Create Date</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Modified By</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Modified Date</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-green">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

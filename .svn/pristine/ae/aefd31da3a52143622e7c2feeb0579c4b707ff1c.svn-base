@@ -1,0 +1,74 @@
+
+* {
+-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+html, body {
+height: 100%;
+}
+html {
+font-size: 100%;
+-webkit-text-size-adjust: 100%;
+-ms-text-size-adjust: 100%;
+}
+body, div, dl, dt, dd, pre, form, fieldset, input, table, th, td, embed, object {
+margin: 0;
+padding: 0;
+}
+:focus {
+outline: 0
+}
+:link, :visited {
+text-decoration: none
+}
+/* clearfix */
+.clearfix:before, .clearfix:after {
+content: "";
+display: table;
+}
+.clearfix:after {
+clear: both;
+}
+.clearfix {
+zoom: 1;
+}
+
+
+/* Header .............. */
+header {
+
+height: 100px;
+width: 100%;
+}
+
+/* Main ................ */
+main {
+margin: 20px auto;
+max-width: 1100px;
+}
+/* aside */
+aside {
+float: right !important;
+max-width: 250px;
+}
+.inside {
+background-color: transparent;
+/*padding: 10px;*/
+}
+#sidebar.sticky {
+    float: right;
+    position: fixed;
+    top: 20px;
+    z-index: 6;
+    right: 9%;
+}
+/* main content */
+.main_content {
+float: left !important;
+max-width: 800px;
+}
+/* Footer .............. */
+footer {
+/*background-color: #999;*/
+/*height: 300px;*/
+width: 100%;
+}

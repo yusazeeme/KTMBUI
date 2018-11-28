@@ -1,0 +1,71 @@
+﻿(function () {
+    var app = angular.module('cms', []);
+
+    app.controller('CMSController', ["$scope", "$http", 'growl', '$window', 'apiURL', '$rootScope', '$location', 'x2js', '$parse', '$cookies', 'baseURL', function ($scope, $http, growl, $window, apiURL, $rootScope, $location, x2js, $parse, $cookies, baseURL) {
+        console.log("CMSController logged on.");
+
+        $scope.getMenu = function () {
+            $rootScope.spinnerShow = true;
+            console.log("CMSController.getMenu triggered");
+            $http({
+                method: 'GET',
+                url: baseURL + '/api/cms/allmenu'
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                $scope.allMenu = response.data;
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 240 cms.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+        $scope.getMenuSibling = function (id) {
+            $rootScope.spinnerShow = true;
+            console.log(id);
+            console.log("CMSController.getMenuSibling triggered");
+            $http({
+                method: 'GET',
+                url: baseURL + '/api/cms/menu?id=' + id
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                $scope.siblings = response.data;
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 257 cms.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+        $scope.getContent = function (id) {
+            $rootScope.spinnerShow = true;
+            console.log(id);
+            console.log("CMSController.getContent triggered");
+            $http({
+                method: 'GET',
+                url: baseURL + '/api/cms/content?id=' + id
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                $scope.content = response.data;
+                if (response.data.Article != null) {
+                    $scope.content.Article.content_en = response.data.Article.content_en.replace(/src="/g, 'src="http://intranet4.ktmb.com.my/');
+                    $scope.content.Article.content_my = response.data.Article.content_my.replace(/src="/g, 'src="http://intranet4.ktmb.com.my/');
+                    $scope.getMenuSibling(response.data.Menu.parent_id);
+                }
+                else {
+                    console.log('masuk');
+                    console.log(response.data.SubContent);
+                    if (response.data.SubContent != null) {
+                        $window.location.href = '/portal/content/' + response.data.SubContent[0].Menu.id;
+                    }
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 278 cms.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+    }]);
+
+})();

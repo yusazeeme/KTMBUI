@@ -1,0 +1,107 @@
+
+* {
+-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+html, body {
+height: 100%;
+font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+html {
+font-size: 100%;
+-webkit-text-size-adjust: 100%;
+-ms-text-size-adjust: 100%;
+font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+body, div, dl, dt, dd, pre, form, fieldset, input, table, th, td, embed, object {
+margin: 0;
+padding: 0;
+}
+:focus {
+outline: 0
+}
+:link, :visited {
+text-decoration: none
+}
+/* clearfix */
+.clearfix:before, .clearfix:after {
+content: "";
+display: table;
+}
+.clearfix:after {
+clear: both;
+}
+.clearfix {
+zoom: 1;
+}
+
+
+/* Header .............. */
+header {
+
+height: 100px;
+width: 100%;
+}
+
+/* Main ................ */
+main {
+/*margin: 20px auto;*/
+    max-width: 100% !important;
+}
+/* aside */
+aside {
+float: right !important;
+max-width: 250px;
+}
+.inside {
+background-color: transparent;
+/*padding: 10px;*/
+}
+
+@media (min-width: 200px) and (max-width: 1499px) {
+    #sidebar.sticky {
+        float: right;
+        position: fixed;
+        top: 20px;
+        z-index: 6;
+        right: 9%;
+    }
+}
+/* main content */
+.main_content {
+float: left !important;
+max-width: 800px;
+}
+/* Footer .............. */
+footer {
+/*background-color: #999;*/
+/*height: 300px;*/
+width: 100%;
+}
+
+@media (min-width: 1500px) and (max-width: 2000px) {
+
+    #sidebar.sticky {
+    float: right;
+    position: fixed;
+    top: 20px;
+    z-index: 6;
+    right: 14%;
+    }
+
+    .aisle-title {
+    color: #808080;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    font-size: 25px;
+    margin: 10px;
+    position: absolute;
+    margin-bottom: -40px;
+    margin-top: 50%;
+    padding-left: 22%;
+    padding-top: 32%;
+    text-transform:uppercase;
+}
+    }
+}

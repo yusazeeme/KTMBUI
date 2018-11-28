@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="KTMB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Keretapi Tanah Melayu Berhad">
+    <meta name="keywords" content="Keretapi Tanah Melayu Berhad, KTMB, Komuter, Intercity, KTM Komuter, Freight Oline">
+    <meta name="author" content="opensoft.sdn.bhd">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - KTM Berhad</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112478451-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-112478451-1');
+    </script>
+
+    <!-- FontAwesome CSS -->
+    <link href="~/Content/assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap DateTime Picker CSS -->
+    <link href="~/Content/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- Scrolling Tab CSS -->
+    <link rel="stylesheet" href="~/Content/assets/js/scrollingtabs/jquery.scrolling-tabs.css">
+
+    <!-- Others CSS -->
+    <link href="~/Content/assets/js/jqwidgets/range/ranger.css" rel="stylesheet">
+    <link href="~/Content/assets/js/jqwidgets/styles/jqx.base.css" rel="stylesheet">
+    <link href="~/Content/assets/js/animate/animate.css" rel="stylesheet">
+    <link href="~/Content/assets/js/select2/select2.min.css" rel="stylesheet">
+    <link href="~/Content/assets/css/slick.css" rel="stylesheet">
+    <link href="~/Content/assets/css/style.css" rel="stylesheet" type="text/css">
+    
+    <!--untuk w3c layout--->
+    @*<link id="stylesheet" rel="stylesheet" type="text/css" href="~/Content/assets/css/black.css" />
+        <link id="stylesheet" rel="stylesheet" type="text/css" href="~/Content/assets/css/red.css" />
+        <link id="stylesheet" rel="stylesheet" type="text/css" href="~/Content/assets/css/blue.css" />*@
+    <!-- Angular Growl CSS -->
+    <link href="~/Content/assets/css/angular-growl.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Loaders CSS -->
+    <link href="~/Content/assets/css/loaders.min.css" rel="stylesheet">
+
+    <!-- Angular Datatables CSS -->
+    <link rel="stylesheet" href="~/Content/admin/assets/angular-datatables/angular-datatables.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/js/datatables/datatables.css">
+
+    <!-- Custom CSS -->
+    <link href="~/Content/assets/css/custom.css" rel="stylesheet" type="text/css">
+
+    @*<link href="//www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">*@
+    <link href="~/Content/assets/sidefixed/css/styleside.css" rel="stylesheet" />
+
+    <!--favicon-->
+    <link rel="icon" href="~/Content/ktmb_120x120.png">
+    <!--end here-->
+</head>
+<body ng-controller="UserController as userCtrl" ng-init="getUserInfo(); GetRefund();">
+    @*<body ng-controller="UserController as userCtrl" ng-init="getUserInfo(); GetRefund();">*@
+        <div onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload=""></div>
+        <div growl></div>
+        <!--start top-bar-->
+        <div class="top_bar_travel hidden-xs text-center sizefont">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2" style="color:#0053a0" ng-show="userinfo.UserName && userinfo.UserType!='Guest'">Hi, {{userinfo.UserName}}!</div>
+                    <div class="col-md-2" style="color:#0053a0" ng-show="userinfo.UserType=='Guest'">Hi, Guest!</div>
+                    <div class="col-md-2 hidden-sm" ng-show="!userinfo.UserName"></div>
+                    <div class="col-md-6 hidden-sm"></div>
+                    <div class="col-md-6 col-sm-6 pull-right">
+                        @*<ul class="list-unstyled list-inline top_contact" style="padding-left: 50%;">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"  style="color:#444444;">
+                                        w3c
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" style="min-width:200px; text-align:center;">
+                                        <li style="border-bottom:1px solid #ddd;">
+                                            <span>
+                                                <a href="#" title="Background default" onclick="setStyleSheet('/Content/assets/css/default.css')" style="padding: 10px; border-bottom: 1px solid transparent;"><i class="fa fa-circle fa-lg" style="color:darkgrey;" aria-hidden="true"></i></a>
+                                                <a href="#" title="Background black" onclick="setStyleSheet('/Content/assets/css/black.css')" style="padding: 10px; border-bottom: 1px solid transparent;"><i class="fa fa-circle fa-lg" style="color:#242424;" aria-hidden="true"></i></a>
+                                                <a href="#" title="Background red" onclick="setStyleSheet('/Content/assets/css/red.css')" style="padding: 10px; border-bottom: 1px solid transparent;"><i class="fa fa-circle fa-lg" style="color:#ff5252;" aria-hidden="true"></i></a>
+                                                <a href="#" title="Background blue" onclick="setStyleSheet('/Content/assets/css/blue.css')" style="padding: 10px; border-bottom: 1px solid transparent;"><i class="fa fa-circle fa-lg" style="color:#0053a0;" aria-hidden="true"></i></a>
+                                            </span>
+
+                                        </li>
+                                        <li>
+                                            <span>
+                                                <a href="#" title="Increase size font" id="incfont" style="padding: 10px; border-bottom: 1px solid transparent;"><b>A</b> <i class="fa fa-plus" aria-hidden="true"></i></a> |
+                                                <a href="#" title="Reset size font" id="resetfont" style="padding: 10px; border-bottom: 1px solid transparent;"><span><b>A <i class="fa fa-refresh" aria-hidden="true"></i></b></span></a> |
+                                                <a href="#" title="Decrease size font" id="decfont" style="padding: 10px; border-bottom: 1px solid transparent;"><b>A</b> <i class="fa fa-minus" aria-hidden="true"></i></a>
+                                            </span>
+                                         </li>
+                                    </ul>
+                                </li>
+                            </ul>*@
+                        <div class="top_email pull-right">
+                            <ul class="list-unstyled list-inline">
+                                <li><a href="{{UIURL}}/user/login" title="Login E-ticket"><i class="fa fa-sign-in"></i></a></li>
+                                <li><a href="https://www.facebook.com/ktmberhad/" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="https://twitter.com/ktm_berhad/" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="https://www.instagram.com/mykomuter/" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="http://intranet4.ktmb.com.my/ktmb/index.php?r=cms/login" title="Staff Dashboard"><i class="fa fa-user"></i></a></li>
+                                <li><a href="https://webmail.ktmb.com.my/owa" title="Staff Email"><i class="fa fa-envelope"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--end top-bar-->
+        <div ng-controller="CMSController as cmsCtrl" ng-init="getMenu()">
+
+            <!--start float menu kiri-->
+            <ul class="social">
+                <li>
+                    <a class="fa fa-subway" href="{{UIURL}}/portal/full/{{258}}" target="_blank">
+                        <span>Train Schedule Komuter</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="fa fa-subway" href="{{UIURL}}/portal/full/{{260}}" target="_blank">
+                        <span>Train Schedule ETS</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="fa fa-subway" href="{{UIURL}}/portal/full/{{259}}" target="_blank">
+                        <span>Train Schedule Intercity</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="fa fa-bullhorn" href="{{UIURL}}/portal/full4/{{164}}" target="_blank">
+                        <span>Announcement</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="fa fa-wpforms" href="https://goo.gl/forms/Kql74kbXwqW2ne3n2" target="_blank">
+                        <span>E-Ticket Survey</span>
+                    </a>
+                </li>
+            </ul>
+            <!--end float menu kanan-->
+
+            <div>
+                <!--start navigation bar-->
+                <nav class="navbar navbar-inverse sizefont">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="{{UIURL}}"><img src="~/Content/assets/img/ktmb_logo.png" alt="logo"></a>
+                        </div>
+
+                        <!--navbar-collapse-->
+                        <div id="navbar" class="navbar-collapse collapse sizefont">
+                            <ul class="nav navbar-nav navbar-right sizefont">
+                                <li><a class="sizefont" href="{{UIURL}}"><i class="fa fa-home fa-lg"></i> Home</a></li>
+
+                                <li class="dropdown" ng-repeat="menu in allMenu.Header | orderBy :'+Sort'">
+                                    <a class="sizefont" href="{{UIURL}}/portal/full/{{menu.Id}}" ng-show="!menu.SubMenuList.length && menu.LinkTo == 'portal/full'">{{menu.Title}}</a>
+                                    <a class="sizefont" href="{{UIURL}}/portal/full3/{{menu.Id}}" ng-show="!menu.SubMenuList.length && menu.LinkTo == 'portal/full3'">{{menu.Title}}</a>
+                                    <a class="sizefont" href="{{UIURL}}/portal/full4/{{menu.Id}}" ng-show="!menu.SubMenuList.length && menu.LinkTo == 'portal/full4'">{{menu.Title}}</a>
+                                    <a class="sizefont" href="{{UIURL}}/portal/left/{{menu.Id}}" ng-show="!menu.SubMenuList.length && menu.LinkTo == 'portal/left'">{{menu.Title}}</a>
+
+                                    <a class="sizefont dropdown-toggle" data-toggle="dropdown" href="#" ng-show="menu.SubMenuList.length">
+                                        {{menu.Title}}
+                                        <span class="caret"></span>
+                                    </a>
+
+                                    <ul class="dropdown-menu" ng-show="menu.SubMenuList.length">
+                                        <li ng-repeat="subMenu in menu.SubMenuList">
+                                            <a class="sizefont" href="{{UIURL}}/portal/full/{{subMenu.Id}}" ng-show="subMenu.LinkTo == 'portal/full'">{{subMenu.Title}}</a>
+                                            <a class="sizefont" href="{{UIURL}}/portal/full3/{{subMenu.Id}}" ng-show="subMenu.LinkTo == 'portal/full3'">{{subMenu.Title}}</a>
+                                            <a class="sizefont" href="{{UIURL}}/portal/full4/{{subMenu.Id}}" ng-show="subMenu.LinkTo == 'portal/full4'">{{subMenu.Title}}</a>
+                                            <a class="sizefont" href="{{UIURL}}/portal/left/{{subMenu.Id}}" ng-show="subMenu.LinkTo == 'portal/left'">{{subMenu.Title}}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!--Account user-->
+                                <li class="dropdown sizefont" ng-show="userinfo.UserName">
+                                    <a class="dropdown-toggle sizefont" data-toggle="dropdown" href="javascript:;">
+                                        My Account
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu sizefont">
+                                        <li ng-show="userinfo.UserName && userinfo.UserType=='User'"><a class="sizefont" href="{{UIURL}}/user/myprofile">  My Profile</a></li>
+                                        <li ng-show="userinfo.UserName && (userinfo.UserType=='Agent' && userinfo.vip==false)"><a class="sizefont" href="{{UIURL}}/user/agentprofile">  Agent Profile</a></li>
+                                        <li ng-show="userinfo.UserName && userinfo.UserType=='User' || (userinfo.UserType=='Agent' && userinfo.vip==false)"><a class="sizefont" href="{{UIURL}}/user/changepassword">  Change Password</a></li>
+                                        <li ng-show="userinfo.UserName && userinfo.UserType!='Guest' && userinfo.UserType!='Agent'"><a class="sizefont" href="{{UIURL}}/user/viewbooking">  Manage Booking</a></li>
+                                        <li ng-show="userinfo.UserType=='Agent' && userinfo.vip==false"><a class="sizefont" href="{{UIURL}}/user/agentreport">  Agent Report</a></li>
+                                        <li ng-show="userinfo.vip==true"><a href="{{UIURL}}/user/vipreport">  VIP Report</a></li>
+                                        <li ng-show="userinfo.UserName && userinfo.UserType!='Guest'"><a class="sizefont" href="{{UIURL}}/user/managefavorite">  My Favorite List</a></li>
+                                        @*<li ng-show="(userinfo.UserName && userinfo.UserType =='User' &&  result.detailList.length) || (userinfo.UserName && userinfo.UserType =='Guest' &&  result.detailList.length)"><a class="sizefont" href="{{UIURL}}/user/refundinfo">  My Refund Info</a></li>*@
+                                        <li ng-show="userinfo.UserName && (userinfo.UserType=='Admin'||userinfo.UserType=='StarUser')"><a class="sizefont" href="{{UIURL}}/user/AdminDashboard">  Admin Dashboard</a></li>
+                                        <li ng-show="userinfo.UserName"><a class="sizefont" href="{{UIURL}}/user/login">  Log Out</a></li>
+                                    </ul>
+                                </li>
+                                <!--to redirect register user-->
+                                <li class="visible-lg" ng-show="!userinfo.UserName && userinfo.UserType != 'Guest'"><span><a href="{{UIURL}}/user/login" class="btn btn_order_now sizefont">Log In/Sign Up</a></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <!--navigation end here-->
+                <!--inner body start from here-->
+                <div class="inner-body sizefont">
+                    @RenderBody()
+                </div>
+                <!--inner body end from here-->
+            </div>
+            <!--back_to_top-->
+            <div id="back_to_top">
+                <div class="button">
+                    <i class="fa fa-chevron-up"></i>
+                </div>
+            </div>
+            <!--end-->
+            <!--footer start here-->
+            <footer class="main-footer sizefont">
+                <!--end button here-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="inner-footer1 sizefont" ng-init="getContent()">
+                                <h4 style="font-size:20px;margin-bottom: 5px;">Contact Us</h4>
+                                <!--<a href="index.html"><img src="assets/img/logo.png" alt="logo" class="img-responsive"></a>-->
+                                <p class="footer-content" style="font-family:'Raleway', sans-serif; font-size:14px; font-weight: 550;">
+                                    Ibu Pejabat KTM BERHAD,  <br />
+                                    Jalan Sultan Hishamuddin,  <br />
+                                    50621 Kuala Lumpur.
+                                </p>
+                                <br>
+                                <p class="footer-text sizefont"><span><a href="#"><i class="fa fa-phone"></i></a></span> KTMB HQ :  +603 - 2263 1111<br />(Operation Time : 0830 - 1730)</p>
+                                <p class="footer-text sizefont"><span><a href="#"><i class="fa fa-phone"></i></a></span> Call center :  +603 - 2267 1200<br />(Operation Time : 0700 - 2200)</p>
+                                <p class="footer-text sizefont"><span><a href="#"><i class="fa fa-envelope"></i></a></span>  Email: callcenter@ktmb.com.my</p>
+                                <p class="footer-text sizefont"><span><a style="color: #ffffff;" href="{{UIURL}}/portal/full/{{172}}" target="_blank"><i class="fa  fa-train"></i></span>  Registered Station</a></p>
+                                <p class="footer-text sizefont"><span><a style="color: #ffffff;" href="{{UIURL}}/portal/full/{{173}}" target="_blank"><i class="fa  fa-user-secret"></i></span>  Registered Agent</a></p>
+                                <p class="footer-text sizefont"><span><a style="color: #ffffff;" href="https://goo.gl/forms/Kql74kbXwqW2ne3n2" target="_blank"><i class="fa fa-wpforms"></i></span>e-ticket Survey</a></p>
+                                <p class="footer-text sizefont"><span><a style="color: #ffffff;" href="https://docs.google.com/forms/d/e/1FAIpQLSeY0_aEIbL7aclF9wD2lco-R68sWMvyDDpmFluCFNuUkxc-1Q/viewform" target="_blank"></i></span>Customer Satisfaction</a></p>
+
+                                <div class="inner-footer sizefont">
+                                    <ul class="list-unstyled list-inline">
+                                        <li>
+                                            <a href="{{UIURL}}/user/login" title="Login E-Ticket"> <span class="social-icon"><i class="fa fa-sign-in"></i></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="http://intranet4.ktmb.com.my/ktmb/index.php?r=cms/login" title="Staff Dashboard" target="_blank"> <span class="social-icon"><i class="fa fa-user" aria-hidden="true"></i></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://webmail.ktmb.com.my/owa" title="Staff Email" target="_blank"> <span class="social-icon"><i class="fa fa-envelope" aria-hidden="true"></i></span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="inner-footer sizefont">
+                                    <ul class="list-unstyled list-inline">
+                                        <li>
+                                            <a href="https://www.facebook.com/ktmberhad/" title="Facebook" target="_blank"> <span class="social-icon"><i class="fa fa-facebook-f"></i></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://twitter.com/ktm_berhad/" title="Twiter" target="_blank"> <span class="social-icon"><i class="fa fa-twitter"></i></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.instagram.com/mykomuter/" title="Instagram" target="_blank"> <span class="social-icon"><i class="fa fa-instagram"></i></span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="menu in allMenu.Footer | orderBy :'+Sort'">
+                            <div class="list-of-nav">
+                                <div class="inner-footer1 sizefont">
+                                    <h4 style="font-size: 20px; margin-bottom: 5px;">{{menu.Title}}</h4>
+                                    <ul class="list-unstyled" style="font-size: 14px;">
+                                        <li ng-repeat="submenu in menu.SubMenuList | orderBy :'+Sort'">
+                                            <a class="sizefont" href="{{UIURL}}/portal/full/{{submenu.Id}}" ng-show="submenu.LinkTo == 'portal/full'"> {{submenu.Title}}</a>
+                                            <a class="sizefont" href="{{UIURL}}/portal/left/{{submenu.Id}}" ng-show="submenu.LinkTo == 'portal/left'"> {{submenu.Title}}</a>
+                                            <a class="sizefont" href="{{UIURL}}/portal/full3/{{submenu.Id}}" ng-show="submenu.LinkTo == 'portal/full3'"> {{submenu.Title}}</a>
+                                            <a class="sizefont" href="{{UIURL}}/portal/full4/{{submenu.Id}}" ng-show="submenu.LinkTo == 'portal/full4'"> {{submenu.Title}}</a>
+                                            <a class="sizefont" href="{{submenu.LinkTo}}" ng-show="submenu.LinkTo != 'portal/full' && submenu.LinkTo != 'portal/left' && submenu.LinkTo != 'portal/full3' && submenu.LinkTo != 'portal/full4'"> {{submenu.Title}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <p class="footer-bottom">
+                    &copy; 2017 All Rights Reserved KTM Berhad, KTM Berhad shall not be liable for any loss or damage caused by the usage of any information obtained from this site.
+                    <br />
+                    Best View : Mozilla Firefox , Chrome ,Safari .Moderate View :Internet Explorer 9. Best Resolution: 1280 x 900 (px)
+                    <br />
+                    <a style="color: #444444;" href="{{UIURL}}/portal/full/{{178}}"> Web Disclaimer |</a><a style="color: #444444;" href="{{UIURL}}/portal/full/{{176}}"> Website Usage |</a><a style="color: #444444;" href="{{UIURL}}/portal/full/{{208}}"> Customer Privacy Statement |</a><a style="color: #444444;" href="{{UIURL}}/portal/full/{{177}}"> Business Privacy Policy </a>
+                </p>
+                <!--button back to top-->
+            </footer>
+            <!--footer end here-->
+        </div>
+        <!--page loader-->
+        <div class="loader" ng-show="spinnerShow">
+            <div class="square-spin">
+                <div>
+                </div>
+            </div>
+        </div>
+        <!--end here-->
+        <!-- jQuery 2.2.4 -->
+        <script src="~/Content/assets/js/jquery.min.js"></script>
+
+        <!-- Datatables JS -->
+        <script src="~/Content/admin/assets/js/datatables/datatables.js"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="~/Content/assets/js/bootstrap.min.js"></script>
+
+        <!-- Others JS -->
+        <script src="~/Content/assets/js/isotop/isotope-docs.min.js"></script>
+        <script src="~/Content/assets/js/select2/select2.js"></script>
+        <script src="~/Content/assets/js/slick.min.js"></script>
+        <script src="~/Content/assets/js/parallax/parallax.min.js"></script>
+        <script src="~/Content/assets/js/scrollreveal.min.js"></script>
+
+        <script src="~/Content/assets/js/scrollingtabs/jquery.scrolling-tabs.js"></script>
+        <script src="~/Content/assets/sidefixed/js/stickySidebar.js"></script>
+        <script src="~/Content/assets/js/jquery.sticky-kit.min.js"></script>
+
+        <!-- Bootstrap DateTime Picker JS -->
+        <!-- <script src="~/Content/assets/js/moment.min.js"></script>
+             <script src="~/Content/assets/js/jqwidgets/range/ranger.js"></script>
+        <script src="~/Content/assets/js/bootstrap-datetimepicker.min.js"></script> --->
+        <!-- Custom JS -->
+        <script src="~/Content/assets/js/custom.js"></script>
+
+        <!-- Angular JS -->
+        <script src="~/Content/assets/js/angular.min.js"></script>
+        <script src="~/Content/assets/js/angular-cookies.js"></script>
+        <script src="~/Content/assets/js/angular-growl.min.js"></script>
+        <script src="~/AppJS/app.js?r=@DateTime.Now"></script>
+        <script src="~/AppJS/lookup.js?r=@DateTime.Now"></script>
+        <script src="~/AppJS/ticket.js?r=@DateTime.Now"></script>
+        <script src="~/AppJS/user.js?r=@DateTime.Now"></script>
+        <script src="~/AppJS/cms.js?r=@DateTime.Now"></script>
+        <script src="~/AppJS/coach.js?r=@DateTime.Now"></script>
+        <script src="~/AppJS/marketing.js?r=@DateTime.Now"></script>
+        <script src="~/Content/assets/js/angular-filter.min.js"></script>
+        <script src="~/Content/assets/js/angular-sanitize.min.js"></script>
+        <script src="~/Content/assets/js/angular-animate.js"></script>
+        <script src="~/Content/assets/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+        <script src="~/Content/assets/js/angular-base64-upload.min.js"></script>
+        <script src="~/AppJS/datehandler.js?r=@DateTime.Now"></script>
+        <script src="~/Content/admin/assets/angular-datatables/angular-datatables.min.js"></script>
+        <script src="~/Content/admin/assets/angular-datatables/angular-datatables.buttons.js"></script>
+
+        <!-- QR Generator -->
+        <script src="~/Content/assets/qrcode/qrcode.js"></script>
+        <script src="~/Content/assets/qrcode/qrcode_UTF8.js"></script>
+        <script src="~/Content/assets/qrcode/angular-qrcode.js"></script>
+
+        <!--script end-->
+
+        <script>
+            $(document).ready(function () {
+                $('#sidebar').stickySidebar({
+                    sidebarTopMargin: 20,
+                    footerThreshold: 100
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            $('.nav-tabs').scrollingTabs({
+                scrollToTabEdge: true,
+                forceActiveTab: true
+            });
+            // refresh the plugin
+            $('.nav-tabs').scrollingTabs('refresh');
+
+
+
+            $(document).ready(function () {
+                $('#incfont').click(function () {
+                    curSize = parseInt($('.sizefont').css('font-size')) + 2;
+                    if (curSize <= 20)
+                        $('.sizefont').css('font-size', curSize);
+                });
+                $('#decfont').click(function () {
+                    curSize = parseInt($('.sizefont').css('font-size')) - 2;
+                    if (curSize >= 8)
+                        $('.sizefont').css('font-size', curSize);
+                });
+                $('#resetfont').click(function () {
+                    $('.sizefont').css('font-size', 14);
+                });
+            });
+
+        </script>
+
+        <script type="text/javascript">
+            window.history.forward();
+            function noBack() {
+                window.history.forward();
+            }
+
+            function setStyleSheet(url) {
+                var stylesheet = document.getElementById("stylesheet");
+                stylesheet.setAttribute('href', url);
+            }
+        </script>
+
+        <!--end script files-->
+    </body>
+
+</html>

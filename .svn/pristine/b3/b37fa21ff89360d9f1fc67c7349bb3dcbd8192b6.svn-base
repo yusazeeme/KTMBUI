@@ -1,0 +1,396 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="KTMB">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="KTMB Admin" />
+    <meta name="author" content="" />
+
+    <link rel="icon" href="~/Content/ktmb_120x120.png">
+
+    <title>KTMB - @ViewBag.Title</title>
+
+    <!-- Angular Growl CSS -->
+    <link href="~/Content/assets/css/angular-growl.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Loaders CSS -->
+    <link href="~/Content/assets/css/loaders.min.css" rel="stylesheet">
+        
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Content/admin/assets/js/datatables/datatables.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/js/datatables/Buttons-1.0.3/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/js/select2/select2-bootstrap.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/js/select2/select2.css">
+
+    <!-- Angular Datatables CSS -->
+    <link rel="stylesheet" href="~/Content/admin/assets/angular-datatables/angular-datatables.css">
+
+    <!-- Angular Neon Core CSS -->
+    <link rel="stylesheet" href="~/Content/admin/assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/css/font-icons/entypo/css/entypo.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/css/neon-core.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/css/neon-theme.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/css/neon-forms.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/Content/admin/assets/css/custom.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/fontv2/css/font-awesome.min.css">
+
+    <script src="~/Content/admin/assets/js/jquery-1.11.3.min.js"></script>
+
+    <!--[if lt IE 9]><script src="~/Content/admin/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
+<body class="page-body  page-fade" data-url="" ng-controller="UserController as userCtrl" ng-init="getUserInfo()">
+    <div growl></div>
+    <div class="page-container">
+        <!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+        <div class="sidebar-menu">
+
+            <div class="sidebar-menu-inner">
+
+                <header class="logo-env">
+
+                    <div class="sidebar-collapse">
+                        <a href="#" class="sidebar-collapse-icon">
+                            <!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+                            <i class="entypo-menu"></i>
+                    </div>
+
+                    <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
+                    <div class="sidebar-mobile-menu visible-xs">
+                        <a href="#" class="with-animation">
+                            <!-- add class "with-animation" to support animation -->
+                            <i class="entypo-menu"></i>
+                        </a>
+                    </div>
+                </header>
+
+                <ul id="main-menu" class="main-menu" ng-controller="UserController as userCtrl" ng-init="checkAccess()">
+                    <!-- add class "multiple-expanded" to allow multiple submenus to open -->
+                    <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+                    <li ng-hide="userinfo.UserType == 'User' || userinfo.UserType == 'Agent'">
+                        <a href="{{UIURL}}/user/AdminDashboard">
+                            <i class="glyphicon glyphicon-home"></i>
+                            <span class="title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{UIURL}}">
+                            <i class="entypo-plus-circled"></i>
+                            <span class="title">New Booking</span>
+                        </a>
+                    </li>
+                    
+                    <li ng-show="userinfo.UserType != 'Agent'">
+                        <a href="{{UIURL}}/user/viewbooking">
+                            <i class="entypo-book"></i>
+                            <span class="title">Manage Booking</span>
+                        </a>
+                    </li>
+                    <li ng-show="userinfo.UserType == 'User'">
+                        <a href="{{UIURL}}/user/myprofile">
+                            <i class="entypo-user"></i>
+                            <span class="title">My Profile</span>
+                        </a>
+                    </li>
+                    <li ng-show="userinfo.UserType == 'Agent' && userinfo.vip == false">
+                        <a href="{{UIURL}}/user/agentprofile">
+                            <i class="entypo-user"></i>
+                            <span class="title">Agent Profile</span>
+                        </a>
+                    </li>
+                    <li ng-show="userinfo.UserType=='User' || (userinfo.UserType=='Agent' && userinfo.vip==false)">
+                        <a href="{{UIURL}}/user/changepassword">
+                            <i class="entypo-key"></i>
+                            <span class="title">Change Password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{UIURL}}/user/managefavorite">
+                            <i class="entypo-heart"></i>
+                            <span class="title">Manage Favorite List</span>
+                        </a>
+                    </li>
+                    <li ng-show="userinfo.UserType == 'Agent' && userinfo.vip == false">
+                        <a href="{{UIURL}}/user/agentreport">
+                            <i class="entypo-clipboard"></i>
+                            <span class="title">Agent Report</span>
+                        </a>
+                    </li>
+                    <li ng-show="userinfo.vip == true">
+                        <a href="{{UIURL}}/user/vipreport">
+                            <i class="entypo-clipboard"></i>
+                            <span class="title">VIP Report</span>
+                        </a>
+                    </li>
+                    @*<li ng-show="userinfo.StarRole == '80'">
+        <a href="#">
+            <i class="glyphicon glyphicon-calendar"></i>
+            <span class="title">Coach Management</span>
+        </a>
+    </li>*@
+                    <li ng-show="userinfo.StarRole == '80' || userinfo.UserType == 'Admin'">
+                        <a href="{{UIURL}}/user/discountsetting">
+                            <i class="fa fa-percent" aria-hidden="true"></i>
+                            <span class="title">Discount Setting</span>
+                        </a>
+                    </li>
+                    <li ng-show="userinfo.StarRole == '80' || userinfo.UserType == 'Admin'">
+                        <a href="{{UIURL}}/user/parametersetting">
+                            <i class="fa fa-gears" aria-hidden="true"></i>
+                            <span class="title">Parameter Setting</span>
+                        </a>
+                    </li>
+                    <li ng-hide="userinfo.UserType== 'User'">
+                        <a href="#">
+                            <i class="entypo-user"></i>
+                            <span class="title">User Management</span>
+                        </a>
+                        <ul>
+                            <li ng-show="userinfo.StarRole == '80' || userinfo.StarRole == '32' || userinfo.StarRole == '4' || userinfo.StarRole == '5' || userinfo.UserType == 'Admin'">
+                                <a href="{{UIURL}}/user/unlockuser">
+                                    <span class="title">Unlock User</span>
+                                </a>
+                            </li>
+                            @*<li ng-show="userinfo.StarRole == '80'">
+                                <a href="{{UIURL}}/user/registeradmin">
+                                    <span class="title">Create New Admin</span>
+                                </a>
+                            </li>*@
+                            <li ng-show="userinfo.UserType == 'StarUser' || userinfo.UserType== 'Agent'">
+                                <a href="{{UIURL}}/user/viewticket">
+                                    <span class="title">View Ticket</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li ng-hide="userinfo.UserType== 'Agent'">
+                        <a href="#">
+                            <i class="entypo-chart-line"></i>
+                            <span class="title">Report Management</span>
+                        </a>
+                        <ul>
+                            <li ng-show="userinfo.UserType == 'StarUser' || userinfo.UserType== 'Admin' || userinfo.UserType== 'User'">
+                                <a href="{{UIURL}}/user/RPTUSER">
+                                    <span class="title">User Report</span>
+                                </a>
+                            </li>
+                            <li ng-hide="userinfo.StarRole == '20' || userinfo.StarRole == '32' || userinfo.StarRole == '35' || userinfo.UserType== 'User'">
+                                <a href="{{UIURL}}/user/RPTAGENT">
+                                    <span class="title">Agent Report</span>
+                                </a>
+                            </li>
+                            <li ng-hide="userinfo.StarRole == '20' || userinfo.StarRole == '32' || userinfo.StarRole == '35' || userinfo.UserType== 'User'">
+                                <a href="{{UIURL}}/user/RPTBANK">
+                                    <span class="title">Bank Report</span>
+                                </a>
+                            </li>
+                            <li ng-hide="userinfo.StarRole == '20' || userinfo.StarRole == '32' || userinfo.StarRole == '35' || userinfo.UserType== 'User'">
+                                <a href="{{UIURL}}/user/RPTDISC">
+                                    <span class="title">Discount Report</span>
+                                </a>
+                            </li>
+                            <li ng-hide="userinfo.StarRole == '20' || userinfo.StarRole == '32' || userinfo.StarRole == '35' || userinfo.UserType== 'User'">
+                                <a href="{{UIURL}}/user/WRPT1006">
+                                    <span class="title">Daily STN Sales (WRPT 1006)</span>
+                                </a>
+                            </li>
+                            <li ng-hide="userinfo.StarRole == '20' || userinfo.StarRole == '32' || userinfo.StarRole == '35' || userinfo.UserType== 'User'">
+                                <a href="{{UIURL}}/user/RPTSUMMARY">
+                                    <span class="title">Summary Report</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li ng-show="userinfo.UserType== 'StarUser'">
+                        <a href="#">
+                            <i class="entypo-upload"></i>
+                            <span class="title">Upload File</span>
+                        </a>
+                        <ul>
+                            <li ng-show="userinfo.StarRole == '4' || userinfo.StarRole == '5' || userinfo.StarRole == '80' ">
+                                <a href="{{UIURL}}/user/UploadFile">
+                                    <span class="title">Upload File</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="main-content">
+            <div class="new-header">
+                <div class="row">
+
+                    <!-- Profile Info and Notifications -->
+                    <div class="col-md-6 col-sm-8 clearfix">
+
+                        <ul class="user-info pull-left pull-none-xsm">
+                            <li style="margin-right: 10px;">
+                                <img src="~/Content/admin/assets/images/ktmb.png" alt="logo" />
+                            </li>
+                            <!-- Profile Info -->
+                            <li class="profile-info dropdown">
+                                <!-- add class "pull-right" if you want to place this from right -->
+
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Welcome,<br>
+                                    {{userinfo.UserName}}
+                                </a>
+
+                                @*<ul class="dropdown-menu">
+
+                                        <!-- Reverse Caret -->
+                                        <li class="caret"></li>
+
+                                        <!-- Profile sub-links -->
+                                        <li>
+                                            <a href="extra-timeline.html">
+                                                <i class="entypo-user"></i>
+                                                Edit Profile
+                                            </a>
+                                        </li>
+
+
+                                    </ul>*@
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <!-- Raw Links -->
+                    <div class="col-md-6 col-sm-4 clearfix hidden-xs">
+
+                        <ul class="list-inline links-list pull-right">
+
+                            <li>
+                                <a href="{{UIURL}}/user/login">
+                                    Log Out <i class="entypo-logout right"></i>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+
+            @RenderBody()
+
+            <!-- Footer -->
+            <footer class="main">
+                &copy; @DateTime.Now.Year <strong>Keretapi Tanah Melayu Berhad </strong>. All rights reserved. KTM Berhad, Corporate Headquarters, Jalan Sultan Hishamuddin, 50621 Kuala Lumpur.
+            </footer>
+        </div>
+    </div>
+
+    <!--page loader-->
+    <div class="loader" ng-show="spinnerShow">
+        <div class="square-spin">
+            <div>
+            </div>
+        </div>
+    </div>
+    <!--end here-->
+
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            var $table4 = jQuery("#table-4");
+
+            $table4.DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ]
+            });
+        });
+    </script>
+
+
+    <!-- Imported styles on this page -->
+    <link rel="stylesheet" href="~/Content/admin/assets/js/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="~/Content/admin/assets/js/rickshaw/rickshaw.min.css">
+
+    <!-- Bottom scripts (common) -->
+    <script src="~/Content/admin/assets/js/gsap/TweenMax.min.js"></script>
+    <script src="~/Content/admin/assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+    <script src="~/Content/admin/assets/js/bootstrap.js"></script>
+    <script src="~/Content/admin/assets/js/joinable.js"></script>
+    <script src="~/Content/admin/assets/js/resizeable.js"></script>
+    <script src="~/Content/admin/assets/js/neon-api.js"></script>
+    <script src="~/Content/admin/assets/js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+
+
+    <!-- Imported scripts on this page -->
+    <script src="~/Content/admin/assets/js/jvectormap/jquery-jvectormap-europe-merc-en.js"></script>
+    <script src="~/Content/admin/assets/js/jquery.sparkline.min.js"></script>
+    <script src="~/Content/admin/assets/js/rickshaw/vendor/d3.v3.js"></script>
+    <script src="~/Content/admin/assets/js/rickshaw/rickshaw.min.js"></script>
+    <script src="~/Content/admin/assets/js/raphael-min.js"></script>
+    <script src="~/Content/admin/assets/js/morris.min.js"></script>
+    <script src="~/Content/admin/assets/js/toastr.js"></script>
+    <script src="~/Content/admin/assets/js/neon-chat.js"></script>
+
+    <!-- JavaScripts initializations and stuff -->
+    <script src="~/Content/admin/assets/js/neon-custom.js"></script>
+
+    <!-- Demo Settings -->
+    <script src="~/Content/admin/assets/js/neon-demo.js"></script>
+
+    <!-- DataTables -->
+    <script src="~/Content/admin/assets/js/datatables/datatables.js"></script>    
+    <script src="~/Content/admin/assets/js/datatables/Buttons-1.0.3/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/admin/assets/js/datatables/Buttons-1.0.3/js/buttons.colVis.min.js"></script>
+    <script src="~/Content/admin/assets/js/datatables/Buttons-1.0.3/js/buttons.flash.min.js"></script>
+    <script src="~/Content/admin/assets/js/datatables/Buttons-1.0.3/js/buttons.html5.min.js"></script>
+    <script src="~/Content/admin/assets/js/datatables/Buttons-1.0.3/js/buttons.print.min.js"></script>
+
+    <!-- Imported scripts on this page -->
+    <script src="~/Content/admin/assets/js/select2/select2.min.js"></script>
+    <script src="~/Content/admin/assets/js/neon-chat.js"></script>
+
+    <!-- Angular JS -->
+    <script src="~/Content/assets/js/angular.min.js"></script>
+    <script src="~/Content/assets/js/angular-cookies.js"></script>
+    <script src="~/Content/assets/js/angular-growl.min.js"></script>
+    <script src="~/AppJS/app.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/lookup.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/ticket.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/user.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/cms.js?r=@DateTime.Now"></script>
+    <script src="~/Content/assets/js/angular-filter.min.js"></script>
+    <script src="~/Content/assets/js/angular-sanitize.min.js"></script>
+    <script src="~/Content/assets/js/angular-animate.js"></script>
+    <script src="~/Content/assets/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="~/Content/assets/js/angular-base64-upload.min.js"></script>
+    <script src="~/AppJS/datehandler.js?r=@DateTime.Now"></script>
+    <script src="~/Content/admin/assets/angular-datatables/angular-datatables.min.js"></script>
+    <script src="~/Content/admin/assets/angular-datatables/angular-datatables.buttons.js"></script>
+
+    <!-- QR Generator -->
+    <script src="~/Content/assets/qrcode/qrcode.js"></script>
+    <script src="~/Content/assets/qrcode/qrcode_UTF8.js"></script>
+    <script src="~/Content/assets/qrcode/angular-qrcode.js"></script>
+    
+</body>
+</html>

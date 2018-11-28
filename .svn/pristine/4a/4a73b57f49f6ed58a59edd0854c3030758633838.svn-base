@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "UploadFileIpay";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div ng-controller="UserController as userCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="{{UIURL}}"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Upload File Ipay</strong>
+        </li>
+    </ol>
+    <h2>Upload File Ipay</h2>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="panel panel-primary" data-collapsed="0">
+
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Upload File Ipay
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="UploadFile(file)">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">File Input</label>
+                                <div class="col-sm-8">
+                                    <input type="file" class="form-control" ng-model="file" base-sixty-four-input required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="col-sm-3 pull-right">
+                                    <input type="submit" class="btn btn-green" value="Upload" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br />
+                </div>
+                <div class="panel-heading">
+                    <div class="panel-body">
+                        <form role="form" class="form-horizontal form-groups-bordered" ng-submit="GetRefundList(rpt)">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Upload Date (From) </label>
+                                    <div class="col-sm-8" ng-controller="DateController">
+                                        <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="rpt.txDateFrom" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Upload Date (To)</label>
+                                    <div class="col-sm-8" ng-controller="DateController">
+                                        <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="rpt.txDateTo" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"></div>
+                            <div hidden ng-model="rpt.paymentType" ng-value="rpt.paymentType = 'D'"></div>
+                            <div class="col-sm-6 pull-right">
+                                <div class="form-group">
+                                    <div class="col-sm-3 pull-right">
+                                        <input type="submit" class="btn btn-green" value="Get List" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="SendEmailRefund()">                    
+                    <table datatable="ng" class="table table-bordered font-black" dt-options="dtOptionsExport">
+                        <thead>
+                            <tr>
+                                <th>Booking Date</th>
+                                <th>Ref ID</th>
+                                <th>Ticket ID</th>
+                                <th>Train No.</th>
+                                <th>Departure</th>
+                                <th>Arrival</th>
+                                <th>Payment Type</th>
+                                <th>Refund Amount (MYR)</th>
+                                <th style="width:60px">User Name</th>
+                                <th style="width: 79px;">Email</th>
+                                <th style="background-color:green;">Status</th>
+                                <th>Email Start</th>
+                                <th>Email Finish</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd gradeX" ng-repeat="res in result.TransactionList">
+                                <td>{{res.BookingDate}}</td>
+                                <td style="width:85px">{{res.ReferenceId}}</td>
+                                <td>
+                                    <span ng-repeat="tx in res.TicketIdList track by $index">
+                                        {{tx}}<br />
+                                    </span>
+                                </td>
+                                <td>{{res.Train}}</td>
+                                <td>{{res.Arrival}}</td>
+                                <td>{{res.Departure}}</td>
+                                <td>{{res.PaymentType}}</td>
+                                <td>{{res.Amount}}</td>
+                                <td>{{res.UserName}}</td>
+                                <td>{{res.EmailAddress}}</td>
+                                <td>{{res.SendEmailFlag}}</td>
+                                <td class="center"><input type="checkbox" ng-click="getEmailList(res.ReferenceId)"></td>
+                                <td class="center" ng-model="res.EmailFinish"><input type="checkbox" ng-click="getEmailList(res.ReferenceId)" ng-value="res.EmailFinish = 'Y'"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <button type="submit" class="btn btn-green pull-right">Send Email</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+﻿(function () {
+    var app = angular.module('KTMB',
+        [
+            'ngCookies',
+            'lookup',
+            'ticket',
+            'user',
+            'angular-growl',
+            'cb.x2js',
+            'cms',
+            'angular.filter',
+            'ui.tinymce',
+            'monospaced.qrcode'
+        ]);
+
+    //Declaring a service to fetch the base URL of the application - Firdhaus, 03/05/17
+    app.factory('baseURL', ['$window', '$location', function ($window, $location) {
+        var url = new $window.URL($location.absUrl()).origin;
+        return url;
+    }]);
+
+    app.factory('apiURL', ['$window', '$location', function ($window, $location) {
+        return 'http://hnfsystems.ddns.net';
+    }]);
+    
+    app.directive('ngConfirmClick', [function () {
+        return {
+            link: function (scope, element, attr) {
+                var msg = attr.ngConfirmClick || "Are you sure?";
+                var clickAction = attr.confirmedClick;
+                element.bind('click', function (event) {
+                    if (window.confirm(msg)) {
+                        scope.$eval(clickAction)
+                    }
+                });
+            }
+        };
+    }]);
+
+    app.directive("ticketdatepicker", function () {
+        //This directive is only for date selection for tickets all other 
+        //dates will use datepicker directive instead
+        var date = new Date();
+        date.setDate(date.getDate() + 1);
+
+        return {
+            restrict: "A",
+            require: "ngModel",
+            link: function (scope, elem, attrs, ctrl) {
+                var updateModel = function () {
+                    ctrl.$setViewValue(elem.val());
+                    ctrl.$render();
+                    scope.$apply();
+                };
+                elem.datetimepicker({
+                    format: 'DD/MM/YYYY',
+                    //minDate: date
+                });
+                elem.on("dp.change", function (e) {
+                    updateModel();
+                });
+            }
+        }
+    });
+
+    app.directive("datepicker", function () {
+        var date = new Date();
+
+        return {
+            restrict: "A",
+            require: "ngModel",
+            link: function (scope, elem, attrs, ctrl) {
+                var updateModel = function () {
+                    ctrl.$setViewValue(elem.val());
+                    ctrl.$render();
+                    scope.$apply();
+                };
+                elem.datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+                elem.on("dp.change", function (e) {
+                    updateModel();
+                });
+            }
+        }
+    });
+
+    app.run(function ($rootScope) {
+        $rootScope.spinnerShow = false;
+        $rootScope.tinymceOptions = {
+            plugins: 'link image',
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+        };
+    });
+
+    app.directive('fileModel', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
+        };
+    }]);
+
+    app.directive("ngUploadChange", function () {
+        return {
+            scope: {
+                ngUploadChange: "&"
+            },
+            link: function ($scope, $element, $attrs) {
+                $element.on("change", function (event) {
+                    $scope.ngUploadChange({ $event: event })
+                })
+                $scope.$on("$destroy", function () {
+                    $element.off();
+                });
+            }
+        }
+    });
+
+})();

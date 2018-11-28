@@ -1,0 +1,459 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+
+<!--wrapper_index_three-->
+<div id="particles-js" ng-controller="CMSController as cmsCtrl">
+    <div class="wrapper_index_three">
+        <div class="wrapper-inner">
+            <!--text-box-->
+            <div class="text_box_three hidden-xs">
+                <h3>
+                    <span>ADVENTURE</span>  <br>
+                    TRAVEL LIKE YOUR WAY
+                </h3>
+            </div>
+            <div class="container">
+                <!--main-fill-->
+                <div class="main-fill">
+                    <!--tabs-->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#taboneway" data-toggle="tab"><div class="icon"></div>&nbsp;<i class="fa fa-train"></i> One Way <div class="icon2"></div></a></li>
+                                <li><a href="#tabreturn" data-toggle="tab"><div class="icon"></div>&nbsp; <i class="fa fa-train"></i> Return <div class="icon2"></div>&nbsp;</a></li>
+                            </ul>
+                        </div>
+                        <!--panel-body-->
+                        <div class="panel-body" ng-controller="TicketController as ticketCtrl">
+                            <!--tab-content-->
+                            <div class="tab-content">
+                                <!--start taboneway-->
+                                <div class="tab-pane fade in active" id="taboneway">
+                                    <form ng-submit="searchTrain(journey, '0')">
+                                        <h3>Plan Your Journey</h3>
+                                        <ul class="list-inline list-unstyled" ng-controller="LookupController as lookupCtrl" ng-init="getOriginList()">
+                                            <li class="big_25">
+                                                <select class="select-one col-md-3"
+                                                        ng-model="journey.origin"
+                                                        ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in origins" ng-change="getDestinationList(journey.origin)" required>
+                                                    <option value=''>Origin</option>
+                                                </select>
+                                            </li>
+                                            <li class="big_25">
+                                                <select class="select-one col-md-3"
+                                                        ng-model="journey.destination"
+                                                        ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in destinations" required>
+                                                    <option value=''>Destination</option>
+                                                </select>
+                                            </li>
+                                            <li class="big_25">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" ng-model="journey.departuredate" placeholder="Departure Date" ticketdatepicker mydate="xxx" required />
+                                                </div>
+                                            </li>
+                                           <!-- <li class="big_25">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" ng-model="journey.promocode" placeholder="Promo Code">
+                                                </div>
+                                                <div class="i_info">
+                                                    <i title="Info regarding promo code shown here." class="fa fa-info-circle"></i>
+                                                </div> 
+                                            </li>-->
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                        <!--<h3>Who's Travelling?</h3>-->
+                                        <ul class="list-inline list-unstyled">
+                                            <li class="big_25">
+                                                <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.noadult" ng-init="journey.noadult='1'" required>
+                                                    <option selected value=''>No. of Adult</option>
+                                                    <option value="0">0 Adult</option>
+                                                    <option value="1">1 Adult</option>
+                                                    <option value="2">2 Adult</option>
+                                                    <option value="3">3 Adult</option>
+                                                    <option value="4">4 Adult</option>
+                                                    <option value="5">5 Adult</option>
+                                                    <option value="6">6 Adult</option>
+                                                    <option value="7">7 Adult</option>
+                                                    <option value="8">8 Adult</option>
+                                                    <option value="9">9 Adult</option>
+                                                    <option value="10">10 Adult</option>
+                                                </select>
+                                            </li>
+                                            <li class="big_25">
+                                                <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.nochild" ng-init="journey.nochild='0'" required>
+                                                    <option selected value=''>No. of Child</option>
+                                                    <option value="0">0 Children</option>
+                                                    <option value="1">1 Children</option>
+                                                    <option value="2">2 Children</option>
+                                                    <option value="3">3 Children</option>
+                                                    <option value="4">4 Children</option>
+                                                    <option value="5">5 Children</option>
+                                                    <option value="6">6 Children</option>
+                                                    <option value="7">7 Children</option>
+                                                    <option value="8">8 Children</option>
+                                                    <option value="9">9 Children</option>
+                                                    <option value="10">10 Children</option>
+                                                </select>
+                                                <div class="i_note">4 - 12 years</div>
+                                            </li>
+                                            <li class="big_25">
+                                                <input type="submit" class="btn btn-search-travel" ng-disabled="journey.nochild == '0' && journey.noadult== '0'" value="Search!" />
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                                <!--end taboneway-->
+                                <!--start tabreturn-->
+                                <div class="tab-pane fade in" id="tabreturn">
+                                    <form ng-submit="searchTrain(journey, '1')">
+                                        <h3>Plan Your Journey</h3>
+                                        <ul class="list-inline list-unstyled" ng-controller="LookupController as lookupCtrl" ng-init="getOriginList()">
+                                            <li>
+                                                <select class="select-one col-md-3"
+                                                        ng-model="journey.origin"
+                                                        ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in origins" ng-change="getDestinationList(journey.origin)" required>
+                                                    <option value=''>Origin</option>
+                                                </select>
+                                            </li>
+                                            <li>
+                                                <select class="select-one col-md-3"
+                                                        ng-model="journey.destination"
+                                                        ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in destinations" required>
+                                                    <option value=''>Destination</option>
+                                                </select>
+                                            </li>
+                                            <li>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" ng-model="journey.departuredate" placeholder="Departure Date" ticketdatepicker required />
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" ng-model="journey.returndate" placeholder="Return Date" ticketdatepicker required />
+                                                </div>
+                                            </li>
+                                           <!-- <li>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" ng-model="journey.promocode" placeholder="Promo Code">
+                                                </div>
+                                                <div class="i_info">
+                                                    <i title="Info regarding promo code shown here." class="fa fa-info-circle"></i>
+                                                </div>
+                                            </li> -->
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                        <ul class="list-inline list-unstyled">
+                                            <li>
+                                                <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.noadult" ng-init="journey.noadult='1'" required>
+                                                    <option selected value=''>No. of Adult</option>
+                                                    <option value="0">0 Adult</option>
+                                                    <option value="1">1 Adult</option>
+                                                    <option value="2">2 Adult</option>
+                                                    <option value="3">3 Adult</option>
+                                                    <option value="4">4 Adult</option>
+                                                    <option value="5">5 Adult</option>
+                                                    <option value="6">6 Adult</option>
+                                                    <option value="7">7 Adult</option>
+                                                    <option value="8">8 Adult</option>
+                                                    <option value="9">9 Adult</option>
+                                                    <option value="10">10 Adult</option>
+                                                </select>
+                                                <div class="i_note">12+ years</div>
+                                            </li>
+                                            <li>
+                                                <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.nochild" ng-init="journey.nochild='0'" required>
+                                                    <option selected value=''>No. of Child</option>
+                                                    <option value="0">0 Children</option>
+                                                    <option value="1">1 Children</option>
+                                                    <option value="2">2 Children</option>
+                                                    <option value="3">3 Children</option>
+                                                    <option value="4">4 Children</option>
+                                                    <option value="5">5 Children</option>
+                                                    <option value="6">6 Children</option>
+                                                    <option value="7">7 Children</option>
+                                                    <option value="8">8 Children</option>
+                                                    <option value="9">9 Children</option>
+                                                    <option value="10">10 Children</option>
+                                                </select>
+                                                <div class="i_note">4 - 12 years</div>
+                                            </li>
+                                            <li>
+                                                <input type="submit" class="btn btn-search-travel" ng-disabled="journey.nochild == '0' && journey.noadult== '0'"  value="Search!" />
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                                <!--end tabreturn-->
+                            </div>
+                        </div>
+                        <!--end panel body-->
+                    </div>
+                    <!--end tabs-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<!--wrapper index-->
+<div class="container">
+    <div class="row">
+        <!--start slider-->
+        <div class="col-md-8 col-sm-12">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <img class="first-slide" src="~/Content/assets/img/ronda-ronda.jpg" alt="Second slide">
+                    </div>
+                    <div class="item ">
+                        <img class="first-slide" src="~/Content/assets/img/travel-family.jpg" alt="First slide">
+                    </div>
+
+                </div>
+                <ol class="carousel-indicators wow fadeInDown">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                </ol>
+                <a class="left carousel-control hidden-xs" href="#myCarousel" role="button" data-slide="prev">
+                    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control hidden-xs " href="#myCarousel" role="button" data-slide="next">
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!--end slider-->
+        <div class="col-md-4 hidden-sm">
+            <!--start mobile apss ads-->
+            <div class="tour_pak" style="max-height: none;">
+                <div class="overflow-outer">
+                    <div class="overflow-inner">
+                        <span class="pull-left"><a href="#">Mobile Apps (MobTicket)</a></span>
+                    </div>
+                </div>
+                <img src="~/Content/assets/img/mob-ticket.jpg" alt="tour img" class="img-responsive">
+                <span class="pop-feat-two hidden-xs">Download Now!</span>
+            </div>
+            <!--end mobile apss ads-->
+        </div>
+    </div>
+</div>
+
+<!--wrapper-v2-->
+<!--<div class="wrapper-v2">-->
+@*<div ng-controller="CMSController as cmsCtrl">
+    <div class="container">
+        <div class="row scroll-index3">
+            <div class="col-md-4">
+                <div class="index_v3_scroll">
+                    <div class="detail_box">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="promo_train_depart">From JB Sentral <i class="fa fa-long-arrow-right" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="promo_train_promocode">KTM8022</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="promo_train_arrive">Padang Besar</div>
+                            <div class="promo_train_tagprice">RM</div>
+                            <div class="promo_train_price">59</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-sm-5 col-xs-5">
+                                <div class="promo_train_journey_type">One Way</div>
+                            </div>
+                            <div class="col-sm-7 col-xs-7">
+                                <div class="promo_train_travel_date">23 June 2017</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="index_v3_scroll">
+                    <div class="detail_box">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="promo_train_depart">From JB Sentral <i class="fa fa-arrows-h"></i></div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="promo_train_promocode">KTM8022</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="promo_train_arrive">Padang Besar</div>
+                            <div class="promo_train_tagprice">RM</div>
+                            <div class="promo_train_price">59</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-sm-5 col-xs-5">
+                                <div class="promo_train_journey_type">One Way</div>
+                            </div>
+                            <div class="col-sm-7 col-xs-7">
+                                <div class="promo_train_travel_date">23 June 2017</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="index_v3_scroll">
+                    <div class="detail_box">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="promo_train_depart">From JB Sentral <i class="fa fa-arrows-h"></i></div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="promo_train_promocode">KTM8022</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="promo_train_arrive">Padang Besar</div>
+                            <div class="promo_train_tagprice">RM</div>
+                            <div class="promo_train_price">59</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-sm-5 col-xs-5">
+                                <div class="promo_train_journey_type">One Way</div>
+                            </div>
+                            <div class="col-sm-7 col-xs-7">
+                                <div class="promo_train_travel_date">23 June 2017</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="index_v3_scroll">
+                    <div class="detail_box">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="promo_train_depart">From JB Sentral <i class="fa fa-long-arrow-right" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="promo_train_promocode">KTM8022</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="promo_train_arrive">Padang Besar</div>
+                            <div class="promo_train_tagprice">RM</div>
+                            <div class="promo_train_price">59</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="col-sm-5 col-xs-5">
+                                <div class="promo_train_journey_type">One Way</div>
+                            </div>
+                            <div class="col-sm-7 col-xs-7">
+                                <div class="promo_train_travel_date">23 June 2017</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+<!--</div>-->
+<!--start static advertisement - long term-->
+<!--Gallery image-->
+@*<hr><br />
+<div class="container" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('home_page')">
+    <div class="row">
+        <div data-js-module="filtering-demo">
+            <div class="grid-view less-margin">
+                <div class="col-sm-6 col-md-3 col-xs-6    transition hotels" data-category="transition" ng-repeat="gallery in content | filter: {contenttype:'gallery_image'}">
+                    <div class="img-box">
+                        <div class="pro-img" ng-show="gallery.param.filePath">
+                            <img ng-src="{{gallery.param.filePath}}" alt="hotels" class="img-responsive">
+                            <div class="overflow-outer">
+                                <div class="overflow-inner">
+                                    <h3>{{gallery.param.title}}</h3>
+                                    <p>{{gallery.param.details}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+<!--end static advertisement - long term-->
+<div class="our-work-wrapper" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('home_page')">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6" ng-repeat="extLink in content | filter: {contenttype:'external_link'}">
+                <div class="our-work ">
+                    <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+                        <img ng-show="extLink.param.filePath" ng-src="{{extLink.param.filePath}}">
+                        <!--<span class="hi-icon hi-icon-images"></span>-->
+                    </div>
+                    <h4>{{extLink.param.title}}</h4>
+                    <p>{{extLink.param.content}}</p>
+                    <a ng-href="{{extLink.param.urlLink}}" class="btn btn-read-more">READ MORE</a>
+                </div>
+            </div>
+
+            <!--end our-work-->
+        </div>
+    </div>
+</div>
+
+@section footer{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="inner-footer1">
+                    <h4>Contact Us</h4>
+                    <!--<a href="index.html"><img src="assets/img/logo.png" alt="logo" class="img-responsive"></a>-->
+                    <p class="footer-content">
+                        Ibu Pejabat KTM BERHAD,  <br />
+                        Jalan Sultan Hishamuddin,  <br />
+                        50621 Kuala Lumpur.
+                    </p>
+                    <br>
+                    <p class="footer-text"><span><a href="#"><i class="fa fa-phone"></i></a></span> Call center:  +603 - 2267 1200<br />(Operation Time : 0830 - 1730)</p>
+                    <p class="footer-text"><span><a href="#"><i class="fa fa-envelope"></i></a></span>  Email: callcenter@ktmb.com.my</p>
+                    <div class="inner-footer">
+                        <ul class="list-unstyled list-inline">
+                            <li>
+                                <a href="/user/login"> <span class="social-icon"><i class="fa fa-sign-in"></i></span></a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/ktmberhad/"> <span class="social-icon"><i class="fa fa-facebook-f"></i></span></a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/ktmkomuter"> <span class="social-icon"><i class="fa fa-twitter"></i></span></a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/mykomuter/"> <span class="social-icon"><i class="fa fa-instagram"></i></span></a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div ng-controller="CMSController as cmsCtrl" ng-init="getMenu()">
+                <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="menu in allMenu | orderBy :'+sort'" ng-show="menu.Menu.type == 'bawah'">
+                    <div class="list-of-nav">
+                        <div class="inner-footer1">
+                            <h4>{{menu.Menu.title_my}}</h4>
+                            <ul class="list-unstyled">
+                                <li ng-repeat="submenu in menu.SubMenu | orderBy :'+sort'" ng-show="submenu.Menu.type == 'bawah'">
+                                    <a href="{{submenu.Menu.url}}" ng-hide="submenu.Menu.url == 'portal/full2'"> {{submenu.Menu.title_my}}</a>
+                                    <a href="/portal/content/{{submenu.Menu.id}}" ng-show="submenu.Menu.url == 'portal/full2'"> {{submenu.Menu.title_my}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+

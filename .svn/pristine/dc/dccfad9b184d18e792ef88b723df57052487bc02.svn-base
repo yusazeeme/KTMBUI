@@ -1,0 +1,40 @@
+﻿using KTMB.eTicketing.UI.BusinessLayer;
+using KTMB.eTicketing.UI.DataLayer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+
+namespace KTMB.eTicketing.UI.API
+{
+    public class CMSController : ApiController
+    {
+        [Route("api/cms/allpages")]
+        [HttpGet]
+        public List<ContentObj> AllPages()
+        {
+            var content = ContentManagement.GetContent();
+            return content;
+        }
+
+        [Route("api/cms/getrootmenu")]
+        [HttpGet]
+        public List<ost_menu> GetRootMenu(string id)
+        {
+            int Id = int.Parse(id);
+            var content = ContentManagement.GetRootMenu(Id);
+            return content;
+        }
+
+        [Route("api/cms/get")]
+        [HttpGet]
+        public ContentObj Get(string id)
+        {
+            int Id = int.Parse(id);
+            var content = ContentManagement.GetContent(Id);
+            return content;
+        }
+    }
+}

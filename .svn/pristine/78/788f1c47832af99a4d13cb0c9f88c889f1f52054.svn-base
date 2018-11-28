@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "FAQ";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess(true)"></div>
+<div ng-controller="CMSController as cmsCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="/cms/index"><i class="fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+
+            <strong>FAQ(s)</strong>
+        </li>
+    </ol>
+
+    <h2>FAQ(s)</h2>
+    <br />
+
+    <div class="row" ng-init="getCMS('faq', 'faq_content', false)">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Frequently Asked Question(s)
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="javascript:;" onclick="jQuery('#modal-1').modal('show');" class="btn btn-default">Add New</a>
+                            </div>
+                        </div>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Question</th>
+                                    <th>Answers</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="faq_content.length">
+                                <tr ng-repeat="faq in faq_content">
+                                    <td>{{faq.param.question}}</td>
+                                    <td>{{faq.param.answer}}</td>
+                                    <td style="min-width:95px">
+                                        <a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" ng-click="getSingleModel('faq_content', faq_content, faq.pkcolumn)" class="btn btn-success"><i class="fa fa-refresh"></i></a>
+                                        <button confirmed-click="deleteCMS(faq.pkcolumn, 'faq', 'faq_content', false)" ng-confirm-click="Are you sure to delete this item?" class="btn btn-danger">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-1" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(faq_content, 'faq', 'faq_content', false, false)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Frequently Asked Question(s)</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Question</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="faq_content.param.question" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Answer</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="faq_content.param.answer" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-2" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(faq_content, 'faq', 'faq_content', true, true)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="getCMS('faq', 'faq_content', false)">&times;</button>
+                        <h4 class="modal-title">Frequently Asked Question(s)</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Question</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ng-model="faq_content.param.question" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Answer</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ng-model="faq_content.param.answer" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="getCMS('faq', 'faq_content', false)">Close</button>
+                        <button type="submit" class="btn btn-info">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

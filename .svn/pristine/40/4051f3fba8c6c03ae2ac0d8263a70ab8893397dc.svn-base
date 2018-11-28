@@ -1,0 +1,506 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+<!--wrapper_index_three-->
+<div id="particles-js" ng-controller="CMSController as cmsCtrl">
+    <div class="wrapper_index_three hidden-xs" style="background: url(Content/assets/img/banner1.png) center/cover no-repeat !important;">
+        <div class="wrapper-inner">
+            <!--text-box-->
+            <div class="text_box_three hidden-xs">
+                <h3>
+                    GET YOUR TICKET NOW!
+                </h3>
+            </div>
+            <div class="container">
+                <!--main-fill-->
+                <div class="main-fill">
+                    <!--tabs-->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3 class="plan-your-journey">Plan Your Journey <span style="text-align: left;"><a title="Route Map" style="padding-left: 6px;color:#ffe900; padding-bottom:5px;" href="#" data-toggle="modal" data-target="#route"><i class="fa fa-info-circle" aria-hidden="true"></i></a></span></h3>
+                            <div id="route" class="modal fade" role="dialog">
+                                <div class="modal-dialog" style="width:100%;">
+                                    <div class="modal-content" style="background:transparent; margin-left:0%; margin-top:5%; box-shadow:0 5px 15px transparent; border: 1px solid transparent; -webkit-box-shadow: 0 5px 15px transparent; ">
+                                        <div class="modal-body" style="background:transparent;">
+                                            <button type="button" style="cursor: pointer;background: #ea1d24; border: 2px solid #ffffff;padding: 10px 15px;position: absolute;right: 0%;top: 0%;border-radius: 30px;opacity: 1;color:#ffffff;" class="close" data-dismiss="modal">&times;</button>
+                                            <img src="~/Content/assets/img/routemap_ktmb2.png" class="img-responsive">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                             <ul class="nav nav-tabs">
+                                <li class="active"><a href="#taboneway" data-toggle="tab"><div class="icon"></div>&nbsp;<i class="fa fa-train"></i> One Way <div class="icon2"></div></a></li>
+                                <li><a href="#tabreturn" data-toggle="tab"><div class="icon"></div>&nbsp; <i class="fa fa-train"></i> Return <div class="icon2"></div>&nbsp;</a></li>
+                            </ul>
+                        </div>
+                        <!--panel-body-->
+                        <div class="panel-body" ng-controller="TicketController as ticketCtrl">
+                            <!--tab-content-->
+                            <div class="tab-content" ng-controller="LookupController as lookupCtrl">
+                                <!--start taboneway-->
+                                <div class="tab-pane fade in active" id="taboneway">
+                                    <form ng-submit="searchTrain(journey, '0')">
+                                        
+                                       
+                                       
+                                       <!-- <div class="panel panel-default" style="border:0; text-align:left;">
+                                            <a data-toggle="collapse" href="#toggle1" aria-expanded="false" aria-controls="toggle1" style="padding-left: 6px;color:#ffe900; padding-bottom:5px;">KTM Route Map</a><br><br>
+                                            <div class="collapse" id="toggle1">
+                                                <div class="panel-body" >                                              
+                                                    <img src="~/Content/assets//img/KTMB_Route_MAP.jpg" class="img-responsive">
+                                                    <br>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                        <ul class="list-inline list-unstyled" ng-init="getOriginList()">
+                                            <li  style="width:100%;" class="">
+                                                <select class="select-one col-md-3"
+                                                        ng-model="journey.origin"
+                                                        ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in origins" ng-change="getDestinationList(journey.origin)" required>
+                                                    <option value=''>Origin</option>
+                                                </select>
+                                            </li>
+                                            <li style="width:100%;"  class="">
+                                                <select class="select-one col-md-3"
+                                                        ng-model="journey.destination"
+                                                        ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in destinations" required>
+                                                    <option value=''>Destination</option>
+                                                </select>
+                                            </li>
+                                            <li style="width:100%;" class="">
+                                                <div class="form-group" ng-controller="DateController">
+                                                    <input type="text" style="color:#2c2c2c;" class="form-control" placeholder="Departure Date" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="journey.departuredate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" ng-change="setMinDate()" />
+                                                </div>
+                                            </li>
+                                            <li class=""><input type="hidden" name="dummyonly"></li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                        <!--<h3>Who's Travelling?</h3>-->
+                                        <ul class="list-inline list-unstyled">
+                                            <li style="width:50%;" class="">
+                                                <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.noadult" ng-init="journey.noadult='1'" required>
+                                                    <option value="0">0 Adult</option>
+                                                    <option value="1">1 Adult</option>
+                                                    <option value="2">2 Adults</option>
+                                                    <option value="3">3 Adults</option>
+                                                    <option value="4">4 Adults</option>
+                                                    <option value="5">5 Adults</option>
+                                                    <option value="6">6 Adults</option>
+                                                    @*<option value="7">7 Adults</option>
+                                                    <option value="8">8 Adults</option>
+                                                    <option value="9">9 Adults</option>
+                                                    <option value="10">10 Adults</option>*@
+                                                </select>
+                                            </li>
+                                            <li style="width:50%;" class="">
+                                                <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.nochild" ng-init="journey.nochild='0'" required>
+                                                    <option value="0">0 Child</option>
+                                                    <option value="1">1 Child</option>
+                                                    <option value="2">2 Children</option>
+                                                    <option value="3">3 Children</option>
+                                                    <option value="4">4 Children</option>
+                                                    <option value="5">5 Children</option>
+                                                    <option value="6">6 Children</option>
+                                                    @*<option value="7">7 Children</option>
+                                                    <option value="8">8 Children</option>
+                                                    <option value="9">9 Children</option>
+                                                    <option value="10">10 Children</option>*@
+                                                </select>
+                                                <div class="i_note">4 - 12 years</div>
+                                            </li>
+                                            <li style="width:50%;" class="">
+                                                <input type="submit" class="btn btn-clear3-travel" ng-disabled="journey.nochild == '0' && journey.noadult== '0'" value="Search" />
+                                             
+                                            </li>
+                                            <li style="width:50%;" class="">                                              
+                                                <button class="btn btn-clear4-travel" ng-click="journey={}; journey.nochild='0'; journey.noadult='1';">Clear</button>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                                <!--end taboneway-->
+                                <!--start tabreturn-->
+                                <div class="tab-pane fade in" id="tabreturn">
+                                    <form ng-submit="searchTrain(journey, '1')" ng-init="getOriginList()">
+                                        
+                                       <!-- <p style="text-align: left;"><a title="Route Map" style="padding-left: 6px;color:#ffe900; padding-bottom:5px;" href="#" data-toggle="modal" data-target="#route2">Info &nbsp;<i class="fa fa-info-circle" aria-hidden="true"></i></a></p>-->
+                                        <div id="route2" class="modal fade" role="dialog">
+                                            <div class="modal-dialog" style="width:100%;">
+                                                <div class="modal-content" style="background:transparent; margin-left:10%; margin-top:15%; box-shadow:0 5px 15px transparent; border: 1px solid transparent; -webkit-box-shadow: 0 5px 15px transparent; ">
+                                                    <div class="modal-body" style="background:transparent;">
+                                                        <button type="button" style="cursor:pointer;background:#ea1d24; border:2px solid #ffffff;padding:5px 10px;position:absolute;right:9%;top:-2%;border-radius:30px;opacity:1;color:#ffffff;" class="close" data-dismiss="modal">&times;</button>
+                                                        <img src="~/Content/assets//img/routemap_ktmb2.png" class="img-responsive">
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                       <!--- <div class="panel panel-default" style="border:0; text-align:left;">
+                                            <a data-toggle="collapse" href="#toggle2" aria-expanded="false" aria-controls="toggle2" style="color:#ffe900; padding-left: 6px; padding-bottom:5px;">KTM Route Map</a><br><br>
+                                            <div class="collapse" id="toggle2">
+                                                <div class="panel-body">                                                  
+                                                    <img src="~/Content/assets/img/KTMB_Route_MAP.jpg" class="img-responsive">
+                                                    <br>
+                                                </div>
+                                            </div>
+                                        </div>--->
+                                        <ul class="list-inline list-unstyled" ng-controller="DateController">
+                                            <li style="width:100%;">
+                                                <select class="select-one col-md-3"
+                                                        ng-model="journey.origin"
+                                                        ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in origins" ng-change="getDestinationList(journey.origin)" required>
+                                                    <option value=''>Origin</option>
+                                                </select>
+                                            </li>
+                                            <li style="width:100%;">
+                                                <select class="select-one col-md-3"
+                                                        ng-model="journey.destination"
+                                                        ng-options="destination.CODE as destination.NAME group by destination.STATE for destination in destinations" required>
+                                                    <option value=''>Destination</option>
+                                                </select>
+                                            </li>
+                                            <li style="width:50%;">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Departure Date" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="journey.departuredate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" ng-change="setMinDate()" />
+                                                </div>
+                                            </li>
+                                            <li style="width:50%;">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Return Date" uib-datepicker-popup="dd/MM/yyyy" ng-click="open2()" ng-model="journey.returndate" is-open="popup2.opened" datepicker-options="{minDate: journey.departuredate}" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                        <ul class="list-inline list-unstyled">
+                                            <li  style="width:50%;">
+                                                <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.noadult" ng-init="journey.noadult='1'" required>
+                                                    <option value="0">0 Adult</option>
+                                                    <option value="1">1 Adult</option>
+                                                    <option value="2">2 Adults</option>
+                                                    <option value="3">3 Adults</option>
+                                                    <option value="4">4 Adults</option>
+                                                    <option value="5">5 Adults</option>
+                                                    <option value="6">6 Adults</option>
+                                                    @*<option value="7">7 Adults</option>
+                                                    <option value="8">8 Adults</option>
+                                                    <option value="9">9 Adults</option>
+                                                    <option value="10">10 Adults</option>*@
+                                                </select>
+                                            </li>
+                                            <li  style="width:50%;">
+                                                <select class="select-one" style="margin-bottom: 5px;" ng-model="journey.nochild" ng-init="journey.nochild='0'" required>
+                                                    <option value="0">0 Child</option>
+                                                    <option value="1">1 Child</option>
+                                                    <option value="2">2 Children</option>
+                                                    <option value="3">3 Children</option>
+                                                    <option value="4">4 Children</option>
+                                                    <option value="5">5 Children</option>
+                                                    <option value="6">6 Children</option>
+                                                    @*<option value="7">7 Children</option>
+                                                    <option value="8">8 Children</option>
+                                                    <option value="9">9 Children</option>
+                                                    <option value="10">10 Children</option>*@
+                                                </select>
+                                                <div class="i_note">4 - 12 years</div>
+                                            </li>
+                                            <li  style="width:50%;">
+                                                <input type="submit" class="btn btn-clear3-travel" ng-disabled="journey.nochild == '0' && journey.noadult== '0'" value="Search" />
+                                            </li>
+                                            <li  style="width:50%;">
+                                                <button class="btn btn-clear4-travel" ng-click="journey={}; journey.nochild='0'; journey.noadult='1';">Clear</button>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div>
+                                <!--end tabreturn-->
+                            </div>
+                        </div>
+                        <!--end panel body-->
+                    </div>
+                    <!--end tabs-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<!--wrapper index-->
+<div class="container">
+    <div class="row">
+        <!--start slider-->
+        <div class="col-md-8 col-sm-12">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <a href="#" title=""><img class="first-slide" src="~/Content/assets/img/ronda-ronda.jpg" alt="Second slide"></a>
+                    </div>
+                    <div class="item ">
+                        <img class="first-slide" src="~/Content/assets/img/travel-family.jpg" alt="First slide">
+                    </div>
+
+                </div>
+                <ol class="carousel-indicators wow fadeInDown">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                </ol>
+                <a class="left carousel-control hidden-xs" href="#myCarousel" role="button" data-slide="prev">
+                    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control hidden-xs " href="#myCarousel" role="button" data-slide="next">
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!--end slider-->
+        <div class="col-md-4 hidden-sm">
+            <!--start mobile apss ads-->
+            <div class="tour_pak" style="max-height: none;">
+               <a href="https://play.google.com/store/apps/details?id=com.ktmb.mobileticketing&hl=en">
+                   <img src="~/Content/assets/img/mob-ticket.jpg" alt="tour img" class="img-responsive">
+               </a>              
+                <span class="pop-feat-two hidden-xs">Download Now!</span>
+            </div>
+            <!--end mobile apss ads-->
+        </div>
+    </div>
+</div>
+
+<hr><br>
+
+<div class="container">
+    <div class="row">
+        <div data-js-module="filtering-demo">
+            <div class="grid-view less-margin">
+                <div class="col-sm-6 col-md-3 col-xs-6    transition hotels" data-category="transition">
+                    <div class="img-box">
+                        <div class="pro-img">
+                            <img src="~/Content/assets/img/flight.png" alt="hotels" class="img-responsive">
+                            <p class="ads-promo">Catch Your Flight Easily</p>
+                            <div class="overflow-outer">
+                                <div class="overflow-inner">
+                                    <h3><a href="{{UIURL}}/Uploads/Poster28122015BKTMNilaiKLIA.pdf">KLIA / KLIA2</a></h3>
+                                    <p>KTM Komuter alternative to KLIA / KLIA2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-6   metalloid travel" data-category="transition">
+                    <div class="img-box">
+                        <div class="pro-img">
+                            <img src="~/Content/assets/img/bicycle.png" alt="hotels" class="img-responsive">
+                            <p class="ads-promo">Ride Your Ride</p>
+                            <div class="overflow-outer">
+                                <div class="overflow-inner">
+                                    <h3><a href="{{UIURL}}/portal/content/232">Ride n ride</a></h3>
+                                    <p>Healthy Lifestyle . Safe . Easy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-6   metalloid flights" data-category="metalloid">
+                    <div class="img-box">
+                        <div class="pro-img">
+                            <img src="~/Content/assets/img/seat.png" alt="hotels" class="img-responsive">
+                            <p class="ads-promo">Choose Your Seat</p>
+                            <div class="overflow-outer">
+                                <div class="overflow-inner">
+                                    <h3>Hot Seat</h3>
+                                    <p>Enjoy the scenery in travel</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-6   metalloid photography" data-category="transition">
+                    <div class="img-box">
+                        <div class="pro-img">
+                            <img src="~/Content/assets/img/cone.png" alt="undercon" class="img-responsive">
+                            <p class="ads-promo">Maintenance KTM Komuter Lembah Klang</p>
+                            <div class="overflow-outer">
+                                <div class="overflow-inner">
+                                    <h3><a href="{{UIURL}}/portal/content/225">Lembah Klang</a></h3>
+                                    <p>Under maintenance KTM Komuter Lembah Klang from 27 May 2016</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-6    metalloid travel photography" data-category="metalloid">
+                    <div class="img-box">
+                        <div class="pro-img">
+                            <img src="~/Content/assets/img/funenjoy.jpg" alt="hotels" class="img-responsive">
+                            <div class="overflow-outer">
+                                <div class="overflow-inner">
+                                    <h3><a href="{{UIURL}}/portal/content/145">Fun, Enjoy & Learn</a></h3>
+                                    <p>Let's joy ride with KTM Komuter</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="col-sm-6 col-md-3 col-xs-6   metalloid flights hotels" data-category="transition">
+                    <div class="img-box">
+                        <div class="pro-img">
+                            <img src="~/Content/assets/img/dimsum.jpg" alt="hotels" class="img-responsive">
+                            <div class="overflow-outer">
+                                <div class="overflow-inner">
+                                    <h3>Eat & Indulge</h3>
+                                    <p>Book your food in the train</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-6   metalloid flights" data-category="transition">
+                    <div class="img-box">
+                        <div class="pro-img">
+                            <img src="~/Content/assets/img/extra.jpg" alt="hotels" class="img-responsive">
+                            <div class="overflow-outer">
+                                <div class="overflow-inner">
+                                    <h3>Extra Luggage</h3>
+                                    <p>More space</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3 col-xs-6   metalloid hotels" data-category="metalloid">
+                    <div class="img-box">
+                        <div class="pro-img">
+                            <img src="~/Content/assets/img/travel.jpg" alt="hotels" class="img-responsive">
+                            <div class="overflow-outer">
+                                <div class="overflow-inner">
+                                    <h3><a href="{{UIURL}}/Uploads/Terms & conditions .pdf">Travel Package</a></h3>
+                                    <p>Let's backpackerz</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end static advertisement - long term-->
+<div class="our-work-wrapper sizefont">
+    <div class="container">
+        <div class="row">
+            <!--our-work-->
+            <div class="col-md-4 col-sm-6">
+                <div class="our-work ">
+                    <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+                        <img src="~/Content/assets/img/calendar.png">
+                    </div>
+                    <h4 class="sizefont">Train Schedule</h4>
+                    <p class="sizefont">
+                        Always be in the know! Train times, routes, and stations
+                    </p>
+                    <a href="{{UIURL}}/portal/content/254" class="btn btn-read-more">READ MORE</a>
+                </div>
+            </div>
+            <!--end our-work-->
+            
+            <!--our-work-->
+            <div class="col-md-4 col-sm-6">
+                <div class="our-work sizefont">
+                    <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+                        <img src="~/Content/assets/img/frieght2.png">
+                    </div>
+                    <h4 class="sizefont">Freight Online</h4>
+                    <p class="sizefont">
+                        Connecting your business anywhere and everywhere &nbsp;
+                        &nbsp;                        
+                    </p>
+                    <a href="https://intranet.ktmb.com.my/fol/logon.aspx" class="btn btn-read-more">READ MORE</a>
+                </div>
+            </div>
+            <!--end our-work-->
+            
+            <!--our-work-->
+            <div class="col-md-4 col-sm-6">
+                <div class="our-work sizefont">
+                    <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+                        <img src="~/Content/assets/img/consession.png">
+                    </div>
+                    <h4 class="sizefont">Consession Card</h4>
+                    <p class="sizefont">
+                        Get your consession card now to enjoy great discount!
+                        &nbsp;
+                    </p>
+                    <a href="http://form.ktmb.com.my/cardMain/" class="btn btn-read-more">READ MORE</a>
+                </div>
+            </div>
+            <!--end our-work-->
+        </div>
+    </div>
+</div>
+
+@section footer{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="inner-footer1 sizefont">
+                    <h4>Contact Us</h4>
+                    <!--<a href="index.html"><img src="assets/img/logo.png" alt="logo" class="img-responsive"></a>-->
+                    <p class="footer-content">
+                        Ibu Pejabat KTM BERHAD,  <br />
+                        Jalan Sultan Hishamuddin,  <br />
+                        50621 Kuala Lumpur.
+                    </p>
+                    <br>
+                    <p class="footer-text sizefont"><span><a href="#"><i class="fa fa-phone"></i></a></span> KTMB HQ :  +603 - 2263 1111<br />(Operation Time : 0830 - 1730)</p>
+                    <p class="footer-text sizefont"><span><a href="#"><i class="fa fa-phone"></i></a></span> Call center :  +603 - 2267 1200<br />(Operation Time : 0700 - 2200)</p>
+                    <p class="footer-text sizefont"><span><a href="#"><i class="fa fa-envelope"></i></a></span>  Email: callcenter@ktmb.com.my</p>
+                    <div class="inner-footer sizefont">
+                        <ul class="list-unstyled list-inline">
+                            <li> 
+                                <a href="{{UIURL}}/user/login" title="Login E-Ticket"> <span class="social-icon"><i class="fa fa-sign-in"></i></span></a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/ktmberhad/" title="Facebook"> <span class="social-icon"><i class="fa fa-facebook-f"></i></span></a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/ktm_berhad/" title="Twiter"> <span class="social-icon"><i class="fa fa-twitter"></i></span></a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/mykomuter/" title="Instagram"> <span class="social-icon"><i class="fa fa-instagram"></i></span></a>
+                            </li>
+                            <li>
+                                <a href="http://intranet4.ktmb.com.my/ktmb/index.php?r=cms/login" title="Staff KTMB"> <span class="social-icon"><i class="fa fa-user" aria-hidden="true"></i></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-controller="CMSController as cmsCtrl" ng-init="getMenu()">
+                <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="menu in allMenu | orderBy :'+sort'" ng-show="menu.Menu.type == 'bawah'">
+                    <div class="list-of-nav">
+                        <div class="inner-footer1 sizefont">
+                            <h4>{{menu.Menu.title_en}}</h4>
+                            <ul class="list-unstyled">
+                                <li ng-repeat="submenu in menu.SubMenu | orderBy :'+sort'" ng-show="submenu.Menu.type == 'bawah' && submenu.Menu.display_status == 1">
+                                    <a class="sizefont" href="{{submenu.Menu.url}}" ng-hide="submenu.Menu.url == 'portal/full2'"> {{submenu.Menu.title_en}}</a>
+                                    <a class="sizefont" href="{{UIURL}}/portal/content/{{submenu.Menu.id}}" ng-show="submenu.Menu.url == 'portal/full2'"> {{submenu.Menu.title_en}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+

@@ -1,0 +1,1163 @@
+﻿(function () {
+    var app = angular.module('user', []);
+
+    app.controller('UserController', ["$scope", "$http", '$window', 'growl', 'apiURL', '$rootScope', '$cookies', 'baseURL', 'DTOptionsBuilder', function ($scope, $http, $window, growl, apiURL, $rootScope, $cookies, baseURL, DTOptionsBuilder) {
+        console.log("UserController logged on.");
+
+        $scope.signIn = function (user, usertype, redirect) {
+            console.log("UserController.signIn triggered.");
+            console.log(user.type);
+            if (user.type !== undefined && user.type !== null)
+                usertype = user.type;
+
+            $rootScope.spinnerShow = true;
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/LOGIN?Username=' + user.username + '&Password=' + user.password + '&UserType=' + usertype
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.ErrorList.length > 0) {
+                    for (var i = 0, len = response.data.ErrorList.length; i < len; i++) {
+                        growl.error(response.data.ErrorList[i], { title: 'ERROR!', ttl: '10000' });
+                    }
+                }
+                else {
+                    growl.success('Login success!', { title: 'SUCCESS!' });
+                    $rootScope.spinnerShow = false;
+                    $cookies.put("UI_TOKEN", response.data.SecurityToken, {
+                        path: "/"
+                    });
+
+                    console.log(redirect);
+                    if (redirect != undefined) {
+                        $window.location.href = baseURL + redirect.toString();
+                    }
+                    else
+                        $window.location.reload();
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 40 user.js');
+                $rootScope.spinnerShow = false;
+            });
+            return true;
+        };
+
+        $scope.getUserInfoFromSession = function () {
+            if (sessionStorage.userinfo != undefined) {
+                console.log(JSON.parse(sessionStorage.userinfo));
+                $scope.userinfosession = JSON.parse(sessionStorage.userinfo)
+            }
+        };
+
+        $scope.getUserInfo = function () {
+            console.log("UserController.getUserInfo triggered.");
+            $scope.userinfo = null;
+            var param = { "securitytoken": $cookies.get('UI_TOKEN') };
+            if ($cookies.get('UI_TOKEN') != undefined && $cookies.get('UI_TOKEN') != null) {
+                console.log(param);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/GETTOKENINFO',
+                    data: JSON.stringify(param),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    if (response.data == null)
+                        $window.location.href = baseURL + '/user/login';
+
+                    sessionStorage.userinfo = JSON.stringify(response.data);
+                    $scope.userinfo = response.data;
+                    console.log($scope.userinfo);
+                }).catch(function onError(response) {
+                    console.log('ERROR!: ' + response.statusText + ' at line 61 user.js');
+                });
+            }
+            else {
+                delete sessionStorage.userinfo;
+                $scope.userinfo = null;
+            }
+
+        };
+
+        $scope.checkAccess = function () {
+            console.log("UserController.checkAccess triggered.");
+            if ($cookies.get('UI_TOKEN') == undefined || $cookies.get('UI_TOKEN') == null)
+                $window.location.href = baseURL + '/user/login';
+        };
+
+        $scope.createUser = function (newUser, usertype) {
+            console.log("UserController.createUser triggered.");
+            var data = {
+                Username: newUser.Username,
+                password: newUser.password,
+                UserType: usertype,
+                FullName: '',
+                Email: newUser.Email,
+                Phone: '',
+                Address: '',
+                Postcode: '',
+                District: '',
+                Country: '',
+                securitytoken: ''
+            };
+
+            $rootScope.spinnerShow = true;
+            console.log(data);
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/REGISTERNEWUSER',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                if (response.data.ErrorList.length > 0) {
+                    angular.forEach(response.data.ErrorList, function (error) {
+                        growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                    });
+                }
+                else {
+                    $scope.newUser = {};
+                    $rootScope.spinnerShow = false;
+                    growl.success('Registration success! <a href="' + baseURL + '/user/login"><b>Click Here</b></a> to log in.', { title: 'SUCCESS!' });
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 192 user.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+        $scope.createAdmin = function (newUser, usertype) {
+            console.log("UserController.createAdmin triggered.");
+
+            var token = $cookies.get('UI_TOKEN');
+            var data = {
+                Username: newUser.Username,
+                password: newUser.password,
+                UserType: usertype,
+                FullName: newUser.FullName,
+                Email: newUser.Email,
+                Phone: newUser.Phone,
+                Address: newUser.Address,
+                Postcode: newUser.Postcode,
+                District: newUser.District,
+                Country: newUser.Country,
+                securitytoken: token
+            };
+
+            $rootScope.spinnerShow = true;
+            console.log(data);
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/REGISTERNEWUSER',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                if (response.data.ErrorList.length > 0) {
+                    angular.forEach(response.data.ErrorList, function (error) {
+                        growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                    });
+                }
+                else
+                    growl.success('Registration success!', { title: 'SUCCESS!', ttl: '10000' });
+                $rootScope.spinnerShow = false;
+
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 172 user.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+        $scope.getUnlockUser = function () {
+            console.log("UserController.unlockUser triggered.");
+            var token = $cookies.get('UI_TOKEN');
+            console.log(token);
+
+            var data = { securitytoken: token };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/GETLOCKEDUSER',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                if (response.data.error != null) {
+                    angular.forEach(response.data.error, function (error) {
+                        growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                    });
+                }
+                else
+                    $scope.lockedUser = response.data.userList;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 199 user.js');
+            });
+        };
+
+        $scope.signOut = function () {
+            console.log("UserController.signOut triggered.");
+            var d = new Date();
+            d.setDate(d.getDate() - 1);
+            $cookies.put('UI_TOKEN', '', {
+                path: '/',
+                expires: d
+            });
+
+            console.log($cookies.get('UI_TOKEN'));
+            if ($scope.userinfo != null)
+                $window.location.reload();
+
+        };
+
+        $scope.unlockUser = function (userid) {
+            console.log("UserController.unlockUser triggered.");
+            var token = $cookies.get('UI_TOKEN');
+            console.log(token);
+
+            var data = { securitytoken: token, usermappingid: userid };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/UNLOCKUSER',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                if (response.data.error != null) {
+                    angular.forEach(response.data.error, function (error) {
+                        growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                    });
+                }
+                else
+                    growl.success('User unlocked!', { title: 'SUCCESS!', ttl: '10000' });
+                $scope.getUnlockUser();
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 240 user.js');
+            });
+        };
+
+        //Angular datatables with options - this option set first column to be sorted by descending
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('order', [0, 'desc']);
+
+        $scope.getBooking = function () {
+            console.log("UserController.getBooking triggered.");
+            $rootScope.spinnerShow = true;
+            var token = $cookies.get('UI_TOKEN');
+            var data = { securitytoken: token };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/GETPROFILEHISTORY',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                if (response.data.ErrorList != null) {
+                    angular.forEach(response.data.ErrorList, function (error) {
+                        growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                    });
+                }
+                else {
+                    var RFIdList = [];
+                    var currentRF;
+                    angular.forEach(response.data.BookingHistory, function (bh) {
+                        if (currentRF != bh.RefIdx) {
+                            currentRF = bh.RefIdx;
+                            RFIdList.push({
+                                RefId: bh.RefIdx,
+                                TicketList: []
+                            });
+                        }
+                    });
+
+                    angular.forEach(RFIdList, function (rf) {
+                        angular.forEach(response.data.BookingHistory, function (bh2) {
+                            if (bh2.RefIdx == rf.RefId) {
+                                rf.TicketList.push(bh2);
+                            }
+                        });
+                    });
+
+                    console.log(RFIdList);
+                    $scope.bookingList = RFIdList;
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 287 user.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+        $scope.resetPassword = function (email) {
+            console.log("UserController.resetPassword triggered.");
+            var data = {
+                securityToken: 'AAEAAAD/////AQAAAAAAAAAMAgAAAFRLVE1CLmVUaWNrZXRpbmcuU2VjdXJpdHlMYXllciwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAACtLVE1CLmVUaWNrZXRpbmcuU2VjdXJpdHlMYXllci5TZWN1cml0eVRva2VuCgAAABY8RW1haWw+a19fQmFja2luZ0ZpZWxkFjxQaG9uZT5rX19CYWNraW5nRmllbGQZPFVzZXJOYW1lPmtfX0JhY2tpbmdGaWVsZBc8VXNlcklkPmtfX0JhY2tpbmdGaWVsZBc8TGVkZ2VyPmtfX0JhY2tpbmdGaWVsZBo8QWdlbnRDb2RlPmtfX0JhY2tpbmdGaWVsZBo8UHJpbnRUeXBlPmtfX0JhY2tpbmdGaWVsZBk8VXNlclR5cGU+a19fQmFja2luZ0ZpZWxkGjxlcnJvcmxpc3Q+a19fQmFja2luZ0ZpZWxkHDxFeHBpcmVkRGF0ZT5rX19CYWNraW5nRmllbGQBAQEAAQEBBAMBBT9LVE1CLmVUaWNrZXRpbmcuU2VjdXJpdHlMYXllci5BdXRoZW50aWNhdGlvbitBdXRoZW50aWNhdGlvblR5cGUCAAAAf1N5c3RlbS5Db2xsZWN0aW9ucy5HZW5lcmljLkxpc3RgMVtbU3lzdGVtLlN0cmluZywgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5XV0CAAAACgoGAwAAAAABMAoKCgX8////P0tUTUIuZVRpY2tldGluZy5TZWN1cml0eUxheWVyLkF1dGhlbnRpY2F0aW9uK0F1dGhlbnRpY2F0aW9uVHlwZQEAAAAHdmFsdWVfXwAIAgAAAAAAAAAKBgUAAAAUMy85LzIxMzEgMTA6MzY6NDMgQU0L|qZs9IqAcNMxUPgpRjI0beEmYDwRbghJbAM125U4va4Hn7S4VOPtijaAPeYO0pWC6akzQNVXZ2AMVicJsPiQfdKAHcvAUlKhXccgc5mQkTsDeW7SWGZ3FiAa6QAZEmMm+zTGInp246y9bIhwY+AVKE2at9UczY6UAAeDPZfrBdhBi7aTIUrwFdsBJZDv6VU9ugYCe2qRTkdPSXqk3rNC3D1ZYTJiZ1emQfUMWbu0+UbQBO0jLSQS/mv72CQXAK11Qk0Tnuq/WHpYWYnl7EuARrH2OfF78hmbuYT1yuVFStyeQPNvx7+wmG6Bkn9aFHtjXfk8g+FnPYOo2cuco05XWVvnehQ5F7/1x7syU94VS2wGHoD5kiCKlGGkpNo1et7OuPeMq3QUxsZERd4UqT29FN9oBQ1ccPIfAe1K1kPNneN74IHNXpfUAYFmHr71yfyruqlTZNiL1aZs5cmRz64eS5gDhkCv0tc2Owb51UsmTeemPabhFXC8Zjoa9V/I3YFg4CiukvLq/mXK+WTillBxJ3/zi/Cgl3YmnlNZvAyUj5jfIyW5AzUjoD+T36fcQkfH+BW/YQP4PDBVQHe/5eJe7DDNg/7WajEd/S8BuoNwYEYs0EAhiSGf9BfCDauVcjNG7bka6F8hd/+vX4MAEBzry2T9XqkC7YdPK6RO+zASOBxY=',
+                Email: email
+            };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/FORGOTPASSWORD',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.success) {
+                    growl.success('A new password have been sent to your email.', { title: 'SUCCESS!', ttl: '10000' });
+                }
+                else
+                    growl.error(response.data.error, { title: 'ERROR!', ttl: '10000' });
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 311 user.js');
+            });
+        };
+
+        $scope.changePassword = function (changePass) {
+            console.log("UserController.changePassword triggered.");
+            $rootScope.spinnerShow = true;
+            console.log($scope.userinfo.UserName);
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    Username: $scope.userinfo.UserName,
+                    oldpassword: changePass.oldpassword,
+                    newpassword: changePass.newpassword,
+                    securitytoken: $cookies.get('UI_TOKEN')
+                };
+            }
+            console.log(data);
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/CHANGEPASSWORD',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function successCallback(response) {
+
+                console.log(response.data);
+                if (response.data.error != null) {
+                    growl.error(response.data.error, { title: 'ERROR!', ttl: '10000' });
+                }
+                else
+                    growl.success('Your password has changed.', { title: 'SUCCESS!', ttl: '5000' });
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                $rootScope.spinnerShow = false;
+                console.log('ERROR!: ' + response.statusText + ' at line 344 user.js');
+            });
+            $rootScope.spinnerShow = false;
+
+        };
+        //$rootScope.spinnerShow = false;
+
+
+
+        $scope.getFavoriteList = function () {
+            console.log("UserController.getFavoriteList triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = { securitytoken: $cookies.get('UI_TOKEN') };
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/GETFAVORITEPASSENGER',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $scope.FavoriteList = response.data;
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    $window.location.reload();
+                    console.log('ERROR!: ' + response.statusText + ' at line 369, user.js');
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getFavorite = function (id) {
+            console.log("UserController.getFavorite triggered.");
+            angular.forEach($scope.FavoriteList, function (fav) {
+                if (fav.ID == id) {
+                    $scope.singleFav = fav;
+                }
+            });
+        };
+
+        $scope.updateFav = function (singleFav) {
+            console.log("UserController.updateFav triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    passengerlist: []
+                };
+                data.passengerlist.push(singleFav);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/UPDATEFAVORITEPASSENGER',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    growl.success('Favorite passenger updated!', { title: 'SUCCESS!', ttl: '10000' });
+                    $scope.getFavoriteList();
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    console.log(response);
+                    growl.error(response.statusText, { title: 'ERROR!', ttl: '10000' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getTicketType = function () {
+            console.log("UserController.getTicketType triggered.");
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            console.log(dd + mm + yyyy);
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/TICKETTYPELIST?DateJourney=' + dd + '/' + mm + '/' + yyyy,
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                $scope.ticketTypeList = response.data;
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.addFav = function (singleFav) {
+            console.log("UserController.addFav triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var singleFav = {
+                    FullName: singleFav.FullName,
+                    IC: singleFav.IC,
+                    Gender: singleFav.Gender,
+                    DOB: singleFav.dob,
+                    TicketType: singleFav.TicketType,
+                    KonsesiID: singleFav.KonsesiID
+                };
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    passengerlist: [singleFav]
+                };
+                //data.passengerlist.push(singleFav);
+                console.log(data);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/INSERTFAVORITEPASSENGER',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+
+                    console.log(response.data);
+                    if (response.data.error != null) {
+                        angular.forEach(response.data.error, function (error) {
+                            growl.error(error, { title: 'ERROR!', ttl: '10000' });
+                        });
+                    }
+                    else {
+                        growl.success('Favorite passenger added!', { title: 'SUCCESS!', ttl: '10000' });
+                        $scope.getFavoriteList();
+                        $rootScope.spinnerShow = false;
+                    }
+
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.deleteFav = function (id) {
+            console.log("UserController.deleteFav triggered.");
+            var singleFav = { ID: id };
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    passengerlist: []
+                };
+                data.passengerlist.push(singleFav);
+                console.log(data);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/DELETEFAVORITEPASSENGER',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response);
+                    growl.success('Favorite passenger removed!', { title: 'SUCCESS!' });
+                    $scope.getFavoriteList();
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getProfile = function () {
+            console.log("UserController.getProfile triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN')
+                };
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/GETPROFILE',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $scope.userProfile = response.data;
+
+                    if (response.data.Country == null)
+                        $scope.userProfile.Country = 'MY';
+
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.userProfile = {};
+        $scope.updateProfile = function (userProfile) {
+            console.log("UserController.updateProfile triggered.");
+
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                // profile.securitytoken = $cookies.get('UI_TOKEN');
+                var data = {
+                    FullName: userProfile.FullName,
+                    IC: userProfile.IC,
+                    Gender: userProfile.Gender,
+                    Phone: userProfile.Phone,
+                    Email: userProfile.Email,
+                    Address: userProfile.Address,
+                    Postcode: userProfile.Postcode,
+                    District: userProfile.District,
+                    Country: userProfile.Country,
+                    securitytoken: $cookies.get('UI_TOKEN')
+                };
+                console.log(data);
+
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/UPDATEPROFILE',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    if (response.data.ErrorList != null) {
+                        angular.forEach(response.data.ErrorList != null , function (error) {
+                            growl.warning(error, { title: 'WARNING!', ttl: 5000 });
+                        });
+                    }
+                    else {
+                        //Add to favorite list
+                        var personList = {
+                            passengerlist: [],
+                            securitytoken: $cookies.get('UI_TOKEN')
+                        };
+
+                        ////angular.forEach(lastTrip.PaxList, function (profile)
+                        //{
+                        console.log(userProfile.saveFav);
+                        if (userProfile.saveFav != undefined && userProfile.saveFav) {
+                            var person = {
+                                FullName: userProfile.FullName,
+                                IC: userProfile.IC,
+                                Gender: userProfile.Gender,
+                                AdultChild: 'A'
+                            };
+                            personList.passengerlist.push(person);
+                        }
+                        ////});
+
+                        console.log(personList);
+
+                        $http({
+                            method: 'POST',
+                            url: apiURL + '/api/STOREFAVORITEPASSENGER',
+                            data: JSON.stringify(personList),
+                            headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                        }).then(function onSuccess(response) {
+                            console.log('Save favorite status: ' + response.data);
+                        }).catch(function onError(response) {
+                            growl.error(response.statusText + ' at line 656, ticket.js', { title: 'ERROR!' });
+                        });
+                    }
+                    console.log(response.data);
+                    growl.success('Your profile have been updated!', { title: 'SUCCESS!' });
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        ////////////////// FOR REPORTING ONLY ///////////////////////
+
+        $scope.getRpt1006 = function (rpt) {
+            console.log("UserController.getRpt1006 triggered.");
+            console.log(rpt);
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var fromDay = rpt.fromDate.getDate();
+                var fromMonth = (rpt.fromDate.getMonth() + 1);
+                fromDay = fromDay.toString().length != 2 ? '0' + fromDay : fromDay;
+                fromMonth = fromMonth.toString().length != 2 ? '0' + fromMonth : fromMonth;
+                var fromDate = fromDay + '/' + fromMonth + '/' + rpt.fromDate.getFullYear();
+
+                var toDay = rpt.toDate.getDate();
+                var toMonth = (rpt.toDate.getMonth() + 1);
+                toDay = toDay.toString().length != 2 ? '0' + toDay : toDay;
+                toMonth = toMonth.toString().length != 2 ? '0' + toMonth : toMonth;
+                var toDate = toDay + '/' + toMonth + '/' + rpt.toDate.getFullYear();
+
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    FromDate: fromDate,
+                    ToDate: toDate,
+                    Location: rpt.station,
+                    UserId: rpt.userId
+                };
+
+                console.log(data);
+
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/RPT1006',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    if (response.data.ErrorList != null) {
+                        angular.forEach(response.data.ErrorList, function (error) {
+                            growl.error(error, { title: 'ERROR!' });
+                        });
+                    }
+                    else
+                        $scope.result = response.data;
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getRpt1000 = function (rpt) {
+            console.log("UserController.getRpt1000 triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+
+                var fromDay = rpt.fromDate.getDate();
+                var fromMonth = (rpt.fromDate.getMonth() + 1);
+                fromDay = fromDay.toString().length != 2 ? '0' + fromDay : fromDay;
+                fromMonth = fromMonth.toString().length != 2 ? '0' + fromMonth : fromMonth;
+                var fromDate = fromDay + '/' + fromMonth + '/' + rpt.fromDate.getFullYear();
+
+                var toDay = rpt.toDate.getDate();
+                var toMonth = (rpt.toDate.getMonth() + 1);
+                toDay = toDay.toString().length != 2 ? '0' + toDay : toDay;
+                toMonth = toMonth.toString().length != 2 ? '0' + toMonth : toMonth;
+                var toDate = toDay + '/' + toMonth + '/' + rpt.toDate.getFullYear();
+
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    FromDate: fromDate,
+                    ToDate: toDate
+                };
+
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/REP1000',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else
+                        $scope.result = response.data;
+
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getDiscountReport = function (rpt) {
+            console.log("UserController.getDiscountReport triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+
+                var fromDay = rpt.fromDate.getDate();
+                var fromMonth = (rpt.fromDate.getMonth() + 1);
+                fromDay = fromDay.toString().length != 2 ? '0' + fromDay : fromDay;
+                fromMonth = fromMonth.toString().length != 2 ? '0' + fromMonth : fromMonth;
+                var fromDate = fromDay + '/' + fromMonth + '/' + rpt.fromDate.getFullYear();
+
+                var toDay = rpt.toDate.getDate();
+                var toMonth = (rpt.toDate.getMonth() + 1);
+                toDay = toDay.toString().length != 2 ? '0' + toDay : toDay;
+                toMonth = toMonth.toString().length != 2 ? '0' + toMonth : toMonth;
+                var toDate = toDay + '/' + toMonth + '/' + rpt.toDate.getFullYear();
+
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    FromDate: fromDate,
+                    ToDate: toDate,
+                    DiscTrain: rpt.trainNo,
+                    DiscType: rpt.discType
+                };
+                
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/DISCOUNTREPORT',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else
+                        $scope.result = response.data;
+
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getSummaryReport = function (rpt) {
+            console.log("UserController.getSummaryReport triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var fromDay = rpt.txDate.getDate();
+                var fromMonth = (rpt.txDate.getMonth() + 1);
+                fromDay = fromDay.toString().length != 2 ? '0' + fromDay : fromDay;
+                fromMonth = fromMonth.toString().length != 2 ? '0' + fromMonth : fromMonth;
+                var fromDate = fromDay + '/' + fromMonth + '/' + rpt.txDate.getFullYear();
+
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    Jenis: rpt.paymentType,
+                    Tarikh: fromDate
+                };
+                console.log(data);
+
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/SUMMARYREPORT',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else
+                        $scope.result = response.data;
+
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getBankReport = function (rpt) {
+            console.log("UserController.getBankReport triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+
+                var fromDay = rpt.txDate.getDate();
+                var fromMonth = (rpt.txDate.getMonth() + 1);
+                fromDay = fromDay.toString().length != 2 ? '0' + fromDay : fromDay;
+                fromMonth = fromMonth.toString().length != 2 ? '0' + fromMonth : fromMonth;
+                var fromDate = fromDay + '/' + fromMonth + '/' + rpt.txDate.getFullYear();
+                
+                var data = {
+                    SecurityToken: $cookies.get('UI_TOKEN'),
+                    paymenttype: rpt.paymentType,
+                    date: fromDate
+                };
+                
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/MAYBANKREPORT',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else
+                        $scope.result = response.data;
+
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getDiscountSetting = function () {
+            console.log("UserController.getDiscountSetting triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    SecurityToken: $cookies.get('UI_TOKEN')
+                };
+
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/GETDISCOUNT',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else
+                        $scope.result = response.data;
+
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        ////////////////    Parameter Setting     /////////////////
+
+        $scope.getParameter = function (isadmin) {
+            console.log("UserController.getParameter triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    ispublic: isadmin ? false : true
+                };
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/GETPARAMETER',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $scope.parameter = response.data;
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        //$scope.getParam = function (id) {
+        //    console.log("UserController.getParam triggered.");
+        //    angular.forEach($scope.parameter, function (pm) {
+        //        if (pm.Name == id) {
+        //            $scope.param = pm;
+        //        }
+        //    });
+        //    angular.forEach($scope.FavoriteList, function (fav) {
+        //        if (fav.ID == id) {
+        //            $scope.singleFav = fav;
+        //        }
+        //    });
+        //};
+
+        $scope.addParameter = function (param, isadmin) {
+            console.log("UserController.addParameter triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var dataParam = {
+                    Name: param.Name,
+                    Descr: param.Descr,
+                    Value: param.Value,
+                    IsPublic: isadmin ? false : true
+                };
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    param: dataParam
+                };
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/CREATEPARAMETER',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $scope.parameter = response.data;
+                    $rootScope.spinnerShow = false;
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else
+                        //$('#modal-1').dialog("close").
+                        growl.success('New parameter added!', { title: 'SUCCESS!' });
+                    $scope.getParameter(isadmin);
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+
+        $scope.updateParameter = function (param, isadmin) {
+            console.log("UserController.updateParameter triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var dataParam = {
+                    Name: param.Name,
+                    Descr: param.Descr,
+                    Value: param.Value,
+                    IsPublic: isadmin ? false : true
+                };
+                //var data = {
+                //    securitytoken: $cookies.get('UI_TOKEN'),
+                //    param: dataParam
+                //};
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    param: {}
+                };
+                data.param.push(dataParam);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/UPDATEPARAMETER',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    growl.success('Parameter updated!', { title: 'SUCCESS!' });
+                    $scope.getParam();
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    console.log(response);
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.deleteParam = function (id) {
+            console.log("UserController.deleteParam triggered.");
+            var param = id;
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    paramName: param
+                };
+                console.log(data);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/REMOVEPARAMETER',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $rootScope.spinnerShow = false;
+                    if (response.data.error != null) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                    }
+                    else {
+                        growl.success('Parameter removed!', { title: 'SUCCESS!' });
+                        $scope.getParameter();
+                        $rootScope.spinnerShow = false;
+                    }
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        
+        $scope.getUserReport = function (rpt) {
+            console.log("UserController.getUserReport triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                
+                var fromDay = rpt.fromDate.getDate();
+                var fromMonth = (rpt.fromDate.getMonth() + 1);
+                fromDay = fromDay.toString().length != 2 ? '0' + fromDay : fromDay;
+                fromMonth = fromMonth.toString().length != 2 ? '0' + fromMonth : fromMonth;
+                var fromDate = fromDay + '/' + fromMonth + '/' + rpt.fromDate.getFullYear();
+
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    FromDate: fromDate,
+                    ToDate: fromDate,
+                    PaymentType: rpt.paymentType,
+                    Status: rpt.status
+                };
+
+                console.log(data);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/USERREPORT',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+
+                    if (response.data.error != null) {
+                        angular.forEach(response.data.error, function (error) {
+                            growl.error(error, { title: 'ERROR!' });
+                        });
+                    }
+                    else
+                        $scope.result = response.data;
+
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.rpt = {};
+        $scope.getAgentReport = function (rpt) {
+            console.log("UserController.getAgentReport triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+
+                console.log(rpt);
+
+                console.log(rpt.fromDate);
+                console.log(rpt.toDate);
+
+                var fromDay = rpt.fromDate.getDate();
+                var fromMonth = (rpt.fromDate.getMonth() + 1);
+                fromDay = fromDay.toString().length != 2 ? '0' + fromDay : fromDay;
+                fromMonth = fromMonth.toString().length != 2 ? '0' + fromMonth : fromMonth;
+                var fromDate = fromDay + '/' + fromMonth + '/' + rpt.fromDate.getFullYear();
+
+                var toDay = rpt.toDate.getDate();
+                var toMonth = (rpt.toDate.getMonth() + 1);
+                toDay = toDay.toString().length != 2 ? '0' + toDay : toDay;
+                toMonth = toMonth.toString().length != 2 ? '0' + toMonth : toMonth;
+                var toDate = toDay + '/' + toMonth + '/' + rpt.toDate.getFullYear();
+
+
+                var data = {
+                    SecurityToken: $cookies.get('UI_TOKEN'),
+                    FromDate: fromDate,
+                    ToDate: toDate,
+                    PaymentType: rpt.paymentType,
+                    Status: rpt.status,
+                    AgentName: rpt.agent
+                };
+                console.log(data);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/AGENTREPORT',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+
+                    if (response.data.error != null) {
+                        angular.forEach(response.data.error, function (error) {
+                            growl.error(error, { title: 'ERROR!' });
+                        });
+                    }
+                    else
+                        $scope.result = response.data;
+
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getVipReport = function (rpt) {
+            console.log("UserController.getVipReport triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                
+                var data = {
+                    securitytoken: $cookies.get('UI_TOKEN'),
+                    month: rpt.month,
+                    year: rpt.year
+                };
+                console.log(data);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/VIPREPORT',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+
+                    if (response.data.error != null) {
+                        angular.forEach(response.data.error, function (error) {
+                            growl.error(error, { title: 'ERROR!' });
+                        });
+                    }
+                    else
+                        $scope.result = response.data;
+
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+    }]);
+
+})();

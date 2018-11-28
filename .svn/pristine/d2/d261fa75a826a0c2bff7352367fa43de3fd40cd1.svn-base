@@ -1,0 +1,88 @@
+﻿ 
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div ng-controller="UserController as userCntrl" ng-init="signOut()">
+    <div class="inner-body" ng-init="getUserInfo()">
+        <div class="login_wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+                        <div class="login-widget animte-reavel">
+                            <div class="sec-img" ng-show="isGuest!=true">
+                                <h3>Login to your Account</h3>
+                            </div>
+                            <div class="sec-img" ng-show="isGuest==true">
+                                <h3>Login as Guest</h3>
+                            </div>
+
+                            <div class="login-box" ng-show="isGuest!=true">                               
+                                <form ng-submit="signIn(user, '1', '/')">
+                                    <div class="form-group">
+                                        <span><i class="fa fa-user"></i></span>
+                                        <input type="text" class="form-control" ng-model="user.username" placeholder="Username*" required >
+                                    </div>
+                                    <div class="form-group">
+                                        <span><i class="fa fa-lock"></i></span>
+                                        <input type="password" class="form-control" ng-model="user.password" placeholder="Password*" required >
+                                    </div>
+                                    <div hidden ng-model="user.type =='1'"></div>
+                                    @*<div class="form-group">
+                                        <span><i class="fa fa-tag"></i></span>
+                                        <select class="form-control" ng-model="user.type" ng-init="user.type = '1'" required >
+                                            <option value=''>Select User Type</option>
+                                            <option value="1">User</option>
+                                            <option value="2">Agent</option>
+                                        </select>
+                                    </div>*@
+                                    <div class="form-actions clearfix">
+                                        <div class="submit-form" style="text-align: right">
+                                          <!--  <a href="/user/register" class="btn submit-btn">Register</a>-->
+                                            <button class="btn submit-btn">Login</button>
+                                            <div class="login-footer">
+                                                <a href="{{UIURL}}/user/register">
+                                                    Register New User
+                                                </a> | 
+                                                <a href="{{UIURL}}/user/forgotpassword">
+                                                    Forgot Password?
+                                                </a> |
+                                                <a href="{{UIURL}}/user/loginagent">
+                                                    Login as Agent
+                                                </a> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="login-box" ng-show="isGuest==true">
+                                <form ng-submit="signIn(guest, '5', '/')">
+                                    <div class="form-group">
+                                        <span><i class="fa fa-envelope"></i></span>
+                                        <input type="email" class="form-control" ng-model="guest.username" placeholder="Email*" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <span><i class="fa fa-phone-square"></i></span>
+                                        <input type="number" class="form-control" ng-model="guest.password" placeholder="Phone Number*" required>
+                                    </div>
+                                    <div class="form-actions clearfix">
+                                        <div class="submit-form" style="text-align: right">
+                                            <button class="btn submit-btn">Login As Guest</button>                                            
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="register">
+                                <p ng-show="isGuest!=true">Not a register user? <a href="#" ng-click="isGuest=true">Continue as guest</a> </p>
+                                <p ng-show="isGuest==true">Already registered? <a href="#" ng-click="isGuest=false">Login now</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

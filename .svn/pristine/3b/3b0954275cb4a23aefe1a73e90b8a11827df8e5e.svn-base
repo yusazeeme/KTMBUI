@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Unlock User";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess(true)"></div>
+
+<div ng-controller="UserController as userCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="/cms/index"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+
+            <strong>Unlock User</strong>
+        </li>
+    </ol>
+    <h2>Unlock User</h2>
+    <br />
+
+    <div class="row" ng-init="getUnlockUser()">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Unlock User
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                        </div>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>User Id</th>
+                                    <th>Username</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in lockedUser">
+                                    <td>{{user.UserID}}</td>
+                                    <td>{{user.UserName}}</td>
+                                    <td>{{user.Status}}</td>
+                                    <td style="width:30px">
+                                        <button confirmed-click="unlockUser(user.UserID)" ng-confirm-click="Are you sure to unlock this user?" class="btn btn-success">
+                                            <i class="fa fa-unlock"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

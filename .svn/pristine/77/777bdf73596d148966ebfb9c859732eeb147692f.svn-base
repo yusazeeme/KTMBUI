@@ -1,0 +1,1182 @@
+﻿(function () {
+    var app = angular.module('ticket', []);
+
+    app.controller('TicketController', ["$scope", "$http", 'growl', '$window', 'apiURL', '$rootScope', '$location', '$filter', '$cookies', function ($scope, $http, growl, $window, apiURL, $rootScope, $location, $filter, $cookies) {
+        console.log("TicketController logged on.");
+
+        $scope.journey = {};
+        $scope.passenger = {};
+        $scope.passenger.adult = [];
+        $scope.passenger.child = [];
+        $scope.selectedTrip = [];
+        $scope.selectedSeat = {};
+        $scope.readyToProceed = false;
+
+        $scope.getONDName = function getONDName(ondlist, origincode, destinationcode) {
+            var ondName = {};
+            angular.forEach(ondlist, function (ond) {
+                if (ond.CODE.toString() === origincode.toString())
+                    ondName.OriginName = ond.NAME;
+
+                if (ond.CODE.toString() === destinationcode.toString())
+                    ondName.DestinationName = ond.NAME;
+
+                $scope.ONDName = ondName;
+            });
+        }
+
+        $scope.searchTrain = function (journey, isreturn) {
+            console.log("TicketController.searchTrain triggered.");
+            console.log(journey);
+
+            $window.location.href = '/ticket/select' +
+                '?origin=' + journey.origin +
+                '&destination=' + journey.destination +
+                '&odate=' + journey.departuredate +
+                '&rdate=' + journey.returndate +
+                '&pcode=' + journey.promocode +
+                '&adult=' + (journey.noadult == undefined ? "0" : journey.noadult) +
+                '&child=' + (journey.nochild == undefined ? "0" : journey.nochild) +
+                '&isreturn=' + isreturn;
+        };
+
+        $scope.getCoach = function () {
+            console.log("TicketController.getCoach triggered.");
+            $rootScope.spinnerShow = true;
+            delete sessionStorage.bookedTrips;
+            delete sessionStorage.readyForSeating;
+            var origin = getUrlParameter('origin', $location.absUrl());
+            var destination = getUrlParameter('destination', $location.absUrl());
+            var odate = getUrlParameter('odate', $location.absUrl());
+            var isreturn = getUrlParameter('isreturn', $location.absUrl());
+            var rdate = getUrlParameter('rdate', $location.absUrl());
+            var adult = getUrlParameter('adult', $location.absUrl());
+            var child = getUrlParameter('child', $location.absUrl());
+            var tempid = 1;
+
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/ONDLIST',
+            }).then(function onSuccess(response) {
+                var ondlist = response.data;
+                $http({
+                    method: 'GET',
+                    url: apiURL + '/api/GETCONNECTING?OriginCode=' + origin + '&DestinationCode=' + destination + '&DateJourney=' + odate
+                }).then(function onSuccess(response) {
+                    $rootScope.spinnerShow = true;
+                    if (response.data != null) {
+                        if (response.data.TransitCount > 0) {
+                            var selectionList = [];
+                            angular.forEach(response.data.TransitInfo.Path, function (train) {
+
+                                $scope.getONDName(ondlist, train.Origin, train.Destination);
+
+                                var Train = {
+                                    Sequence: train.seq,
+                                    TripList: [],
+                                    TripType: "O",//O for onward, R for return                                                        
+                                    DateJourney: odate,
+                                    OriginCode: train.Origin,
+                                    OriginName: $scope.ONDName.OriginName,
+                                    DestinationCode: train.Destination,
+                                    DestinationName: $scope.ONDName.DestinationName,
+                                };
+
+                                if (train.TrainAvailable.length > 0) {
+                                    angular.forEach(train.TrainAvailable, function (trainInfo) {
+                                        $http({
+                                            method: 'GET',
+                                            url: apiURL + '/api/COACHLIST?OriginCode=' + train.Origin + '&DestinationCode=' + train.Destination + '&DateJourney=' + odate + '&TrainNumber=' + trainInfo.TRAIN_NUMBER + '&Direction=O'
+                                        }).then(function onSuccess(response) {
+                                            console.log(response.data);
+                                            if (response.data.length > 0) {
+                                                var coachInfoRaw = response.data;
+                                                angular.forEach(coachInfoRaw, function (coachInfo) {
+                                                    var PaxType = [];
+                                                    PaxType.push({ AdultChild: 'A', TICKETTTYPE: '1', PaxCount: adult })
+                                                    PaxType.push({ AdultChild: 'C', TICKETTTYPE: '1', PaxCount: child })
+                                                    var Paxinfo = {
+                                                        OriginCode: train.Origin,
+                                                        DestinationCode: train.Destination,
+                                                        DateJourney: odate,
+                                                        TrainNumber: trainInfo.TRAIN_NUMBER,
+                                                        CoachCode: coachInfo.CoachCode,
+                                                        PaxType: PaxType
+                                                    }
+
+                                                    $http({
+                                                        method: 'POST',
+                                                        url: apiURL + '/api/GETFARE',
+                                                        data: JSON.stringify({ Paxinfo: Paxinfo }),
+                                                        headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                                                    }).then(function onSuccess(response) {
+                                                        if (response.data != null) {
+
+                                                            var departDateTime = convertDate(trainInfo.DEPARTURE_DATETIME);
+                                                            var arrivalDateTime = convertDate(trainInfo.ARRIVAL_DATETIME);
+                                                            var hours = Math.floor((arrivalDateTime - departDateTime) / 1000 / 60 / 60);
+                                                            var minutes = ((arrivalDateTime - departDateTime) / 1000 / 60) % 60;
+                                                            $scope.getONDName(ondlist, train.Origin, train.Destination);
+
+                                                            var TripDetails = {
+                                                                TempId: tempid,
+                                                                TravellingDate: odate,
+                                                                OriginCode: train.Origin,
+                                                                OriginName: $scope.ONDName.OriginName,
+                                                                DestinationCode: train.Destination,
+                                                                DestinationName: $scope.ONDName.DestinationName,
+                                                                TrainNumber: trainInfo.TRAIN_NUMBER,
+                                                                TrainName: trainInfo.NAME,
+                                                                CoachCode: coachInfo.CoachCode,
+                                                                CoachName: coachInfo.CoachName,
+                                                                CoachDiagram: coachInfo.CoachDiagram,
+                                                                CoachType: coachInfo.CoachType,
+                                                                HasLowFare: response.data.LowFareSeatLeft > 0 ? true : false,//true if lowfare price is available
+                                                                NormalPrice: response.data.NORMALCHARGE,
+                                                                LowFarePrice: response.data.LOWFARECHARGE,
+                                                                NormalSeatLeft: response.data.NormalSeatLeft,
+                                                                LowFareSeatLeft: response.data.LowFareSeatLeft,
+                                                                Duration: hours + 'H ' + minutes + 'MIN',
+                                                                DepartureTime: trainInfo.DEPARTURE_DATETIME,
+                                                                ArrivalTime: trainInfo.ARRIVAL_DATETIME,
+                                                                TotalAdult: adult,
+                                                                TotalChild: child,
+                                                                Sequence: train.seq,
+                                                                TripType: "O"
+                                                            };
+                                                            Train.TripList.push(TripDetails);
+                                                            tempid++;
+                                                        }
+                                                    }).catch(function onError(response) {
+                                                        console.log(response);
+                                                    });
+                                                });
+                                            }
+                                        }).catch(function onError(response) {
+                                            console.log(response);
+                                        });
+                                    });
+                                    $scope.onwardList = selectionList;
+                                }
+                                selectionList.push(Train);
+                            });
+                        }
+                        else {
+                            //Only for UI - must return something
+                            var selectionList = [];
+                            $scope.getONDName(ondlist, origin, destination);
+                            var Train = {
+                                Sequence: 0,
+                                TripList: [],
+                                TripType: "O",//O for onward, R for return                                                        
+                                DateJourney: odate,
+                                OriginCode: origin,
+                                OriginName: $scope.ONDName.OriginName,
+                                DestinationCode: destination,
+                                DestinationName: $scope.ONDName.DestinationName,
+                            };
+                            selectionList.push(Train);
+                            $scope.onwardList = selectionList;
+                        }
+                    }
+                    else {
+                        //Only for UI - must return something
+                        var selectionList = [];
+                        $scope.getONDName(ondlist, origin, destination);
+                        var Train = {
+                            Sequence: 0,
+                            TripList: [],
+                            TripType: "O",//O for onward, R for return                                                        
+                            DateJourney: odate,
+                            OriginCode: origin,
+                            OriginName: $scope.ONDName.OriginName,
+                            DestinationCode: destination,
+                            DestinationName: $scope.ONDName.DestinationName,
+                        };
+                        selectionList.push(Train);
+                        $scope.onwardList = selectionList;
+                    }
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.toString(), { title: 'ERROR!' });
+                });
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+
+            //Execute only if the isreturn=true
+            if (isreturn == '1') {
+                $http({
+                    method: 'GET',
+                    url: apiURL + '/api/ONDLIST',
+                }).then(function onSuccess(response) {
+                    var ondlist = response.data;
+                    $http({
+                        method: 'GET',
+                        url: apiURL + '/api/GETCONNECTING?OriginCode=' + destination + '&DestinationCode=' + origin + '&DateJourney=' + rdate
+                    }).then(function onSuccess(response) {
+                        $rootScope.spinnerShow = true;
+                        if (response.data != null) {
+                            if (response.data.TransitCount > 0) {
+                                var selectionList = [];
+                                angular.forEach(response.data.TransitInfo.Path, function (train) {
+                                    $scope.getONDName(ondlist, train.Origin, train.Destination);
+                                    var Train = {
+                                        Sequence: train.seq,
+                                        TripList: [],
+                                        TripType: "R",//O for onward, R for return                                                        
+                                        DateJourney: rdate,
+                                        OriginCode: train.Origin,
+                                        OriginName: $scope.ONDName.OriginName,
+                                        DestinationCode: train.Destination,
+                                        DestinationName: $scope.ONDName.DestinationName
+                                    };
+
+                                    if (train.TrainAvailable.length > 0) {
+                                        angular.forEach(train.TrainAvailable, function (trainInfo) {
+                                            $http({
+                                                method: 'GET',
+                                                url: apiURL + '/api/COACHLIST?OriginCode=' + train.Origin + '&DestinationCode=' + train.Destination + '&DateJourney=' + rdate + '&TrainNumber=' + trainInfo.TRAIN_NUMBER + '&Direction=R'
+                                            }).then(function onSuccess(response) {
+                                                if (response.data.length > 0) {
+                                                    var coachInfoRaw = response.data;
+                                                    angular.forEach(coachInfoRaw, function (coachInfo) {
+                                                        var PaxType = [];
+                                                        PaxType.push({ AdultChild: 'A', TICKETTTYPE: '1', PaxCount: adult })
+                                                        PaxType.push({ AdultChild: 'C', TICKETTTYPE: '1', PaxCount: child })
+                                                        var Paxinfo = {
+                                                            OriginCode: train.Origin,
+                                                            DestinationCode: train.Destination,
+                                                            DateJourney: rdate,
+                                                            TrainNumber: trainInfo.TRAIN_NUMBER,
+                                                            CoachCode: coachInfo.CoachCode,
+                                                            PaxType: PaxType
+                                                        }
+                                                        $http({
+                                                            method: 'POST',
+                                                            url: apiURL + '/api/GETFARE',
+                                                            data: JSON.stringify({ Paxinfo: Paxinfo }),
+                                                            headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                                                        }).then(function onSuccess(response) {
+                                                            if (response.data != null) {
+                                                                var departDateTime = convertDate(trainInfo.DEPARTURE_DATETIME);
+                                                                var arrivalDateTime = convertDate(trainInfo.ARRIVAL_DATETIME);
+                                                                var hours = Math.floor((arrivalDateTime - departDateTime) / 1000 / 60 / 60);
+                                                                var minutes = ((arrivalDateTime - departDateTime) / 1000 / 60) % 60;
+                                                                $scope.getONDName(ondlist, train.Origin, train.Destination);
+                                                                var TripDetails = {
+                                                                    TempId: tempid,
+                                                                    TravellingDate: rdate,
+                                                                    OriginCode: train.Origin,
+                                                                    OriginName: $scope.ONDName.OriginName,
+                                                                    DestinationCode: train.Destination,
+                                                                    DestinationName: $scope.ONDName.DestinationName,
+                                                                    TrainNumber: trainInfo.TRAIN_NUMBER,
+                                                                    TrainName: trainInfo.NAME,
+                                                                    CoachCode: coachInfo.CoachCode,
+                                                                    CoachName: coachInfo.CoachName,
+                                                                    CoachName: coachInfo.CoachName,
+                                                                    CoachDiagram: coachInfo.CoachDiagram,
+                                                                    HasLowFare: response.data.LowFareSeatLeft > 0 ? true : false,//true if lowfare price is available
+                                                                    NormalPrice: response.data.NORMALCHARGE,
+                                                                    LowFarePrice: response.data.LOWFARECHARGE,
+                                                                    NormalSeatLeft: response.data.NormalSeatLeft,
+                                                                    LowFareSeatLeft: response.data.LowFareSeatLeft,
+                                                                    Duration: hours + 'H ' + minutes + 'MIN',
+                                                                    DepartureTime: trainInfo.DEPARTURE_DATETIME,
+                                                                    ArrivalTime: trainInfo.ARRIVAL_DATETIME,
+                                                                    TotalAdult: adult,
+                                                                    TotalChild: child,
+                                                                    Sequence: train.seq,
+                                                                    TripType: "R"
+                                                                };
+                                                                Train.TripList.push(TripDetails);
+                                                                tempid++;
+                                                            }
+                                                        }).catch(function onError(response) {
+                                                            growl.error(response.toString(), { title: 'ERROR!' });
+                                                        });
+                                                    });
+                                                }
+                                            }).catch(function onError(response) {
+                                                growl.error(response.toString(), { title: 'ERROR!' });
+                                            });
+                                        });
+                                        $scope.returnList = selectionList;
+                                    }
+                                    selectionList.push(Train);
+                                });
+                            }
+                            else {
+                                //Only for UI - must return something
+                                var selectionList = [];
+                                $scope.getONDName(ondlist, destination, origin);
+                                var Train = {
+                                    Sequence: 0,
+                                    TripList: [],
+                                    TripType: "R",//O for onward, R for return                                                        
+                                    DateJourney: odate,
+                                    OriginCode: destination,
+                                    OriginName: $scope.ONDName.DestinationName,
+                                    DestinationCode: origin,
+                                    DestinationName: $scope.ONDName.OriginName,
+                                };
+                                selectionList.push(Train);
+                                $scope.returnList = selectionList;
+                            }
+                        }
+                        else {
+                            //Only for UI - must return something
+                            var selectionList = [];
+                            $scope.getONDName(ondlist, destination, origin);
+                            var Train = {
+                                Sequence: 0,
+                                TripList: [],
+                                TripType: "R",//O for onward, R for return                                                        
+                                DateJourney: odate,
+                                OriginCode: destination,
+                                OriginName: $scope.ONDName.DestinationName,
+                                DestinationCode: origin,
+                                DestinationName: $scope.ONDName.OriginName,
+                            };
+                            selectionList.push(Train);
+                            $scope.returnList = selectionList;
+                        }
+                        $rootScope.spinnerShow = false;
+                    }).catch(function onError(response) {
+                        growl.error(response.toString(), { title: 'ERROR!' });
+                    });
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+            $scope.calculateTicketCost();
+        };
+
+        $scope.bookingOnClick = function (tempid, islowfare) {
+            console.log("TicketController.bookingOnClick triggered.");
+
+            var selectedTrip = $scope.selectedTrip;
+            var tripcount = 0;
+
+            angular.forEach($scope.onwardList, function (trip) {
+                tripcount++;
+                angular.forEach(trip.TripList, function (triplist) {
+                    if (triplist.TempId.toString() == tempid.toString()) {//Found match in onwardlist
+                        angular.forEach(selectedTrip, function (selected) {//remove the same origin n destination to avoid duplication
+                            if (selected.OriginCode === triplist.OriginCode && selected.DestinationCode === triplist.DestinationCode) {
+                                var index = selectedTrip.indexOf(selected);
+                                selectedTrip.splice(index, 1);//remove duplicate in current selected list
+                            }
+                        });
+                        triplist.LowFareSelected = islowfare;
+                        selectedTrip.push(triplist);
+                    }
+                });
+            });
+
+            angular.forEach($scope.returnList, function (trip) {
+                tripcount++;
+                angular.forEach(trip.TripList, function (triplist) {
+                    if (triplist.TempId.toString() == tempid.toString()) {//Found match in onwardlist
+                        angular.forEach(selectedTrip, function (selected) {//remove the same origin n destination to avoid duplication
+                            if (selected.OriginCode === triplist.OriginCode && selected.DestinationCode === triplist.DestinationCode) {
+                                var index = selectedTrip.indexOf(selected);
+                                selectedTrip.splice(index, 1);//remove duplicate in current selected list
+                            }
+                        });
+                        triplist.LowFareSelected = islowfare;
+                        selectedTrip.push(triplist);
+                    }
+                });
+            });
+
+            //Check the validity of the proceed button
+            if (tripcount == selectedTrip.length)
+                $scope.readyToProceed = true;
+
+            $scope.selectedTrip = selectedTrip;
+            $scope.calculateTicketCost();
+            //Add another function to trim the selection to match date departure and next arrival time
+            console.log($scope.selectedTrip);
+        };
+
+        $scope.calculateTicketCost = function () {
+            var totalCost = 0.00;
+            angular.forEach($scope.selectedTrip, function (trip) {
+                if (trip.LowFareSelected) {
+                    totalCost = totalCost + parseFloat(trip.LowFarePrice.replace('MYR ', ''));
+                }
+                else
+                    totalCost = totalCost + parseFloat(trip.NormalPrice.replace('MYR ', ''));
+            });
+            $scope.totalCost = parseFloat(totalCost).toFixed(2);
+        };
+
+        $scope.generateTripDate = function () {
+            console.log("TicketController.generateTripDate triggered.");
+            var rdate = getUrlParameter('rdate', $location.absUrl());
+            var odate = getUrlParameter('odate', $location.absUrl());
+            var isreturn = getUrlParameter('isreturn', $location.absUrl());
+
+            var onwardTripDate = [];
+            var returnTripDate = [];
+
+            var _odate = odate.toString().toDate("dd/MM/yyyy", "/");
+
+            for (i = 1; i < 6; i++) {
+                if (i < 3) {
+                    _odate.setDate(_odate.getDate() - i);
+                    var x = { tripDate: _odate, isactive: false };
+                    onwardTripDate.push(x);
+                }
+
+                _odate = odate.toString().toDate("dd/MM/yyyy", "/");
+
+                if (i == 3) {
+                    _odate.setDate(_odate.getDate());
+                    var x = { tripDate: _odate, isactive: true };
+                    onwardTripDate.push(x);
+                }
+
+                _odate = odate.toString().toDate("dd/MM/yyyy", "/");
+
+                if (i > 3) {
+                    _odate.setDate(_odate.getDate() + i - 3);
+                    var x = { tripDate: _odate, isactive: false };
+                    onwardTripDate.push(x);
+                }
+            }
+
+            if (rdate != undefined) {
+                var _rdate = rdate.toString().toDate("dd/MM/yyyy", "/");
+
+                for (i = 1; i < 6; i++) {
+                    if (i < 3) {
+                        _rdate.setDate(_rdate.getDate() - i);
+                        var x = { tripDate: _rdate, isactive: false };
+                        returnTripDate.push(x);
+                    }
+
+                    _rdate = rdate.toString().toDate("dd/MM/yyyy", "/");
+
+                    if (i == 3) {
+                        _rdate.setDate(_rdate.getDate());
+                        var x = { tripDate: _rdate, isactive: true };
+                        returnTripDate.push(x);
+                    }
+
+                    _rdate = rdate.toString().toDate("dd/MM/yyyy", "/");
+
+                    if (i > 3) {
+                        _rdate.setDate(_rdate.getDate() + i - 3);
+                        var x = { tripDate: _rdate, isactive: false };
+                        returnTripDate.push(x);
+                    }
+                }
+            }
+
+            if (isreturn !== '1') {
+                var dateTab = angular.element('.return-date');
+                dateTab.attr('hidden', 'hidden');
+            }
+
+            $scope.ReturnTripDateList = returnTripDate;
+            $scope.OnwardTripDateList = onwardTripDate;
+        };
+
+        $scope.changeTravellingDate = function (isreturn, newdate) {
+            console.log("TicketController.changeTravellingDate triggered.");
+            var origin = getUrlParameter('origin', $location.absUrl());
+            var destination = getUrlParameter('destination', $location.absUrl());
+            var adult = getUrlParameter('adult', $location.absUrl());
+            var child = getUrlParameter('child', $location.absUrl());
+            var pcode = getUrlParameter('pcode', $location.absUrl());
+            var _isreturn = getUrlParameter('isreturn', $location.absUrl());
+            console.log(_isreturn);
+
+            var rdate = getUrlParameter('rdate', $location.absUrl());
+            var odate = getUrlParameter('odate', $location.absUrl());
+
+            if (isreturn) {
+                rdate = $filter('date')(newdate, 'dd/MM/yyyy');
+            }
+            else {
+                odate = $filter('date')(newdate, 'dd/MM/yyyy');
+            }
+
+            $window.location.href = '/ticket/select' +
+                '?origin=' + origin +
+                '&destination=' + destination +
+                '&odate=' + odate +
+                '&rdate=' + rdate +
+                '&pcode=' + pcode +
+                '&adult=' + adult +
+                '&child=' + child +
+                '&isreturn=' + _isreturn;
+        };
+
+        $scope.proceedBooking = function () {
+            console.log("TicketController.proceedBooking triggered.");
+            console.log('--- Selected Trip ---');
+            console.log($scope.selectedTrip);
+            //$scope.selectedTrip will be send to the future pages via session
+            sessionStorage.bookedTrips = JSON.stringify($scope.selectedTrip);
+            $window.location.href = '/ticket/passenger';
+        };
+
+        $scope.getBooking = function () {
+            console.log("TicketController.getBooking triggered.");
+            if (sessionStorage.bookedTrips != undefined || sessionStorage.bookedTrips != null) {
+                console.log(JSON.parse(sessionStorage.bookedTrips));
+
+                var bookedList = [];
+                var isreturn = false;
+
+                var totalCost = 0.00;
+                angular.forEach(JSON.parse(sessionStorage.bookedTrips), function (trip) {
+                    $scope.numberOfAdult = Number(trip.TotalAdult);
+                    $scope.numberOfChild = Number(trip.TotalChild);
+
+                    if (trip.LowFareSelected) {
+                        totalCost = totalCost + parseFloat(trip.LowFarePrice.replace('MYR ', ''));
+                    }
+                    else
+                        totalCost = totalCost + parseFloat(trip.NormalPrice.replace('MYR ', ''));
+
+                    if (trip.TripType == 'R')
+                        if (!isreturn)
+                            isreturn = true;
+
+                    trip._DepartureTime = convertDate(trip.DepartureTime);
+                    bookedList.push(trip);
+                });
+
+                var booked = {
+                    bookedList: bookedList,
+                    totalCost: parseFloat(totalCost).toFixed(2),
+                    IsReturn: isreturn
+                };
+
+                $scope.booked = booked;
+                console.log($scope.booked);
+            }
+            else
+                $window.location.href = '/';
+        };
+
+        $scope.checkIsUserLogIn = function () {
+            console.log("TicketController.checkIsUserLogIn triggered.");
+            if ($cookies.get('UI_TOKEN') === undefined || $cookies.get('UI_TOKEN') === null) {
+                $scope.showModal('#userModal');
+            }
+            else {
+                var param = { "securitytoken": $cookies.get('UI_TOKEN') };
+                console.log(param);
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/GETTOKENINFO',
+                    data: JSON.stringify(param),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    if (response.data == null)
+                        $scope.showModal('#userModal');
+                    $scope.currentUserInfo = response.data;
+                }).catch(function onError(response) {
+                    console.log('ERROR!: ' + response.statusText + ' at line 587 ticket.js');
+                    $window.location.reload();
+                });
+            }
+        };
+
+        $scope.showModal = function (modalid) {
+            console.log("TicketController.showModal triggered.");
+            angular.element('.modal').modal('hide');
+            angular.element(modalid).modal('show');
+        };
+
+        $scope.getNumber = function (num) {
+            return new Array(num);
+        };
+
+        $scope.getTicketType = function () {
+            console.log("TicketController.getTicketType triggered.");
+            var booked = JSON.parse(sessionStorage.bookedTrips);
+            if (booked.length > 0) {
+                $http({
+                    method: 'GET',
+                    url: apiURL + '/api/TICKETTYPELIST?DateJourney=' + booked[0].TravellingDate,
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $scope.ticketTypeList = response.data;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                });
+            }
+        };
+
+        //This function only meant for populating favorite user array object
+        $scope.PopulateField = function () {
+            console.log("TicketController.PopulateField triggered.");
+            var booked = JSON.parse(sessionStorage.bookedTrips);
+            console.log(booked);
+            var totalAdult = booked[0].TotalAdult;
+            var totalChild = booked[0].TotalChild;
+            console.log(totalAdult);
+            console.log(totalChild);
+
+            for (var i = 0; i <= Number(booked[0].TotalAdult) ; i++) {
+                $scope.passenger.adult.push({});
+            };
+
+            for (var i = 0; i <= Number(booked[0].TotalChild) ; i++) {
+                $scope.passenger.child.push({});
+            };
+
+        };
+
+        $scope.getFavoriteList = function () {
+            console.log("TicketController.getFavoriteList triggered.");
+            $rootScope.spinnerShow = true;
+            if ($cookies.get('UI_TOKEN') !== undefined && $cookies.get('UI_TOKEN') !== null) {
+                var data = { securitytoken: $cookies.get('UI_TOKEN') };
+                $http({
+                    method: 'POST',
+                    url: apiURL + '/api/GETFAVORITEPASSENGER',
+                    data: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $scope.FavoriteList = response.data;
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    $window.location.reload();
+                    console.log('ERROR!: ' + response.statusText + ' at line 655, ticket.js');
+                });
+            }
+            else
+                $rootScope.spinnerShow = false;
+        };
+
+        $scope.getFav = function (selected, index, isadult) {
+            console.log("TicketController.getFav triggered.");
+            console.log(selected, index);
+            angular.forEach($scope.FavoriteList, function (fav) {
+                if (fav.IC == selected) {
+                    if (isadult) {
+                        $scope.passenger.adult[index + 1].name = fav.FullName;
+                        $scope.passenger.adult[index + 1].gender = fav.Gender;
+                        $scope.passenger.adult[index + 1].icpassport = fav.IC;
+                    }
+                    else {
+                        $scope.passenger.child[index + 1].name = fav.FullName;
+                        $scope.passenger.child[index + 1].gender = fav.Gender;
+                        $scope.passenger.child[index + 1].icpassport = fav.IC;
+                    }
+                }
+            });
+        };
+
+        $scope.verifyPassenger = function (passenger) {
+            console.log("TicketController.verifyPassenger triggered.");
+            var booked = JSON.parse(sessionStorage.bookedTrips);
+            var lastTrip = { PaxList: [] };
+            var isreturn = false;
+            console.log(passenger);
+            console.log(booked);
+
+            var booking = {
+                BookingList: [],
+                SecurityToken: $cookies.get('UI_TOKEN'),
+                AutoSelectSeat: true
+            };
+
+            angular.forEach(JSON.parse(sessionStorage.bookedTrips), function (trips) {
+                var trip = { PaxList: [] };
+                console.log(trips);
+
+                for (var i = 1; i <= Number(trips.TotalAdult) ; i++) {
+                    var pax = {
+                        Name: passenger.adult[i].name,
+                        IC: passenger.adult[i].icpassport,
+                        ADULTCHILD: "A",
+                        GENDER: passenger.adult[i].gender,
+                        LABELNAME: "TBD",
+                        SLOTID: "TBD",
+                        TICKETTTYPE: passenger.adult[i].tickettype,
+                        KONSESIID: passenger.adult[i].konsesiid,
+                        DOB: passenger.adult[i].dob
+                    };
+                    trip.PaxList.push(pax);
+                };
+
+                for (var i = 1; i <= Number(trips.TotalChild) ; i++) {
+                    var pax = {
+                        Name: passenger.child[i].name,
+                        IC: passenger.child[i].icpassport,
+                        ADULTCHILD: "C",
+                        GENDER: passenger.child[i].gender,
+                        LABELNAME: "TBD",
+                        SLOTID: "TBD",
+                        TICKETTTYPE: passenger.child[i].tickettype,
+                        KONSESIID: passenger.child[i].konsesiid,
+                        DOB: passenger.child[i].dob
+                    };
+                    trip.PaxList.push(pax);
+                };
+
+                if (trips.TripType == 'R')
+                    if (!isreturn)
+                        isreturn = true;
+
+                trip.OnwardReturn = trips.TripType;
+                trip.OriginCode = trips.OriginCode;
+                trip.DestinationCode = trips.DestinationCode;
+                trip.DateJourney = trips.TravellingDate;
+                trip.TrainNumber = trips.TrainNumber;
+                trip.CoachCode = trips.CoachCode;
+                trip.CoachName = trips.CoachName;
+                trip.CoachDiagram = trips.CoachDiagram;
+                trip.isLowFare = trips.LowFareSelected;
+                trip.TrainName = trips.TrainName;
+                trip.OriginName = trips.OriginName;
+                trip.DestinationName = trips.DestinationName;
+                trip.DepartureTime = trips.DepartureTime;
+                trip.ArrivalTime = trips.ArrivalTime;
+                booking.BookingList.push(trip);
+
+                lastTrip.PaxList = [];
+                lastTrip.PaxList = trip.PaxList;
+            });
+
+            console.log(booking);
+
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/VERIFYSLOT',
+                data: JSON.stringify(booking),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.ERROR.length > 0) {
+                    angular.forEach(response.data.ERROR, function (error) {
+                        growl.error(error, { title: 'ERROR!' });
+                    });
+                }
+                else {
+                    //Add to favorite list
+                    var personList = {
+                        passengerlist: [],
+                        securitytoken: $cookies.get('UI_TOKEN')
+                    };
+
+                    angular.forEach(lastTrip.PaxList, function (passenger) {
+                        var person = {
+                            FullName: passenger.Name,
+                            IC: passenger.IC,
+                            Gender: passenger.GENDER,
+                            AdultChild: passenger.ADULTCHILD
+                        };
+                        personList.passengerlist.push(person);
+                    });
+
+                    $http({
+                        method: 'POST',
+                        url: apiURL + '/api/STOREFAVORITEPASSENGER',
+                        data: JSON.stringify(personList),
+                        headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                    }).then(function onSuccess(response) {
+                        console.log('Save favorite status: ' + response.data);
+                    }).catch(function onError(response) {
+                        growl.error(response.statusText + ' at line 722, ticket.js', { title: 'ERROR!' });
+                    });
+
+                    //Proceed to seating page
+                    booking.VerificationResult = response.data;
+                    booking.IsReturn = isreturn;
+                    sessionStorage.readyForSeating = JSON.stringify(booking);
+                    console.log(sessionStorage.readyForSeating);
+                    $window.location.href = '/ticket/seating';
+                }
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+
+        };
+
+        $scope.getLabels = function () {
+            console.log("TicketController.getLabels triggered.");
+            if (sessionStorage.readyForSeating == null || sessionStorage.readyForSeating == undefined)
+                $window.location.href = '/';
+
+            var booking = JSON.parse(sessionStorage.readyForSeating);
+
+            if (booking.BookingList.length > 0) {
+                //GET LABELS
+                angular.forEach(booking.BookingList, function (trips) {
+                    trips.LabelInfo = [];
+                    if (booking.BookingList.length > 0) {
+                        $http({
+                            method: 'GET',
+                            url: apiURL + '/api/LABELLIST?OriginCode=' + trips.OriginCode + '&DestinationCode=' + trips.DestinationCode + '&DateJourney=' + trips.DateJourney + '&TrainNumber=' + trips.TrainNumber + '&CoachCode=' + trips.CoachCode
+                        }).then(function onSuccess(response) {
+                            //GET ALL SEATS
+                            if (response.data.length > 0) {
+                                //GET SLOTS
+                                var count = 1;
+                                angular.forEach(response.data, function (label) {
+                                    var LabelInfo = { LabelName: label.LABEL_NAME };
+                                    trips.LabelInfo.push(LabelInfo);
+
+                                    if (count == 1)//Populate seatings for the first label found
+                                        $scope.getSeats(trips.OriginCode, trips.DestinationCode, trips.DateJourney, trips.TrainNumber, trips.CoachCode, label.LABEL_NAME);
+                                    count++;
+
+                                    if (trips.CurrentShowLabel == null || trips.CurrentShowLabel == undefined)
+                                        trips.CurrentShowLabel = label.LABEL_NAME;
+                                });
+                            }
+                        }).catch(function onError(response) {
+                            console.log(response);
+                            growl.error(response.statusText, { title: 'ERROR!' });
+                        });
+                    }
+                });
+                console.log(booking);
+                $scope.BookingInfoWithLabel = booking;
+            }
+            else
+                $window.location.href = '/ticket/passenger';
+        };
+
+        $scope.getSeats = function (origin, destination, datejourney, trainnumber, coachcode, label) {
+            console.log("TicketController.getSeats triggered.");
+            console.log(origin + ', ' + destination + ', ' + datejourney + ', ' + trainnumber + ', ' + coachcode + ', ' + label);
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/SLOTLIST?OriginCode=' + origin + '&DestinationCode=' + destination + '&DateJourney=' + datejourney + '&TrainNumber=' + trainnumber + '&CoachCode=' + coachcode + '&Label=' + label
+            }).then(function onSuccess(response) {
+                var seats = [];
+                var x = 1;
+                var tempSeatList = [];
+                var seatByRow = { SeatList: [] };
+                console.log(response);
+                angular.forEach(response.data, function (seating) {
+                    //Need some algo on seat arrangement here...  
+                    if (seating.SORT == x) {
+                        tempSeatList.push(seating);
+                    }
+                    else {
+                        seatByRow.LabelCode = label;
+                        seatByRow.OriginCode = origin;
+                        seatByRow.DestinationCode = destination;
+                        seatByRow.Row = x;
+                        seatByRow.SeatList = tempSeatList;
+                        seats.push(seatByRow);
+                        seatByRow = { SeatList: [] };
+
+                        while (seating.SORT != x)
+                            x++;
+
+                        tempSeatList = [];//Override value
+                        tempSeatList.push(seating);
+                    }
+                });
+
+                console.log(seats);
+
+                var booking = $scope.BookingInfoWithLabel;
+                angular.forEach(booking.BookingList, function (trips) {
+                    if (trips.OriginCode == origin && trips.DestinationCode == destination) {
+                        trips.AllSeats = seats;
+                    }
+                });
+
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.checkSeatCount = function ($event) {
+            console.log("TicketController.checkSeatCount triggered.");
+            //Check max seat selected for the selected trips
+
+            if ($event.target.checked) {
+                //Retrieve info from checkbox id
+                var chckbxid = $event.target.id;
+                var originCode = $event.target.id.split('_')[0];
+                var destinationCode = $event.target.id.split('_')[1];
+                var labelCode = $event.target.id.split('_')[2];
+                var seatCode = $event.target.id.split('_')[3];
+
+                var currentSelection = [];
+                var selectCnt = 0;
+                var totalSeatSelected = 0;
+                angular.forEach($scope.selectedSeat, function (value, key) {
+                    var origin = key.split('_')[0];
+                    var destination = key.split('_')[1];
+                    if (value && origin == originCode && destination == destinationCode) {
+                        selectCnt++;
+                        currentSelection.push({ Label: key.split('_')[2], Slot: key.split('_')[3] });
+                    }
+
+                    if (value)
+                        totalSeatSelected++;
+                });
+
+                var totalSeatNeeded = 0;
+                angular.forEach($scope.BookingInfoWithLabel.BookingList, function (booking) {
+                    totalSeatNeeded = totalSeatNeeded + booking.PaxList.length;
+                    if (booking.OriginCode == originCode && booking.DestinationCode == destinationCode) {
+                        //Cancel checked - already at limit
+                        if (selectCnt > booking.PaxList.length)
+                            $scope.selectedSeat[chckbxid] = false;
+
+                        //Store n show label name n slot id
+                        var i = 0;
+                        angular.forEach(booking.PaxList, function (person) {
+                            if (currentSelection[i] != undefined) {
+                                person.LABELNAME = currentSelection[i].Label;
+                                person.SLOTID = currentSelection[i].Slot;
+                            }
+                            i++;
+                        });
+                    }
+                });
+
+                //Finally, check to enable/disable the proceed button
+                if (totalSeatSelected >= totalSeatNeeded) {
+                    $scope.readyToProceed = true;
+                }
+                else
+                    $scope.readyToProceed = false;
+
+            }
+        };
+
+        $scope.confirmBooking = function () {
+            console.log("TicketController.confirmBooking triggered.");
+            var booking = $scope.BookingInfoWithLabel;
+            booking.AutoSelectSeat = false;
+            console.log(booking);
+
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/VERIFYSLOT',
+                data: JSON.stringify(booking),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.ERROR.length > 0 || response.data.SLOTERROR.length > 0) {
+                    angular.forEach(response.data.ERROR, function (error) {
+                        growl.error(error, { title: 'ERROR!' });
+                    });
+
+                    angular.forEach(response.data.SLOTERROR, function (error) {
+                        growl.error(error, { title: 'ERROR!' });
+                    });
+                }
+                else {
+                    console.log('---FINAL VERIFICATION---');
+                    console.log(response.data);
+                    $http({
+                        method: 'POST',
+                        url: apiURL + '/api/CONFIRMSLOT',
+                        data: JSON.stringify(booking),
+                        headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                    }).then(function onSuccess(response) {
+                        console.log(response.data);
+                        if (response.data.ERROR.length > 0 || response.data.SLOTERROR.length > 0) {
+                            angular.forEach(response.data.ERROR, function (error) {
+                                growl.error(error, { title: 'ERROR!' });
+                            });
+
+                            angular.forEach(response.data.SLOTERROR, function (error) {
+                                growl.error(error, { title: 'ERROR!' });
+                            });
+                        }
+                        else {
+                            console.log('---CONFIRMATION---');
+                            console.log(response.data);
+                            booking.ConfirmationResult = response.data;
+                            console.log(booking);
+                            sessionStorage.bookingConfirmation = JSON.stringify(booking);
+                            $window.location.href = '/ticket/confirmation';
+                        }
+                    }).catch(function onError(response) {
+                        growl.error(response.statusText, { title: 'ERROR!' });
+                    });
+                }
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+
+        };
+
+        $scope.finalConfirmation = function () {
+            console.log("TicketController.finalConfirmation triggered.");
+            if (sessionStorage.bookingConfirmation === null || sessionStorage.bookingConfirmation === undefined)
+                $window.location.href = '/';
+
+            var confirmation = JSON.parse(sessionStorage.bookingConfirmation);
+            $scope.FinalConfirmation = confirmation;
+            console.log($scope.FinalConfirmation);
+
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/TICKETTYPELIST?DateJourney=' + confirmation.BookingList[0].DateJourney,
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                $scope.ticketTypeList = response.data;
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.paymentGateway = function () {
+            console.log("TicketController.paymentGateway triggered.");
+            sessionStorage.bookingConfirmation = JSON.stringify($scope.FinalConfirmation);
+            $window.location.href = apiURL + '/paymentgateway.aspx?devcode=112233&amount=' +
+                $scope.FinalConfirmation.ConfirmationResult.FINALCHARGE.replace('MYR ', '') + '&refid=' +
+                $scope.FinalConfirmation.ConfirmationResult.REFID.replace('MYR ', '') + '&securitytoken=' +
+                encodeUriQuery($scope.FinalConfirmation.SecurityToken);
+        };
+
+        $scope.getTicket = function () {
+            console.log("TicketController.getTicket triggered.");
+            $rootScope.spinnerShow = true;
+            var confirmation = JSON.parse(sessionStorage.bookingConfirmation);
+
+            if (confirmation == null || confirmation == undefined)
+                $window.location.href = '/';
+
+            var data = {
+                RefId: confirmation.ConfirmationResult.REFID,
+                securitytoken: $cookies.get('UI_TOKEN')
+            };
+
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/CHECKTRANSACTIONSTATUS',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+
+                if (response.data.ErrorList != null)
+                    $window.location.href = '/';
+
+                $scope.PrintTicket = response.data;
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                $rootScope.spinnerShow = false;
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+        ///////////////////////////////////////////////////////// SHARED FUNCTION //////////////////////////////////////////////
+
+        function encodeUriQuery(val, pctEncodeSpaces) {
+            return encodeURIComponent(val).
+              replace(/%40/gi, '@').
+              replace(/%3A/gi, ':').
+              replace(/%24/g, '$').
+              replace(/%2C/gi, ',').
+              replace(/%20/g, (pctEncodeSpaces ? '%20' : '+'));
+        }
+
+        function getUrlParameter(param, path) {
+            var sPageURL = path || window.location.search.substring(1),
+                sURLVariables = sPageURL.split(/[&||?]/),
+                res;
+
+            for (var i = 0; i < sURLVariables.length; i += 1) {
+                var paramName = sURLVariables[i],
+                    sParameterName = (paramName || '').split('=');
+
+                if (sParameterName[0] === param) {
+                    res = sParameterName[1];
+                }
+            }
+            return res;
+        }
+
+        String.prototype.toDate = function (format, delimiter) {
+            var date = this;
+            var formatedDate = null;
+            var formatLowerCase = format.toLowerCase();
+            var formatItems = formatLowerCase.split(delimiter);
+            var dateItems = date.split(delimiter);
+            var monthIndex = formatItems.indexOf("mm");
+            var monthNameIndex = formatItems.indexOf("mmm");
+            var dayIndex = formatItems.indexOf("dd");
+            var yearIndex = formatItems.indexOf("yyyy");
+            var d = dateItems[dayIndex];
+            if (d < 10) {
+                d = "0" + d;
+            }
+            if (monthIndex > -1) {
+                var month = parseInt(dateItems[monthIndex]);
+                month -= 1;
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                formatedDate = new Date(dateItems[yearIndex], month, d);
+            } else if (monthNameIndex > -1) {
+                var monthName = dateItems[monthNameIndex];
+                month = getMonthIndex(monthName);
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                formatedDate = new Date(dateItems[yearIndex], month, d);
+            }
+            return formatedDate;
+        };
+
+        function getMonthIndex(name) {
+            name = name.toLowerCase();
+            if (name == "jan" || name == "january") {
+                return 0;
+            } else if (name == "feb" || name == "february") {
+                return 1;
+            } else if (name == "mar" || name == "march") {
+                return 2;
+            } else if (name == "apr" || name == "april") {
+                return 3;
+            } else if (name == "may" || name == "may") {
+                return 4;
+            } else if (name == "jun" || name == "june") {
+                return 5;
+            } else if (name == "jul" || name == "july") {
+                return 6;
+            } else if (name == "aug" || name == "august") {
+                return 7;
+            } else if (name == "sep" || name == "september") {
+                return 8;
+            } else if (name == "oct" || name == "october") {
+                return 9;
+            } else if (name == "nov" || name == "november") {
+                return 10;
+            } else if (name == "dec" || name == "december") {
+                return 11;
+            }
+        }
+
+        function convertDate(dateString) {
+            //This function only support this format - dd/MM/yyyy HH:mm
+            var reggie = /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/;
+            var dateArray = reggie.exec(dateString);
+            var dateObject = new Date(
+                (+dateArray[3]),
+                (+dateArray[2]) - 1, // Careful, month starts at 0!
+                (+dateArray[1]),
+                (+dateArray[4]),
+                (+dateArray[5])
+            );
+            return dateObject;
+        }
+
+    }]);
+
+})();

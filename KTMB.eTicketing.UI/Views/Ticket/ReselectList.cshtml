@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Reselect List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div ng-controller="TicketController as userCtrl" ng-init="checkAccess();"></div>
+<div ng-controller="TicketController as userCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="{{UIURL}}"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li>
+            Reselect Ticket List
+        </li>
+    </ol>
+    <h2>Reselect Ticket List</h2>
+
+    <br>
+
+    <div class="row">
+        <div class="col-md-12" ng-init="getReselectTicket()"> 
+            <table datatable="ng" dt-options="dtOptions" class="table table-bordered">
+                <thead>
+                    <tr>
+                        @*<th>Reference Id </th>*@
+                        <th>Ticket Id</th>
+                        <th>Booking Date</th>
+                        @*<th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Origin</th>
+                        <th>Destination</th>*@
+                        <th>Bank Type</th>
+                        <th>Payment Type</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="booking in reselectList.reselectTicketList | orderBy :'+RefId'">
+                        <td style="width:85px">{{booking.REFID}}</td>                       
+                        <td style="width:85px">{{booking.BOOKINGDATE | date:'dd/MM/yyyy' | limitTo : 16}} </td>
+                        <td style="width:85px">{{booking.BANKTYPE}}</td>
+                        <td style="width:85px">{{booking.PAYMENTTYPE}}</td>
+                        <td style="width:85px">{{booking.AMOUNT}}</td>
+
+                        @*<td>
+                            <span ng-repeat="ticket in booking.TicketList">
+                                {{ticket.TicketId}}<br />
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-repeat="ticket in booking.TicketList">
+                                {{ticket.TarikhBook | date:'dd/MM/yyyy' | limitTo : 16}} <br />
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-repeat="ticket in booking.TicketList">
+                                {{ticket.Departure}}<br />
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-repeat="ticket in booking.TicketList">
+                                {{ticket.Arrival}}<br />
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-repeat="ticket in booking.TicketList">
+                                {{ticket.Origin}}<br />
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-repeat="ticket in booking.TicketList">
+                                {{ticket.Destination}}<br />
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-repeat="ticket in booking.TicketList">
+                                {{ticket.TrainNo}}<br />
+                            </span>
+                        </td>*@
+                        <td  style="width:85px">
+                            <a href="{{UIURL}}/ticket/reselectseat?refid={{booking.REFID}}"><i class="btn btn-search2-travel"></i> Get Ticket</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

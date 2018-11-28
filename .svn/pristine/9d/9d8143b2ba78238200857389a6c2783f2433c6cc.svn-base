@@ -1,0 +1,123 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace KTMB.eTicketing.UI.Controllers
+{
+    public class UserController : Controller
+    {
+        // GET: User
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult RegisterAdmin()
+        {
+            return View();
+        }
+
+        public ActionResult UnlockUser()
+        {
+            return View();
+        }
+
+        public ActionResult ViewBooking()
+        {
+            return View();
+        }
+        
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        public ActionResult ManageFavorite()
+        {
+            return View();
+        }
+
+        public ActionResult MyProfile()
+        {
+            return View();
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        public ActionResult AgentReport()
+        {
+            return View();
+        }
+
+        public ActionResult UserDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult WRPT1006()
+        {
+            return View();
+        }
+
+        public ActionResult WRPT1000()
+        {
+            return View();
+        }
+
+        public ActionResult RPTDISC()
+        {
+            return View();
+        }
+
+        public ActionResult RPTBANK()
+        {
+            return View();
+        }
+
+        public ActionResult RPTAGENT()
+        {
+            return View();
+        }
+
+        public ActionResult RPTUSER()
+        {
+            return View();
+        }
+
+        public ActionResult RPTSUMMARY()
+        {
+            return View();
+        }
+
+        public ActionResult AdminDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult AdminLogin()
+        {
+            return View();
+        }
+
+        public ActionResult DiscountSetting()
+        {
+            return View();
+        }
+
+        public ActionResult ParameterSetting()
+        {
+            return View();
+        }
+
+    }
+}

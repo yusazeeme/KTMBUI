@@ -1,0 +1,44 @@
+﻿(function () {
+    var app = angular.module('cms', []);
+
+    app.controller('CMSController', ["$scope", "$http", 'growl', '$window', 'baseURL', '$rootScope', '$location', 'x2js', 'devLogin', function ($scope, $http, growl, $window, baseURL, $rootScope, $location, x2js, devLogin) {
+        console.log("CMSController logged on.");
+
+        var cms = {};
+
+        $scope.testXMLtoJSON = function () {
+            console.log("CMSController.testXMLtoJSON triggered.");
+            var c = {};
+            c.xxx = {};
+            c.xxx.key = 'zahidah';
+            c.xxx.key2 = 'farhanah';
+            var bbb = x2js.json2xml_str(c);//Convert JSON to XML
+            console.log(bbb);
+            console.log(x2js.xml_str2json(bbb));//Convert XML back to JSON
+        };
+
+        $scope.getCMS = function (pagename) {
+            $rootScope.spinnerShow = true;
+            console.log("CMSController.getCMS triggered.");
+            var token = devLogin;
+            console.log(token);
+            if (devLogin != undefined) {
+                var requiredParam = { securitytoken: token, pagename: pagename };
+                $http({
+                    method: 'POST',
+                    url: baseURL + '/api/GETCMS',
+                    data: JSON.stringify(requiredParam),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                    $rootScope.spinnerShow = false;
+                });
+            }            
+        };
+        
+    }]);
+
+})();

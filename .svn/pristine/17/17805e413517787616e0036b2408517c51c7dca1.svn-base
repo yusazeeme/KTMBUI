@@ -1,0 +1,55 @@
+.top_bar_travel {
+    background-color: #ff5252 !important;
+}
+.top_email ul li a {
+    color: #000000 !important;
+}
+
+.navbar-inverse {
+    background-color: #ff5252 !important;
+}
+.navbar-inverse .navbar-nav li a i {
+    color: #000000 !important;
+}
+
+.navbar-inverse .navbar-nav li a {
+    color: #000000 !important;
+}
+
+.inner-body {
+    background-color: #ff5252 !important;
+}
+
+.our-work-wrapper {
+    background-color: #ff5252 !important;
+}
+
+.our-work p {
+    color: #000000 !important;
+}
+
+.our-work h4 {
+    color: #000000 !important;
+}
+
+.main-footer .footer-bottom {
+    background-color: #ff5252;
+    color:  #000000;
+}
+
+.main-footer {
+        color:  #000000 !important;
+    background-color: #ff5252 !important;
+}
+.main-footer .inner-footer1 h4 {
+    color: #000000 !important;
+}
+.main-footer .footer-content {
+    color: #000000 !important;
+}
+.main-footer .footer-text {
+    color: #000000 !important;
+}
+.main-footer .list-of-nav ul li a {
+    color: #000000 !important;
+}

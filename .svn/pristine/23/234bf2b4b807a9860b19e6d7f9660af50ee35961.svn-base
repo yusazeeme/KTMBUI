@@ -1,0 +1,107 @@
+﻿using KTMB.eTicketing.UI.DataLayer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KTMB.eTicketing.UI.BusinessLayer
+{
+    public class ContentManagement
+    {
+        public static List<ContentObj> GetContent()
+        {
+            var list = new List<ContentObj>();
+            using (var context = new KTMBEntities())
+            {
+                var menu = context.ost_menu.Where(i => i.parent_id == 0).ToList();//Root menu
+                foreach (var m in menu)
+                {
+                    list.Add(GetContent(m.id));
+                }
+            }
+            return list;
+        }
+
+        public static ContentObj GetContent(int id)
+        {
+            using (var context = new KTMBEntities())
+            {
+                var menu = context.ost_menu.Where(i => i.id == id).FirstOrDefault();
+                var submenu = context.ost_menu.Where(i => i.parent_id == menu.id).ToList();
+                var article = context.ost_articles.Where(i => i.menu_id == menu.id).FirstOrDefault();
+                var subContent = new List<ContentObj>();
+
+                foreach (var item in submenu)
+                {
+                    subContent.Add(GetContent(item.id));
+                }
+
+                var content = new ContentObj()
+                {
+                    Menu = menu,
+                    Article = article,
+                    SubContent = subContent
+                };
+                return content;
+            }
+        }
+
+        public static List<MenuObj> GetMenu()
+        {
+            var list = new List<MenuObj>();
+            using (var context = new KTMBEntities())
+            {
+                var menu = context.ost_menu.Where(i => i.parent_id == 0).Where(c => c.type != "cms").ToList();//Root menu
+                foreach (var m in menu)
+                {
+                    list.Add(GetMenu(m.id));
+                }
+            }
+            return list;
+        }
+
+        public static MenuObj GetMenu(int id)
+        {
+            using (var context = new KTMBEntities())
+            {
+                var menu = context.ost_menu.Where(i => i.id == id).Where(c => c.type != "cms").FirstOrDefault();
+                if (menu != null)
+                {
+                    var _submenu = context.ost_menu.Where(i => i.parent_id == menu.id).Where(c => c.type != "cms").ToList();
+                    var submenu = new List<MenuObj>();
+
+                    foreach (var item in _submenu)
+                    {
+                        submenu.Add(GetMenu(item.id));
+                    }
+
+                    var content = new MenuObj()
+                    {
+                        Menu = menu,
+                        SubMenu = submenu
+                    };
+                    return content;
+                }
+
+                return null;
+                
+            }
+        }
+
+    }
+
+    public class ContentObj
+    {
+        public ost_menu Menu { get; set; }
+        public ost_articles Article { get; set; }
+        public ost_board Board { get; set; }
+        public List<ContentObj> SubContent { get; set; }
+    }
+
+    public class MenuObj
+    {
+        public ost_menu Menu { get; set; }
+        public List<MenuObj> SubMenu { get; set; }
+    }
+}

@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "Content";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body" ng-controller="CMSController as cmsCtrl" ng-init="getContent(@ViewBag.Id)">
+    <div ng-show="content.Menu.type!='lain' && content.ArticleFamily.length < 2">
+        <div class="container">
+            <!--start breadcrumb-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="bread-crumb">
+                        <ol class="breadcrumb pull-right">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="javascript:;">About Us</a></li>
+                            <li class="active">Corporate Profile</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!--end breadcrumb-->
+        </div>
+
+        <!--start content-->
+        <div class="container" ng-show="content.Menu.url=='portal/full'">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="team-about-us animate-reveal">
+                        <h2>{{content.Article.title_en}}</h2>
+                    </div>
+                    <center ng-show="bod.param.filePath"><img ng-src="{{bod.param.filePath}}" alt="team" class="img-responsive"></center>
+                </div>
+                <div class="col-sm-12">
+                    <div ng-bind-html="content.Article.content_en"></div>
+                </div>
+            </div>
+        </div>
+        <!--end content-->
+
+        <div class="container railway-font" ng-show="content.Menu.url=='portal/left'">
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <div class="team-about-us animate-reveal">
+                        <h2>{{content.Article.title_en}}</h2>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-xs-12">
+                    <div class="left-group">
+                        <div class="list-group left-menu">
+                            <a ng-class="{ 'list-group-item hvr-skew': sibling.Menu.id != @ViewBag.Id, 'list-group-item hvr-skew active': sibling.Menu.id == @ViewBag.Id }" class="list-group-item hvr-skew " href="/portal/content/{{sibling.Menu.id}}"
+                               ng-repeat="sibling in siblings.SubMenu"><h5 class="nospace"><b>{{sibling.Menu.title_en}}</b></h5></a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div ng-bind-html="content.Article.content_en"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- For media release, content.Menu.type = 'atas' -> need to change to 'lain' in order to allow this section to be generated -->
+    <!-- Content.ArticleFamily.length > 1 condition can be later removed after changes above is amended -->
+    <div ng-show="content.Menu.type=='lain' || content.ArticleFamily.length > 1">
+        <div class="container">
+            <div class="row">
+                <!--start breadcrumb-->
+                <!--<div class="row">-->
+                <div class="col-md-12">
+                    <div class="bread-crumb">
+                        <h2>{{content.Menu.title_my}}</h2>
+                        <ol class="breadcrumb pull-right">
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active">Tender & Quotation</li>
+                        </ol>
+                    </div>
+                </div>
+                <!--</div>-->
+                <!--end breadcrumb-->
+                <!--start table media release-->
+                <div class="col-md-12">
+                    <div class="panel panel-default table-panel">
+                        <!--<div class="panel-heading">&nbsp;</div>-->
+                        <div class="panel-body">
+                            <div class="table-content-box">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th style="text-align: center; min-width:160px">Document Date</th>
+                                            <th><i class="fa fa-file-text" aria-hidden="true"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in content.ArticleFamily">
+                                            <td>{{item.title_my}}</td>
+                                            <td style="text-align: center; min-width:160px" ng-bind="item.doc_date | date:'MMM dd, yyyy'"></td>
+                                            <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="http://intranet4.ktmb.com.my{{item.url}}"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end table media release-->
+            </div>
+        </div>
+    </div>
+
+    <br /><br />
+</div>
+<!--inner body end from here-->

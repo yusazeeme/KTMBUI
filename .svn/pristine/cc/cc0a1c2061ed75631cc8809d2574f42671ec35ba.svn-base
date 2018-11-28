@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "KTMB - Payment Fail";
+    Layout = null;
+}
+
+<!DOCTYPE HTML>
+<html ng-app="KTMB">
+<head>
+    <title>KTMB - Payment Fail</title>
+    <link href="~/Content/payment-failure/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Angular Growl CSS -->
+    <link href="~/Content/assets/css/angular-growl.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Loaders CSS -->
+    <link href="~/Content/assets/css/loaders.min.css" rel="stylesheet">
+
+    <link href="~/Content/payment-failure/css/style.css?r=@DateTime.Now" rel="stylesheet" type="text/css" media="all" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="ktmb failure payment" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+    <div growl></div>
+    <!-- header -->
+    <div class="banner" ng-controller="TicketController as ticketCtrl" ng-init="getTicket(@ViewBag.Id)">
+        <div class="container">
+            
+            <div class="banner-info">
+
+                <div class="logo">
+                    <img src="~/Content/payment-failure/images/ktmb.png">
+                </div>
+                <center><img src="~/Content/payment-failure/images/icon2.png"></center>
+                <h5>Sorry, your payment is unsuccessful...</h5>
+                <br>
+                <div class="white">
+                    <p>
+                        <br>
+                        <br>
+                        <a ng-href="{{UIURL}}" class="btn btn-default">Go Back to Portal KTMB</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--page loader-->
+    <div class="loader" ng-show="spinnerShow">
+        <div class="square-spin">
+            <div>
+            </div>
+        </div>
+    </div>
+
+    <!-- header -->
+
+    <!-- jQuery 2.2.4 -->
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+
+    <script src="~/Content/admin/assets/js/datatables/datatables.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="~/Content/assets/js/bootstrap.min.js"></script>
+
+    <!-- Angular JS -->
+    <script src="~/Content/assets/js/angular.min.js"></script>
+    <script src="~/Content/assets/js/angular-cookies.js"></script>
+    <script src="~/Content/assets/js/angular-growl.min.js"></script>
+    <script src="~/AppJS/app.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/lookup.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/ticket.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/user.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/cms.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/coach.js?r=@DateTime.Now"></script>
+    <script src="~/AppJS/marketing.js?r=@DateTime.Now"></script>
+    <script src="~/Content/assets/js/angular-filter.min.js"></script>
+    <script src="~/Content/assets/js/angular-sanitize.min.js"></script>
+    <script src="~/Content/assets/js/angular-animate.js"></script>
+    <script src="~/Content/assets/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="~/Content/assets/js/angular-base64-upload.min.js"></script>
+    <script src="~/AppJS/datehandler.js?r=@DateTime.Now"></script>
+    <script src="~/Content/admin/assets/angular-datatables/angular-datatables.min.js"></script>
+    <script src="~/Content/admin/assets/angular-datatables/angular-datatables.buttons.js"></script>
+
+    <!-- QR Generator -->
+    <script src="~/Content/assets/qrcode/qrcode.js"></script>
+    <script src="~/Content/assets/qrcode/qrcode_UTF8.js"></script>
+    <script src="~/Content/assets/qrcode/angular-qrcode.js"></script>
+
+</body>
+</html>
+

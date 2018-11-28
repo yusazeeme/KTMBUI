@@ -1,0 +1,487 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+
+<div ng-controller="CMSController as cmsCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="index.html"><i class="fa-home"></i>Home</a>
+        </li>
+        <li>
+            <a href="forms-main.html">Forms</a>
+        </li>
+        <li class="active">
+            <strong>Home Page</strong>
+        </li>
+    </ol>
+
+    <h2>Home Page</h2>
+    <br />
+    <!--Start of image slider-->
+    @*<div class="row" ng-init="getCMS('home_page', 'image_slider', false)">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Image Slider
+                    </div>
+                    <div class="panel-options">
+                        <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="javascript:;" onclick="jQuery('#modal-1').modal('show');" class="btn btn-default">Add New</a>
+                            </div>
+                        </div>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Image Name</th>
+                                    <th>Image File</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody ng-show="image_slider.length">
+                                <tr ng-repeat="image in image_slider">
+                                    <td>{{image.param.title}}</td>
+                                    <td ng-show="image.param.filePath"><img ng-src="{{image.param.filePath}}" width="50%" /></td>
+                                    <td>
+                                        <a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" ng-click="getSingleModel('image_slider', image_slider, image.pkcolumn)">Update</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-1" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(image_slider, 'home_page', 'image_slider', false, false)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Image Slider</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Image Title</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="image_slider.param.title" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">File Upload</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" ng-upload-change="fileUpload($event)" required />
+                                    <label for="field-1" class="col-sm-3 control-label">{{uploadedFile.fileName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-2" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(image_slider, 'home_page', 'image_slider', true, true)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="getCMS('home_page', 'image_slider', false)">&times;</button>
+                        <h4 class="modal-title">Update Image Slider</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Image Title</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ng-model="image_slider.param.title" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">File Upload</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" ng-upload-change="fileUpload($event)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Uploaded File</label>
+                            <div class="col-sm-9">
+                                <a ng-href="{{image_slider.param.filePath}}">
+                                    <label for="field-1" class="col-sm-3 control-label">{{image_slider.param.fileName}}</label>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="getCMS('home_page', 'image_slider', false)">Close</button>
+                        <button type="submit" class="btn btn-info">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>*@
+
+    <!--End of image slider-->
+    @*</div>*@
+
+    <!--Start of mobile app-->
+    @*<div class="row" ng-init="getCMS('home_page', 'mobile_app', true)">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Mobile Apps
+                    </div>
+                    <div class="panel-options">
+                        <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(mobile_app, 'home_page', 'mobile_app', true, false)">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Title</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" ng-model="mobile_app.param.title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Mobile App Link</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" ng-model="mobile_app.param.fileLink">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Image Upload</label>
+                            <div class="col-sm-5">
+                                <input type="file" class="form-control" ng-upload-change="fileUpload($event)" accept="image/*" />
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-show="mobile_app.param.filePath">
+                            <label for="field-1" class="col-sm-3 control-label">Current Image</label>
+                            <div class="col-sm-5">
+                                <img ng-src="{{mobile_app.param.filePath}}" width="100%" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-5">
+                                <button type="submit" class="btn btn-default">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <!--End of mobile app-->
+
+    <!--Start of gallery image-->
+
+    <div class="row" ng-init="getCMS('home_page', 'gallery_image', false)">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Gallery Image
+                    </div>
+                    <div class="panel-options">
+                        <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="javascript:;" onclick="jQuery('#modal-3').modal('show');" class="btn btn-default">Add New</a>
+                            </div>
+                        </div>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Image Title</th>
+                                    <th>Image Details</th>
+                                    <th>Current Image</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="gallery_image.length">
+                                <tr ng-repeat="gallery in gallery_image">
+                                    <td>{{gallery.param.title}}</td>
+                                    <td>{{gallery.param.details}}</td>
+                                    <td ng-show="gallery.param.filePath"><img ng-src="{{gallery.param.filePath}}" width="50%" /></td>
+                                    <td>
+                                        <a href="javascript:;" onclick="jQuery('#modal-4').modal('show');" ng-click="getSingleModel('gallery_image', gallery_image, gallery.pkcolumn)">Update</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-3" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(gallery_image, 'home_page', 'gallery_image', false, false)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Gallery Image</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Image Title</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="gallery_image.param.title" required></input>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Image Details</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="gallery_image.param.details" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Image File</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" ng-upload-change="fileUpload($event)" required />
+                                    <label for="field-1" class="col-sm-3 control-label">{{uploadedFile.fileName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+        @*</div>*@
+        <div class="modal fade" id="modal-4" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(gallery_image, 'home_page', 'gallery_image', true, true)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="getCMS('home_page', 'gallery_image', false)">&times;</button>
+                            <h4 class="modal-title">Update Image Gallery</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Image Title</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="gallery_image.param.title" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Image Details</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="gallery_image.param.details" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">File Upload</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" ng-upload-change="fileUpload($event)" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Uploaded File</label>
+                                <div class="col-sm-9">
+                                    <a ng-href="{{gallery_image.param.filePath}}">
+                                        <label for="field-1" class="col-sm-3 control-label">{{gallery_image.param.fileName}}</label>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="getCMS('home_page', 'gallery_image', false)">Close</button>
+                            <button type="submit" class="btn btn-info">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    <!--End of gallery image-->
+
+    <!--Start of external link-->
+    <div class="row" ng-init="getCMS('home_page', 'external_link', false)">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        External Links
+                    </div>
+                    <div class="panel-options">
+                        <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="javascript:;" onclick="jQuery('#modal-5').modal('show');" class="btn btn-default">Add New</a>
+                        </div>
+                    </div>
+                    <br />
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>Image</th>
+                                <th>URL Link</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-show="external_link.length">
+                            <tr ng-repeat="extLink in external_link">
+                                <td>{{extLink.param.title}}</td>
+                                <td>{{extLink.param.content}}</td>
+                                <td ng-show="extLink.param.filePath"><img ng-src="{{extLink.param.filePath}}" width="50%" /></td>
+                                <td>{{extLink.param.urlLink}}</td>
+                                <td>
+                                    <a href="javascript:;" onclick="jQuery('#modal-6').modal('show');" ng-click="getSingleModel('external_link', external_link, extLink.pkcolumn)">Update</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @*</div>*@
+
+        <div class="modal fade" id="modal-5" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(external_link, 'home_page', 'external_link', false, false)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">External Links</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Title</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="external_link.param.title" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Content</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="external_link.param.content" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Image Upload</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" ng-upload-change="fileUpload($event)" required />
+                                    <label for="field-1" class="col-sm-3 control-label">{{uploadedFile.fileName}}</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">URL Link</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="external_link.param.urlLink" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Add New</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="modal fade" id="modal-6" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(external_link, 'home_page', 'external_link', true, true)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="getCMS('home_page', 'external_link', false)">&times;</button>
+                            <h4 class="modal-title">Update External Link</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Title</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="external_link.param.title" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Content</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="external_link.param.content" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Image Upload</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" ng-upload-change="fileUpload($event)" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Uploaded Image</label>
+                                <div class="col-sm-9">
+                                    <a ng-href="{{external_link.param.filePath}}">
+                                        <label for="field-1" class="col-sm-3 control-label">{{external_link.param.fileName}}</label>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">URL Link</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="external_link.param.urlLink" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="getCMS('home_page', 'external_link', false)">Close</button>
+                            <button type="submit" class="btn btn-info">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    
+    <!--End of exteral link-->
+
+</div>

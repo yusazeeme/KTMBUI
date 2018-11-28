@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Our Services";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('our_services')">
+    <div class="container">
+        <div class="row">
+            <!--start breadcrumb-->
+            <!--<div class="row">-->
+            <div class="col-md-12">
+                <div class="bread-crumb">
+                    <h2>Our Services</h2>
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="/ticket/home">Home</a></li>
+                        <li><a href="javascript:;">About Us</a></li>
+                        <li class="active">Our Services</li>
+                    </ol>
+                </div>
+            </div>
+            <!--</div>-->
+            <!--end breadcrumb-->
+            <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="services in content | filter: {contenttype:'services_content'}">
+                <!--find_flight_box-->
+                <div class="find_flight_box animate-reveal">
+                    <div class="img-box">
+                        <img ng-src="{{services.param.filePath}}" alt="img">
+                    </div>
+                    <a target="_blank" ng-href="{{services.param.fileLink}}" class="clearfix">
+                        <h4>{{services.param.name}}</h4>
+                        <p>{{services.param.content}}</p>
+                        <i class="fa fa-paper-plane"></i>
+                    </a>
+                </div>
+            </div>
+            <!--end-->
+        </div>
+    </div>
+</div>
+<!--inner body end from here-->

@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "TenderQuotation";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="index.html"><i class="fa-home"></i>Home</a>
+    </li>
+    <li>
+
+        <a href="forms-main.html">Forms</a>
+    </li>
+    <li class="active">
+
+        <strong>Tender Quotation</strong>
+    </li>
+</ol>
+
+<h2>Tender Quotation</h2>
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="panel panel-primary" data-collapsed="0">
+
+            <div class="panel-heading">
+                <div class="panel-title">
+                    Default Form Inputs
+                </div>
+
+                <div class="panel-options">
+                    <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+                    <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                    <a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
+                    <a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <form role="form" class="form-horizontal form-groups-bordered">
+
+                    <div class="col-md-6">
+
+                        <h4>Bordered Table</h4>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title </th>
+                                    <th>Date Closing</th>
+                                    <th>File</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Arlind</td>
+                                    <td>Nushi</td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td>2</td>
+                                    <td>Art</td>
+                                    <td>Ramadani</td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td>3</td>
+                                    <td>Filan</td>
+                                    <td>Fisteku</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+            </div>
+            </form>
+
+        </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+

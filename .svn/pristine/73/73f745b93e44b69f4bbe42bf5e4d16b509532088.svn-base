@@ -1,0 +1,424 @@
+﻿
+@{
+    ViewBag.Title = "Passenger";
+}
+
+<style>
+    .booking_detail .select_booking {
+        color: black;
+        font-weight: 900;
+    }
+</style>
+
+<div class="container" ng-controller="TicketController as ticketCtrl" ng-init="getTicketType(); getBooking();">
+    <div class="row" ng-init="checkIsUserLogIn()">
+        <div class="col-md-12" style="margin:5% 0;">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li>
+                        <a href="{{UIURL}}" class="active"> <span class="step">1</span> <span class="title">Search Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="{{previousURL}}"> <span class="step">2</span> <span class="title">Select Train</span> </a>
+                    </li>
+                    <li class="active">
+                        <a href="#"> <span class="step">3</span> <span class="title">Passenger Info</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">4</span> <span class="title">Select Seat</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">5</span> <span class="title">Payment</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <!--wajib ada-->
+        <header></header>
+        <!--Start Departure-->
+
+        <form name="passInfo" ng-init="PopulateField()" ng-submit="autoseat ? verifyPassengerAutoSeat(passenger) : verifyPassenger(passenger)">
+            <div class="col-md-12">
+                <!--start content and scrolling-->
+                <main class="clearfix">
+                    <!--start sidebar-->
+                    <aside id="sidebar">
+                        <div class="inside">
+                            <div class="flight_detail_sidebar white-box">
+                                <div class="details-text">
+                                    <h4>
+                                        Journey Summary
+                                        <br />
+                                        <small ng-show="!booked.IsReturn"> (One Way)</small>
+                                        <small ng-show="booked.IsReturn"> (Return)</small>
+                                        <br />
+                                    </h4>
+                                </div>
+                                <div class="railway-font">
+                                    <small>GRAND TOTAL (MYR)</small>
+                                    <div class="alert alert-info">
+                                        <h2 class="price-info">
+                                            {{ ((AdultPriceBreakdown | sumByColumn: 'Price') + (ChildPriceBreakdown | sumByColumn: 'Price')) | number:2 }}
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div ng-repeat="trip in booked.bookedList | orderBy :'+_DepartureTime' track by $index">
+                                    <hr />
+                                    <div class="title-direction">
+                                        <h4>{{trip.OriginName}} - {{trip.DestinationName}}</h4>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-subway"></i>
+                                            Train No.
+                                            <span class="pull-right">
+                                                {{trip.TrainNumber}} - {{trip.TrainName}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-subway"></i>
+                                            Coach Type
+                                            <span class="pull-right">
+                                                {{trip.CoachCode}} - {{trip.CoachName}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-clock-o"></i>
+                                            Departure
+                                            <span class="pull-right">
+                                                {{trip.DepartureTime}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-clock-o"></i>
+                                            Arrival
+                                            <span class="pull-right">
+                                                {{trip.ArrivalTime}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <h4>
+                                        <a data-toggle="collapse" href="#FC{{$index}}" aria-expanded="true">
+                                            <small>Fare &amp; Charges </small><div class="caret"></div>
+                                        </a>
+                                    </h4>
+                                    <div class="collapse in" id="FC{{$index}}" aria-expanded="true" role="button">
+                                        <div class="LTT">
+                                            <span class="skin-clr">
+                                                Fare:
+                                                <span ng-repeat="apd in AdultPriceBreakdown | filter: { Departure: trip.DepartureTime }">
+                                                    <span class="pull-right">
+                                                        {{apd.Name | limitTo:18}} : {{apd.Price.replace('MYR', '')}} MYR
+                                                    </span><br />
+                                                </span>
+                                                <span ng-repeat="cpd in ChildPriceBreakdown | filter: { Departure: trip.DepartureTime }">
+                                                    <span class="pull-right">
+                                                        {{cpd.Name | limitTo:18}} : {{cpd.Price.replace('MYR', '')}} MYR
+                                                    </span><br />
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="LTT">
+                                            <span class="skin-clr">
+                                                Total
+                                                <span class="pull-right">
+                                                    {{ ((AdultPriceBreakdown | filter: { Departure: trip.DepartureTime } | sumByColumn: 'Price') + (ChildPriceBreakdown | filter: { Departure: trip.DepartureTime } | sumByColumn: 'Price')) | number:2 }} MYR
+                                                </span>
+                                            </span>
+                                        </div>
+                                        @*<div class="LTT">
+                                                <small>*price inclusive with charges &amp; GST</small>
+                                            </div>*@
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="railway-font">
+                                    <input type="submit" class="btn btn-proceed-travel btn-lg" ng-click="autoseat=false" value="Select Seat(s) &raquo;" />
+                                    <button type="submit" class="btn btn-proceed-travel btn-lg" ng-click="autoseat=true">
+                                        Proceed to Payment &raquo;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                    <!--end sidebar-->
+                    <!-- start main content-->
+                    <div class="main_content" id="content">
+                        <div class="main_content" id="content" ng-init="getFavoriteList()">
+
+                            <div class="booking_detail white-box animate-reveal" ng-repeat="i in getNumber(numberOfAdult) track by $index">
+                                <h4>Adult Passenger #{{$index+1}}</h4>
+                                <div class="form-check pull-right" ng-show="userinfo.UserType!='Guest'">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" ng-model="passenger.adult[($index+1)].saveFav">
+                                        Save as favorite
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" ng-show="FavoriteList.length && userinfo.UserType!='Guest'">
+                                        <select class="select_booking"
+                                                ng-model="favSelect" ng-change="getFav(favSelect,$index,true)"
+                                                ng-options="fav.IC as fav.FullName for fav in FavoriteList">
+                                            <option value=''>Select from favorite list</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" maxlength="50" class="form-control" placeholder="Enter Name.." ng-model="passenger.adult[($index+1)].name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" maxlength="12" class="form-control" placeholder="Enter I/C or Passport.." ng-model="passenger.adult[($index+1)].icpassport" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" ng-show="passenger.adult[($index+1)].icpassport.length < 12">
+                                        <div class="form-group" ng-controller="DateController">
+                                            <input type="text" class="form-control" placeholder="Date of Birth"
+                                                   uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="passenger.adult[($index+1)].dob"
+                                                   is-open="popup1.opened" ng-required="passenger.adult[($index+1)].icpassport.length < 12"
+                                                   close-text="Close" alt-input-formats="altInputFormats" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="select_booking" ng-init="!passenger.adult[($index+1)].tickettype ? (passenger.adult[($index+1)].tickettype = '1') : passenger.adult[($index+1)].tickettype"
+                                                ng-model="passenger.adult[($index+1)].tickettype" ng-disabled="userinfo.UserType=='Guest' || passenger.adult[($index+1)].icpassport.length < 12 || !passenger.adult[($index+1)].icpassport"
+                                                ng-options="ticketType.CODE as ticketType.DESCRIPTION for ticketType in ticketTypeList"
+                                                ng-change="updateFare(passenger)" required></select>
+                                    </div>
+                                    <div class="col-md-6" ng-show="passenger.adult[($index+1)].tickettype == '28' || passenger.adult[($index+1)].tickettype == '15'">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Card No.." ng-model="passenger.adult[($index+1)].konsesiid" ng-required="passenger.adult[($index+1)].tickettype == '28' || passenger.adult[($index+1)].tickettype == '15'">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="font-family: 'Raleway', sans-serif; font-size: 14px;">
+                                        <div class="passenger_gender">
+                                            <div class="radio-inline">
+                                                <b>Gender:</b>
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" ng-model="passenger.adult[($index+1)].gender" name="adultgender_{{$index}}" value="M" required>Male
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" ng-model="passenger.adult[($index+1)].gender" name="adultgender_{{$index}}" value="F" required>Female
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6" style="font-family: 'Raleway', sans-serif; font-size: 10px; color:red;">
+                                        <ul>
+                                            <li>  Senior Citizen : Malaysian, age 60 years and above</li>
+                                            <li>  Disabled : Malaysian, registered with Jabatan Kebajikan Masyarakat Malaysia (JKMM)</li>
+                                            <li> KTMB iCard : registered with KTMB iCard</li>
+                                            <li>  *Identity Card, KTMB iCard and OKU Card (JKMM) must be presented upon boarding and tickets inspection at all time</li>
+                                        </ul>
+                                    </div>
+                                    @*<div class="col-md-3">
+                                            <button class="btn btn-clear-travel" ng-click="passenger={}; ">Clear</button>
+                                        </div>*@
+                                </div>
+                            </div>
+
+                            <div class="booking_detail white-box animate-reveal" ng-repeat="i in getNumber(numberOfChild) track by $index">
+                                <h4>Child Passenger #{{$index+1}}</h4>
+                                <div class="form-check pull-right" ng-show="userinfo.UserType!='Guest'">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" ng-model="passenger.child[($index+1)].saveFav">
+                                        Save as favorite
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" ng-show="FavoriteList.length && userinfo.UserType!='Guest'">
+                                        <select class="select_booking"
+                                                ng-model="favSelect" ng-change="getFav(favSelect,$index,false)"
+                                                ng-options="fav.IC as fav.FullName for fav in FavoriteList">
+                                            <option value=''>Select from favorite list</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" maxlength="50" class="form-control" placeholder="Enter Name.." ng-model="passenger.child[($index+1)].name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" maxlength="12" class="form-control" placeholder="Enter I/C or Passport.." ng-model="passenger.child[($index+1)].icpassport" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" ng-show="passenger.child[($index+1)].icpassport.length < 12">
+                                        <div class="form-group" ng-controller="DateController">
+                                            <input type="text" class="form-control" placeholder="Date of Birth"
+                                                   uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="passenger.child[($index+1)].dob"
+                                                   is-open="popup1.opened" ng-required="passenger.child[($index+1)].icpassport.length < 12"
+                                                   close-text="Close" alt-input-formats="altInputFormats" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="select_booking"
+                                                ng-init="passenger.child[($index+1)].tickettype = '1'"
+                                                ng-model="passenger.child[($index+1)].tickettype" disabled
+                                                ng-options="ticketType.CODE as ticketType.DESCRIPTION for ticketType in ticketTypeList" required></select>
+                                    </div>
+                                    <div class="col-md-6" ng-show="passenger.child[($index+1)].tickettype == '28' || passenger.child[($index+1)].tickettype == '15'">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Card No.." ng-model="passenger.child[($index+1)].konsesiid" ng-required="passenger.child[($index+1)].tickettype == '28' || passenger.child[($index+1)].tickettype == '15'">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="font-family: 'Raleway', sans-serif; font-size: 14px;">
+                                        <div class="passenger_gender">
+                                            <div class="radio-inline">
+                                                <b>Gender:</b>
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" ng-model="passenger.child[($index+1)].gender" name="childgender_{{$index}}" value="M" required>Male
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" ng-model="passenger.child[($index+1)].gender" name="childgender_{{$index}}" value="F" required>Female
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-3">
+                                            <button class="btn btn-clear-travel" ng-click="passenger={};">Clear</button>
+                                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end main content-->
+                    </div>
+                </main>
+                <!--end content and scrolling-->
+                <!--End Departure-->
+            </div>
+            <!--End Departure-->
+        </form>
+    </div>
+
+    <!-- Users Modal -->
+    <div class="modal fade" id="userModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <form ng-controller="UserController as userCtrl" ng-submit="signIn(user,'1')">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Sign In to Continue...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="booking_detail white-box animate-reveal">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Username" ng-model="user.username" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Password" ng-model="user.password" required="required">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="showModal('#guestModal')">Continue as Guest</button>
+                        <button type="submit" class="btn btn-success">Sign In</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Guest Modal -->
+    <div class="modal fade" id="guestModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <form ng-controller="UserController as userCtrl" ng-submit="signIn(user,'5')">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Log In as Guest...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="booking_detail white-box animate-reveal">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" placeholder="Email" ng-model="user.username" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" max="999999999999999" placeholder="Phone Number" ng-model="user.password" required="required">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="showModal('#userModal')">Sign In</button>
+                        <button type="submit" class="btn btn-success">Log In as Guest</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Autoselect Modal -->
+    <div class="modal fade" id="autoSelectSeat" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <form ng-submit="confirmBooking()">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Booking Summary</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="booking_detail white-box animate-reveal">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p>You have made an autoselect booking as shown below:</p>
+                                    <div ng-repeat="result in autoSelectSeatResult.BookingList | orderBy:'+DepartureTime'">
+                                        <div class="title-direction">
+                                            <h4>{{result.OriginName}} - {{result.DestinationName}}</h4>
+                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>IC/Passport</th>
+                                                    <th>Passenger</th>
+                                                    <th>Ticket Type</th>
+                                                    <th>Coach</th>
+                                                    <th>Seat</th>
+                                                    <th>Fare</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="pax in result.PaxList">
+                                                    <td>{{pax.IC}}</td>
+                                                    <td>{{pax.Name}}</td>
+                                                    <td ng-repeat="type in ticketTypeList" ng-show="type.CODE === pax.TICKETTTYPE">{{type.DESCRIPTION}}</td>
+                                                    <td>{{pax.LABELNAME}}</td>
+                                                    <td>{{pax.SLOTID}}</td>
+                                                    <td>{{pax.IndividualFare.replace('MYR', '')}} MYR</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p>Feel free to click on <b>Pay Now</b> if you're okay with this arrangements.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-search2-travel">Pay Now</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

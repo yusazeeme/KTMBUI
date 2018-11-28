@@ -1,0 +1,217 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="inner-body">
+    <div class="Signup_wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+                    <div class="login-widget">
+
+                        <div class="sec-img">
+                            <h3>User Registration here</h3>
+                        </div>
+
+                        <div class="login-box-v2" style="padding: 30px 30px 30px 30px;">
+                            <form class="form-horizontal ng-pristine ng-valid">
+                                <div class="form-group" style="margin: 3%;">
+                                    <center><a href="#"> <img src="/Content/assets/img/fb2.jpg" alt="facebook"></a></center>
+                                </div>
+                                <hr>
+                                <h4>Login Information</h4>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-xs-5">
+                                        <label for="email" class="control-label"><i class="fa fa-envelope"></i> Email*</label>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <input type="email" class="form-control" placeholder="" name="email" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-5">
+                                        <label for="password" class="control-label"><i class="fa fa-unlock"></i> Password*</label>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <input type="password" class="form-control" placeholder="" name="password" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-5">
+                                        <label for="password" class="control-label"><i class="fa fa-unlock"></i> Confirm Password*</label>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <input type="password" class="form-control" placeholder="" name="confirm_password" required="required">
+                                    </div>
+                                </div>
+                                <br>
+                                <h4>Personal Information</h4>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="title" class="control-label"><i class="fa fa-hand-o-right"></i> Title</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <select class="form-control" name="title" id="title">
+                                            <option value=""> -- Please Choose Title -- </option>
+                                            <option value="1">Datuk</option>
+                                            <option value="2">Datin</option>
+                                            <option value="3">Encik</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="name" class="control-label"><i class="fa fa-user"></i> Name*</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" placeholder="" name="name" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="phone_no" class="control-label"><i class="fa fa-phone"></i> Phone No.*</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" placeholder="" name="phone_no" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="address" class="control-label"><i class="fa fa-home"></i> Address</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" placeholder="" name="address_1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <!--<label for="address" class="control-label"><i class="fa fa-user"></i> Address</label>-->
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" placeholder="" name="address_2">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="postcode" class="control-label"><i class="fa fa-home"></i> Postcode</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" placeholder="" name="postcode">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="district" class="control-label"><i class="fa fa-home"></i> District</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" placeholder="" name="district">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="state" class="control-label"><i class="fa fa-home"></i> State</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <select class="form-control" name="state" id="state">
+                                            <option value=""> -- Please Choose State -- </option>
+                                            <option value="1">Johor</option>
+                                            <option value="2">Kedah</option>
+                                            <option value="3">Kelantan</option>
+                                            <option value="4">Melaka</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="gender" class="control-label"><i class=" fa fa-venus-mars"></i> Gender</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div class="radio-inline">
+                                            <label><input type="radio" name="optradio">Male</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <label><input type="radio" name="optradio">Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="date_of_birth" class="control-label"><i class="fa fa-calendar"></i> Date of Birth</label>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <select class="form-control" name="day" id="day">
+                                            <option value=""> - </option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <select class="form-control" name="month" id="month">
+                                            <option value=""> - </option>
+                                            <option value="1">Jan</option>
+                                            <option value="2">Feb</option>
+                                            <option value="3">Mar</option>
+                                            <option value="4">Apr</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <select class="form-control" name="year" id="year">
+                                            <option value=""> - </option>
+                                            <option value="1">2000</option>
+                                            <option value="2">2001</option>
+                                            <option value="3">2002</option>
+                                            <option value="4">2003</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="nationality" class="control-label"><i class="fa fa-globe"></i> Nationality</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <select class="form-control" name="nationality" id="nationality">
+                                            <option value=""> -- Please Choose State -- </option>
+                                            <option value="1">Yes</option>
+                                            <option value="2">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="occupation" class="control-label"><i class="fa fa fa-suitcase"></i> Occupation</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" placeholder="" name="occupation">
+                                    </div>
+                                </div>
+                                <div class="form-actions clearfix">
+                                    <div class="remember-me pull-left">
+                                        <input type="checkbox"> <span>Terms & condition</span>
+                                        <small><br>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout</small>
+                                        <br><br>
+                                        <input type="checkbox"> <span>Get information promotion & newsletter using email</span>
+
+                                    </div>
+                                    <div class="submit-form pull-right">
+                                        <br>
+                                        <a href="#" class="submit-btn">Register Now!</a>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        <!--                                <div class="register">
+                                                            <p>Already have an account? <a href="../../html/pages/log_in.html"> log In</a> </p>
+                                                        </div>-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

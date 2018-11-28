@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Articles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    img {
+        border: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<div ng-controller="CMSController as cmsCtrl">
+    <!--inner body start from here-->
+    <div class="inner-body">
+
+        <div class="team-about-us animate-reveal">
+            <h2 style="font-family:'Raleway', sans-serif; font-size:20px; font-weight: 550;">Train Schedule</h2>
+        </div>
+
+        <div class="bread-crumb">
+            <ol class="breadcrumb" style="font-family:'Raleway', sans-serif; font-size:14px; font-weight: 550;">
+                <li><a href="{{UIURL}}">Home</a></li>
+                <li class="active"><a href="{{UIURL}}">Train Schedule</a></li>
+            </ol>
+        </div>
+
+        <!--start content-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12" style="padding:45px; margin:0 auto; text-align:justify;line-height:1.8em; font-family:'Raleway', sans-serif; font-size:14px; font-weight: 550;">
+                   <div class="col-md-12">
+                        <div class="name_pakg text-center animate-reveal">Set your tour destination with our journey time</div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <!--find_flight_box-->
+                        <div class="find_flight_box animate-reveal">
+                            <div class="img-box"><img alt="intercity" src="{{intranetURL}}/ktmb/uploads/images/Image_portal/perkhidmatan/komuter/timetable_Intercity.jpg" style="height:280px; width:328px" /></div>
+
+                            <h4><a class="clearfix" href="{{UIURL}}/portal/full/259">Travel with style</a></h4>
+
+                            <p><a class="clearfix" href="{{UIURL}}/portal/full/259">Get the experience with nostalgia memory</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <!--find_flight_box-->
+                        <div class="find_flight_box animate-reveal">
+                            <div class="img-box"><img alt="intercity" src="{{intranetURL}}/ktmb/uploads/images/Image_portal/perkhidmatan/komuter/timetable_ets.jpg" style="height:280px; width:328px" /></div>
+
+                            <h4><a class="clearfix" href="{{UIURL}}/portal/full/260">Long distance travel</a></h4>
+
+                            <p><a class="clearfix" href="{{UIURL}}/portal/full/260">Fast, always on time, comfortable</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <!--find_flight_box-->
+                        <div class="find_flight_box animate-reveal">
+                            <div class="img-box"><img alt="intercity" src="{{intranetURL}}/ktmb/uploads/images/Image_portal/perkhidmatan/komuter/timetable_komuter.jpg" style="height:280px; width:328px" /></div>
+
+                            <h4><a class="clearfix" href="{{UIURL}}/portal/full/258">Short distance travel</a></h4>
+
+                            <p><a class="clearfix" href="{{UIURL}}/portal/full/258">Save your money with short destination</a></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--end content-->
+    </div>
+
+    <br /><br />
+</div>
+

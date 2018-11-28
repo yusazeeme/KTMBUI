@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Corporate Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('corporate_profile')">
+    <div class="container">
+        <!--start breadcrumb-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bread-crumb">
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="javascript:;">About Us</a></li>
+                        <li class="active">Corporate Profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+    </div>
+    <div class="wrapper_about_us" ng-repeat="history in content | filter: {contenttype:'history_content'}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="vision animate-reveal">
+                        <h2>Title Content</h2>
+                    </div>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <h2>sample title</h2>
+                    <p>content at here</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br><br>
+</div>
+<!--inner body end from here-->

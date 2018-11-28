@@ -1,0 +1,476 @@
+﻿
+@{
+    ViewBag.Title = "Discount Setting";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+
+<div ng-controller="UserController as userCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="{{UIURL}}/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Discount Setting</strong>
+        </li>
+    </ol>
+
+    <h2>Discount Setting</h2>
+    <br />
+
+    <div class="row">
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-default">Add New Discount</a>
+                </div>
+            </div>
+            <div class="panel panel-primary" data-collapsed="0" style="background-color:#0053a0; border-color: #0053a0; color:whitesmoke;">
+                <div class="panel-body">
+                    <form role="form" class="form-horizontal" style="margin-top: 15px;" ng-submit="getDiscountSetting(disc)">
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="from" class="col-sm-4 control-label font-white">Date (From)</label>
+                                    <div class="col-sm-8" ng-controller="DateController">
+                                        <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.fromDate" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="to" class="col-sm-4 control-label font-white">Date (To)</label>
+                                    <div class="col-sm-8" ng-controller="DateController">
+                                        <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.toDate" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                    </div>
+                                </div>
+                            </div>
+                            @*<label for="discount-type" class="col-sm-2 control-label font-white">Discount Type</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="discount-type" name="discount-type">
+                                        <option>Please Choose</option>
+                                        <option value="period">By Travel Period</option>
+                                        <option value="date">By Travel Date</option>
+                                        <option value="days">By Travel Days</option>
+                                    </select>
+                                </div>*@
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="payment-type" class="col-sm-4 control-label font-white">Discount Type</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" ng-model="disc.discType">
+                                            <option>Please Choose</option>
+                                            <option value="period">By Travel Period</option>
+                                            <option value="date">By Travel Date</option>
+                                            <option value="days">By Travel Days</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        @*<div class="form-group">
+                                <div class="col-sm-4">
+                                    <button type="submit" class="btn btn btn-warning" style="color:black;"><i class="glyphicon glyphicon-ok"></i> Enable</button>
+                                    <button type="reset" class="btn btn-success"><i class="glyphicon glyphicon-refresh"></i> Reset</button>
+                                </div>
+                            </div>*@
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-8 col-sm-4">
+                                <button type="submit" class="btn btn btn-warning" style="color:black;"><i class="glyphicon glyphicon-search"></i>Search</button>
+                                <button type="reset" class="btn btn-success"><i class="glyphicon glyphicon-refresh"></i>Reset</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <table datatable="ng" class="table table-bordered datatable font-black" ng-init="getDiscountSetting()">
+                <thead>
+                    <tr>
+                        <th>Discount ID</th>
+                        <th>DISCOUNT_CREATEBY</th>
+                        <th>DISCOUNT_CREATEDATE</th>
+                        <th>DISCOUNT_UPDBY</th>
+                        <th>DISCOUNT_UPDATE</th>
+                        <th>DISCOUNT_TYPE</th>
+                        <th>ACTION</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="odd gradeX" ng-repeat="res in result.discRepList ">
+                        <td>{{res.DISCOUNT_ID}}</td>
+                        <td>{{res.DISCOUNT_CREATEBY}}</td>
+                        <td>{{res.DISCOUNT_CREATEDATE}}</td>
+                        <td>{{res.DISCOUNT_UPDBY}}</td>
+                        <td>{{res.DISCOUNT_UPDDATE}}</td>
+                        <td>{{res.DISCOUNT_TYPE}}</td>
+                        @*<td>{{res.DISCOUNT_PURCHASE}}</td>
+                            <td>{{res.FROMDATE}}</td>
+                            <td>{{res.TODATE}}</td>
+                            <td>{{res.NDAYS}}</td>
+                            <td>{{res.TRAINDATE_FROM}}</td>
+                            <td>{{res.TRAINDATE_TO}}</td>
+                            <td>{{res.ISSUE_FROM}}</td>
+                            <td>{{res.ISSUE_TO}}</td>
+                            <td>{{res.DISCOUNT_CODE}}</td>
+                            <td>{{res.DISCOUNT_TRAIN}}</td>
+                            <td>{{res.DISCOUNT_COACH}}</td>
+                            <td>{{res.DISCOUNT_SEAT_OFFERED}}</td>
+                            <td>{{res.DISCOUNT_SEAT_LEFT}}</td>
+                            <td>{{res.DISCOUNT_RATE}}</td>
+                            <td>{{res.DISCOUNT_PRIORITY}}</td>*@
+                        <td>
+                            <a href="#" data-toggle="modal" data-target="#modal-2" class="btn btn-default" ng-click=""><i class="fa fa-print"></i> View</a>
+                            <button type="button" class="btn btn-red" confirmed-click="deleteDisc(res.DISCOUNT_ID)" ng-confirm-click="Are you sure to remove this discount?"><i class="fa fa-close"></i> Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Discount Setting</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="addDiscount(disc)">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Code</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Train</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcTrain" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Coach</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcCoach" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Seat Offered</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcSeatOffer" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Seat Left</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcSeatLeft" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Rate</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcRate" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Priority</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcPriority" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Type</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcType" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Purchase</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcPurchase">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="from" class="col-sm-3 control-label">Date (From)</label>
+                                <div class="col-sm-9" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.fromDate" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">To Date</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-3 control-label">Date (To)</label>
+                                <div class="col-sm-9" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.toDate" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Days</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcDays">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Status</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcStatus" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">Train Date From</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-3 control-label">Train Date (From)</label>
+                                <div class="col-sm-9" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.fromDate_Train" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">Train Date To</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-3 control-label">Train Date (To)</label>
+                                <div class="col-sm-9" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.toDate_Train" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">Issue From</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-3 control-label">Issue Date (From)</label>
+                                <div class="col-sm-9" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.fromDate_Issue" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">Issue To</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-3 control-label">Issue Date (To)</label>
+                                <div class="col-sm-9" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.toDate_Issue" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Discount Settings</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Code</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Train</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcTrain" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Coach</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcCoach" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Seat Offered</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcSeatOffer" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Seat Left</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcSeatLeft" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Rate</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcRate" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Priority</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcPriority" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Type</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcType" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Discount Purchase</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcPurchase" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">From Date</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div*@>
+                                <label for="from" class="col-sm-4 control-label font-white">Date (From)</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.fromDate" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">To Date</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-4 control-label font-white">Date (To)</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.toDate" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Days</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Status</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="disc.dcStatus" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">Train Date From</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-4 control-label font-white">Train Date (From)</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.fromDate_Train" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">Train Date To</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-4 control-label font-white">Train Date (To)</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.toDate_Train" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">Issue From</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-4 control-label font-white">Issue Date (From)</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.fromDate_Issue" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label for="field-1" class="col-sm-3 control-label">Issue To</label>
+
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" ng-model="disc.dcCode" required>
+                                    </div>*@
+                                <label for="from" class="col-sm-4 control-label font-white">Issue Date (From)</label>
+                                <div class="col-sm-8" ng-controller="DateController">
+                                    <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="disc.toDate_Issue" is-open="popup1.opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "Media Release";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+<div ng-controller="CMSController as cmsCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="index.html"><i class="fa-home"></i>Home</a>
+        </li>
+        <li>
+            <a href="forms-main.html">Forms</a>
+        </li>
+        <li class="active">
+            <strong>Media Release</strong>
+        </li>
+    </ol>
+
+    <h2>Media Release</h2>
+    <br />
+
+    <div class="row" ng-init="getCMS('media_release', 'media_content', false)">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Media Release
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="javascript:;" onclick="jQuery('#modal-1').modal('show');" class="btn btn-default">Add New</a>
+                            </div>
+                        </div>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Title Media</th>
+                                    <th>Document Date</th>
+                                    <th>File</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="media_content.length">
+                                <tr ng-repeat="media in media_content">
+                                    <td>{{media.param.title}}</td>
+                                    <td>{{media.param.date}}</td>
+                                    <td>{{media.param.fileLink}}</td>
+                                    <td>
+                                        <a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" ng-click="getSingleModel('media_content', media_content, media.pkcolumn)">Update</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-1" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(media_content, 'media_release', 'media_content', false, false)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Media Release</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Title Media</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="media_content.param.title" ></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Document Date</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="media_content.param.date"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">File Field</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" ng-model="media_content.param.fileLink" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-2" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(media_content, 'media_release', 'media_content', true, true)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="getCMS('media_release', 'media_content', false)">&times;</button>
+                        <h4 class="modal-title">Update Media Release</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Title Media</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ng-model="media_content.param.title" id="field-ta"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Document Date</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="media_content.param.date" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">File Field</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" ng-model="media_content.param.fileLink" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="getCMS('media_release', 'media_content', false)">Close</button>
+                        <button type="submit" class="btn btn-info">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

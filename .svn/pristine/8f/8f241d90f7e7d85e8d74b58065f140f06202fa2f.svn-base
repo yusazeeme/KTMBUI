@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "MediaRelease";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('media_release')">
+    <div class="container">
+        <div class="row">
+            <!--start breadcrumb-->
+            <!--<div class="row">-->
+            <div class="col-md-12">
+                <div class="bread-crumb">
+                    <h2>Media Release</h2>
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="/">Home</a></li>
+                        <li class="active">Media Release</li>
+                    </ol>
+                </div>
+            </div>
+            <!--</div>-->
+            <!--end breadcrumb-->
+            <!--start table media release-->
+            <div class="col-md-12">
+                <div class="panel panel-default table-panel">
+                    <!--<div class="panel-heading">&nbsp;</div>-->
+                    <div class="panel-body">
+                        <div class="table-content-box">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Title media</th>
+                                        <th style="text-align: center;">Document Date</th>
+                                        <th><i class="fa fa-file-text" aria-hidden="true"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="media in content | filter: {contenttype:'media_content'}"">
+                                        <td>{{media.param.title}}</td>
+                                        <td>{{media.param.date}}</td>
+                                        <td>{{media.param.fileLink}}</td>
+                                    </tr>
+                                </tbody>
+                                @*<tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Makluman Perubahan Peraturan Membawa Basikal Bagi Perkhidmatan KTM Komuter Di Sektor Utara </td>
+                                        <td>28-04-2017</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Penambahbaikkan Sistem E-Tiket KTMB</td>
+                                        <td>21-04-2017</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td> Gangguan Perkhidmatan Tren Intercity Di Laluan Pantai Timur  </td>
+                                        <td>04-01-2017</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>ETS Memperkenalkan 'Captain EJ'</td>
+                                        <td>21-12-2016</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">5</th>
+                                        <td>Pindaan Proses Jualan Tiket Perkhidmatan Tren Shuttle Tebrau (Jb Sentral - Woodlands - Jb Sentral)   </td>
+                                        <td>03-11-2016</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">6</th>
+                                        <td>Gangguan Perkhidmatan Tren Di Sektor Utara Dan Selatan</td>
+                                        <td>31-10-2016</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">7</th>
+                                        <td>Gangguan Perkhidmatan Tren Di Sektor Utara Dan Selatan </td>
+                                        <td>31-10-2016</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">8</th>
+                                        <td>Majlis Perasmian Menu Promosi Khas & Tren Tambahan Ets Bagi Laluan Kl Sentral - Butterworth - Kl Sentral Sempena Perayaan Pesta Cahaya 2016 </td>
+                                        <td>27-10-2016</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">9</th>
+                                        <td>Sistem Tiket Baharu Perkhidmatan Ktm Komuter Mula Beroperasi  </td>
+                                        <td>18-10-2016</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">10</th>
+                                        <td>Gangguan Perkhidmatan Tren Ktm Intercity Di Bahagian Selatan  </td>
+                                        <td>26-09-2016</td>
+                                        <td><a rel="tooltip" data-toggle="tooltip" title="View Document" class="btn btn-xs btn-danger" target="_blank" href="#"><i class="ace-icon fa fa-file-pdf-o bigger-120"></i></a></td>
+                                    </tr>
+                                </tbody>*@
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="dataTables_paginate">
+                    <ul id="yw0" class="pagination">
+                        <li class="first hidden"><a href="/ktmb/index.php?r=portal/full3&amp;id=dms2VjJFUFRtR0djdDd2L2sxSXB2Zz09">&lt;&lt; Pertama</a></li>
+                        <li class="previous hidden"><a href="#">&lt; Previously</a></li>
+                        <li class="page active"><a href="#">1</a></li>
+                        <li class="page"><a href="#">2</a></li>
+                        <li class="page"><a href="#">3</a></li>
+                        <li class="next"><a href="#">Next &gt;</a></li>
+                        <li class="last"><a href="#">Last &gt;&gt;</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end table media release-->
+        </div>
+    </div>
+
+</div>
+<!--inner body end from here-->

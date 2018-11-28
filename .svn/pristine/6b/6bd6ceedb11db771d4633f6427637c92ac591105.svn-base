@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewBag.Title = "Refund Info";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div ng-controller="UserController as userCtrl" ng-init="GetRefundX()">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="{{UIURL}}"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Update Refund Info</strong>
+        </li>
+    </ol>
+    <h2>Refund Info</h2>
+    <br />
+
+    <div class="row" ng-init="refundInfo = {}">
+        <div class="col-md-12">
+
+            <div class="panel panel-primary" data-collapsed="0">
+
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Refund Info
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <form role="form" class="form-horizontal form-groups-bordered">
+                    <table class="table table-bordered font-black" dt-options="dtOptionsExport">
+                        <thead>
+                            <tr>
+                                <th>Reference ID</th>
+                                <th>Transaction ID</th>
+                                <th>Transaction Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="res in result.detailList">
+                                <td>{{res.Refid}}</td>           
+                                <td>{{res.TransactionID}}</td>                           
+                                <td>{{res.TransactionDate}}</td>          
+                                @*<td style="width:100px" ng-show="!res.AccHolderName">
+                                    <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-success" ng-click="getRefundInfo(res.ID)"><i class="fa fa-edit"></i>Update</a>
+                                </td>*@
+                                <td style="width:100px" ng-show="!res.AccHolderName">
+                                    <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-success" ng-click="getRefundInfo(res.ID)"><i class="fa fa-edit"></i>Update</a>
+                                </td>
+                                <td style="width:100px" ng-show="res.AccHolderName">
+                                    <a href="#" data-toggle="modal" data-target="#modal-2" class="btn btn-success" ng-click="getRefundInfo(res.ID)"><i class="fa fa-edit"></i>View</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Update Refund Info</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="InsertRefundInfo(refundInfo)">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+                            <input type="hidden" class="form-control" ng-model="refundInfo.ID">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Reference Id</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.Refid" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Transaction Id</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.TransactionID" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Transaction Date</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.TransactionDate" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Amount (MYR)</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.Amount" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Bank</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.BankName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-4 control-label">Bank's Account No</label>
+                                <div class="col-sm-7">
+                                    <input type="number" class="form-control" ng-model="refundInfo.BankNo" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-4 control-label">Account Holder's Name</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.AccHolderName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Account Holder's IC No</label>
+                                <div class="col-sm-7">
+                                    <input type="number" class="form-control" ng-model="refundInfo.AccHolderICNumber" required>
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 (Basic)-->
+    <div class="modal fade" id="modal-2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">View Refund Info</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+                            <input type="hidden" class="form-control" ng-model="refundInfo.ID">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Reference Id</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.Refid" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Transaction Id</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.TransactionID" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Transaction Date</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.TransactionDate" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Bank</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.BankName" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-4 control-label">Bank's Account No</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.BankNo" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-4 control-label">Account Holder's Name</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.AccHolderName" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Account Holder's IC No</label>
+                                <div class="col-sm-7">
+                                    <input type="text" maxlength="12" class="form-control" ng-model="refundInfo.AccHolderICNumber" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-4 control-label">Amount (MYR)</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" ng-model="refundInfo.Amount" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,348 @@
+﻿
+@{
+    ViewBag.Title = "Passenger";
+}
+
+<div class="container" ng-controller="TicketController as ticketCtrl" ng-init="getBooking()">
+    <div class="row" ng-init="checkIsUserLogIn()">
+        <div class="col-md-12" style="margin:5% 0;">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li>
+                        <a href="/" class="active"> <span class="step">1</span> <span class="title">Search Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="/"> <span class="step">2</span> <span class="title">Select Train</span> </a>
+                    </li>
+                    <li class="active">
+                        <a href="#"> <span class="step">3</span> <span class="title">Passenger Info</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">4</span> <span class="title">Select Seat</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">5</span> <span class="title">Payment</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <!--wajib ada-->
+        <header></header>
+        <!--Start Departure-->
+
+        <form ng-submit="verifyPassenger(passenger)">
+            <div class="col-md-12">
+                <!--start content and scrolling-->
+                <main class="clearfix">
+                    <!--start sidebar-->
+                    <aside id="sidebar">
+                        <div class="inside">
+                            <div class="flight_detail_sidebar white-box">
+                                <div class="details-text">
+                                    <h4>
+                                        Journey Summary
+                                        <br />
+                                        <small ng-show="!booked.IsReturn"> (One Way)</small>
+                                        <small ng-show="booked.IsReturn"> (Return)</small>
+                                        <br />
+                                    </h4>
+                                </div>
+                                <div class="railway-font">
+                                    <small>TOTAL (MYR)</small>
+                                    <div class="alert alert-info"><h2 class="price-info">{{booked.totalCost}}</h2></div>
+                                </div>
+                                <div ng-repeat="trip in booked.bookedList | orderBy :'+_DepartureTime'">
+                                    <hr />
+                                    <div class="title-direction">
+                                        <h4 ng-show="trip.TripType == 'O'">Depart <small>({{trip.OriginName}} - {{trip.DestinationName}})</small></h4>
+                                        <h4 ng-show="trip.TripType == 'R'">Return <small>({{trip.OriginName}} - {{trip.DestinationName}})</small></h4>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-subway"></i>
+                                            Train No.
+                                            <span class="pull-right">
+                                                {{trip.TrainNumber}} - {{trip.TrainName}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-subway"></i>
+                                            Coach Type
+                                            <span class="pull-right">
+                                                {{trip.CoachCode}} - {{trip.CoachName}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-clock-o"></i>
+                                            Departure
+                                            <span class="pull-right">
+                                                {{trip.DepartureTime}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-clock-o"></i>
+                                            Arrival
+                                            <span class="pull-right">
+                                                {{trip.ArrivalTime}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <br /><br />
+                                </div>
+                                <div class="railway-font">
+                                    <input type="submit" class="btn btn-search-travel btn-lg" value="Proceed &raquo;" />
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                    <!--end sidebar-->
+                    <!-- start main content-->
+                    <div class="main_content" id="content" ng-init="getTicketType()">
+                        <div class="main_content" id="content">
+
+                            <div class="booking_detail white-box animate-reveal" ng-repeat="i in getNumber(numberOfAdult) track by $index">
+                                <h4>Adult Passenger #{{$index+1}}</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Name.." ng-model="passenger.adult[($index+1)].name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter I/C or Passport.." ng-model="passenger.adult[($index+1)].icpassport" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Date of Birth.." ng-model="passenger.adult[($index+1)].dob" datepicker required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="select_booking"
+                                                ng-model="passenger.adult[($index+1)].tickettype"
+                                                ng-options="ticketType.CODE as ticketType.DESCRIPTION for ticketType in ticketTypeList" required>
+                                            <option value=''>Type of Ticket</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6" ng-show="!(passenger.adult[($index+1)].tickettype == '1' || passenger.adult[($index+1)].tickettype == '2' || !passenger.adult[($index+1)].tickettype)">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Konsesi ID.." ng-model="passenger.adult[($index+1)].konsesiid" ng-required="!(passenger.adult[($index+1)].tickettype == '1' || passenger.adult[($index+1)].tickettype == '2' || !passenger.adult[($index+1)].tickettype)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="font-family: 'Raleway', sans-serif; font-size: 14px;">
+                                        <div class="passenger_gender">
+                                            <div class="radio-inline">
+                                                <b>Gender:</b>
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" ng-model="passenger.adult[($index+1)].gender" name="adultgender_{{$index}}" value="M" required>Male
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" ng-model="passenger.adult[($index+1)].gender" name="adultgender_{{$index}}" value="F" required>Female
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="booking_detail white-box animate-reveal" ng-repeat="i in getNumber(numberOfChild) track by $index">
+                                <h4>Child Passenger #{{$index+1}}</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Name.." ng-model="passenger.child[($index+1)].name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter I/C or Passport.." ng-model="passenger.child[($index+1)].icpassport" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Date of Birth.." ng-model="passenger.child[($index+1)].dob" datepicker required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="select_booking"
+                                                ng-model="passenger.child[($index+1)].tickettype"
+                                                ng-options="ticketType.CODE as ticketType.DESCRIPTION for ticketType in ticketTypeList" required>
+                                            <option value=''>Type of Ticket</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6" ng-show="!(passenger.child[($index+1)].tickettype == '1' || passenger.child[($index+1)].tickettype == '2' || !passenger.child[($index+1)].tickettype)">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Konsesi ID.." ng-model="passenger.child[($index+1)].konsesiid" ng-required="!(passenger.child[($index+1)].tickettype == '1' || passenger.child[($index+1)].tickettype == '2' || !passenger.child[($index+1)].tickettype)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="font-family: 'Raleway', sans-serif; font-size: 14px;">
+                                        <div class="passenger_gender">
+                                            <div class="radio-inline">
+                                                <b>Gender:</b>
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" ng-model="passenger.child[($index+1)].gender" name="childgender_{{$index}}" value="M" required>Male
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" ng-model="passenger.child[($index+1)].gender" name="childgender_{{$index}}" value="F" required>Female
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end main content-->
+                </main>
+                <!--end content and scrolling-->
+                <!--End Departure-->
+            </div>
+            <!--End Departure-->
+        </form>
+    </div>
+
+    <!-- Users Modal -->
+    <div class="modal fade" id="userModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <form ng-controller="UserController as userCtrl" ng-submit="signIn(user,'1','/ticket/passenger')">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Sign In to Continue...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="booking_detail white-box animate-reveal">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Username" ng-model="user.Username" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Password" ng-model="user.Password" required="required">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="showModal('#guestModal')">Continue as Guest</button>
+                        <button type="submit" class="btn btn-success">Sign In</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Guest Modal -->
+    <div class="modal fade" id="guestModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <form ng-controller="UserController as userCtrl" ng-submit="signIn(user,'5','/ticket/passenger')">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Log In as Guest...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="booking_detail white-box animate-reveal">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" placeholder="Email" ng-model="user.Username" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" placeholder="Phone Number" ng-model="user.Password" required="required">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="showModal('#userModal')">Sign In</button>
+                        <button type="submit" class="btn btn-success">Log In as Guest</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Users -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Sign In to Continue...</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="booking_detail white-box animate-reveal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Username" required="required">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Password" required="required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="showModal('#guestModal')">Continue as Guest</button>
+                    <button type="submit" class="btn btn-success">Sign In</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Guest -->
+<div class="modal fade" id="guestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Log In as Guest...</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="booking_detail white-box animate-reveal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Email" required="required">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Phone Number" required="required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="showModal('#userModal')">Sign In</button>
+                    <button type="submit" class="btn btn-success">Log In as Guest</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

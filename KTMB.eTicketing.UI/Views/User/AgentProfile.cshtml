@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Agent Profile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+
+<div ng-controller="UserController as userCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="{{UIURL}}"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Agent Profile</strong>
+        </li>
+    </ol>
+    <h2>Agent Profile</h2>
+    <br />
+
+    <div class="row" ng-init="getAgentCrInfo()">
+
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Ledger Id</th>
+                        <th>Overall Credit Limit</th>
+                        <th>Available Credit Limit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{result.Ledger}}</td>
+                        <td>{{result.CreditLimit}}</td>
+                        <td>{{result.Available}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

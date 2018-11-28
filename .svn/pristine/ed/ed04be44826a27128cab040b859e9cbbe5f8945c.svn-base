@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "View Booking";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div ng-controller="UserController as userCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="#"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Manage Booking</strong>
+        </li>
+    </ol>
+    <h2>Manage Booking</h2>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Booking List
+                    </div>
+                </div>
+                <div class="panel-body" ng-init="getBooking()">
+                    <div class="col-md-12">
+                        <table datatable="ng" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Reference Id</th>
+                                    <th>Ticket Id</th>
+                                    <th>Booking Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="booking in bookingList | orderBy :'-RefId'">
+                                    <td>{{booking.RefId}}</td>
+                                    <td>
+                                        <span ng-repeat="ticket in booking.TicketList">
+                                            {{ticket.TicketId}}<br />
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span ng-repeat="ticket in booking.TicketList">
+                                            {{ticket.TarikhBook | date:'dd/MM/yyyy'}}<br />
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="/ticket/print/{{booking.RefId}}" target="_blank"><i class="fa fa-print"></i> Reprint Ticket</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

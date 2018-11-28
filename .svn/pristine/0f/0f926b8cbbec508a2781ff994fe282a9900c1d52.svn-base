@@ -1,0 +1,707 @@
+﻿
+@{
+    ViewBag.Title = "Booking Confirmation";
+}
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div class="container" ng-controller="TicketController as ticketCtrl" ng-init="finalConfirmation(); queueUpdate();">
+    <div class="row" ng-init="getUserInfo()">
+        <div class="col-md-12" style="margin:5% 0;">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li>
+                        <a href="#" class="active"> <span class="step">1</span> <span class="title">Search Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">2</span> <span class="title">Select Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">3</span> <span class="title">Passenger Info</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">4</span> <span class="title">Select Seat</span> </a>
+                    </li>
+                    <li class="active">
+                        <a href="#"> <span class="step">5</span> <span class="title">Payment</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+
+        <!--wajib ada-->
+        <header></header>
+
+        <!--start content and scrolling-->
+        <!--  <main class="clearfix"> -->
+        <!--start sidebar-->
+        <!-- <aside id="sidebar">
+            <div class="inside"> -->
+        <!--    </div>
+        </aside> -->
+        <!--end sidebar-->
+        <!-- start main content-->
+        <div class="col-md-9 main_content">
+            <div class="flight_detail_sidebar white-box animate-reveal">
+                <h4 style="text-align:center" ng-init="payTimer(10)">Your session will expired in <b>{{counterMin}}</b> minutes and <b>{{counterSec}}</b> seconds</h4>
+            </div>
+
+            <!--start depart-->
+            <div class="flight_detail_sidebar white-box animate-reveal" ng-repeat="trip in FinalConfirmation.BookingList | orderBy :'+_DepartureTime'">
+                <h3>{{trip.OriginName}} - {{trip.DestinationName}}</h3>
+                <p>{{trip.DepartureTime}}  <i class="fa fa-long-arrow-right" aria-hidden="true"></i> {{trip.ArrivalTime}} </p>
+                <div class="clearfix"></div>
+                <!--default akan open adalah untuk pasenger pertama sahaja yang len close-->
+                <div class="panel-group">
+                    <div class="panel panel-default panel-default2" ng-repeat="passenger in trip.PaxList track by $index">
+                        <div class="panel-heading panel-heading2">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#{{trip.OriginCode}}_{{trip.DestinationCode}}_{{$index+1}}" aria-expanded="true" ng-show="passenger.ADULTCHILD == 'A'">
+                                    <i class="fa fa-user"></i>
+                                    {{passenger.Name}} (Adult)
+                                    <i class="fa fa-info-circle pull-right"></i>
+                                </a>
+                                <a data-toggle="collapse" href="#{{trip.OriginCode}}_{{trip.DestinationCode}}_{{$index+1}}" aria-expanded="true" ng-show="passenger.ADULTCHILD == 'C'">
+                                    <i class="fa fa-user"></i>
+                                    {{passenger.Name}} (Child)
+                                    <i class="fa fa-info-circle pull-right"></i>
+                                </a>
+                            </h4>
+                        </div>
+                        <div ng-class="{'collapse in': ($index+1===1), 'collapse': ($index+1!==1)}" id="{{trip.OriginCode}}_{{trip.DestinationCode}}_{{$index+1}}" aria-expanded="true" role="button">
+                            <div class="panel-body">
+                                <div class="pull-left">
+                                    <div class="table-content-box">
+                                        <table class="table2">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>:</td>
+                                                    <td>{{passenger.Name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>No. IC / Passport</td>
+                                                    <td>:</td>
+                                                    <td>{{passenger.IC}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Type Of Ticket</td>
+                                                    <td>:</td>
+                                                    <td ng-repeat="type in ticketTypeList" ng-show="type.CODE === passenger.TICKETTTYPE">{{type.DESCRIPTION}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Gender</td>
+                                                    <td>:</td>
+                                                    <td ng-show="passenger.GENDER=='M'">Male</td>
+                                                    <td ng-show="passenger.GENDER=='F'">Female</td>
+                                                </tr>
+                                                <tr ng-show="trip.CoachCode == 'ADNS' && ((passenger.SLOTID) % 2 == 0)">
+                                                    <td>Position</td>
+                                                    <td>:</td>
+                                                    <td>Lower Berth</td>
+                                                </tr>
+                                                <tr ng-show="trip.CoachCode == 'ADNS' && ((passenger.SLOTID) % 2 != 0)">
+                                                    <td>Position</td>
+                                                    <td>:</td>
+                                                    <td>Upper Berth</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <!--status new / amend-->
+                                    <div class="label-status" style="">Coach/Seat</div>
+                                    <div class="label-payment">
+                                        <!--coach label / seat-->
+                                        {{passenger.LABELNAME}}/{{passenger.SLOTID}}
+                                    </div>
+                                    <div class="label-train">{{trip.TrainNumber}} - {{trip.TrainName}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!--end depart-->
+
+
+
+        </div>
+        <!-- end main content-->
+        <div class="col-md-3 col-xs-12">
+            <div class="flight_detail_sidebar white-box">
+                <div class="details-text">
+                    <h4>
+                        Journey Summary
+                        <br />
+                        <small ng-show="!FinalConfirmation.IsReturn"> (One Way)</small>
+                        <small ng-show="FinalConfirmation.IsReturn"> (Return)</small>
+                        <br />
+                    </h4>
+                </div>
+                <div class="railway-font">
+                    <small>GRAND TOTAL (MYR)</small>
+                    <div class="alert alert-info">
+                        <h2 class="price-info">
+                            {{ (FinalConfirmation.ConfirmationResult.FINALCHARGE.replace('MYR', '')) | number:2 }}
+                        </h2>
+                    </div>
+                </div>
+                <!---start here--->
+                <div ng-repeat="trip in FinalConfirmation.BookingList | orderBy :'+_DepartureTime' track by $index">
+                    <hr />
+                    <div class="title-direction">
+                        <h4>{{trip.OriginName}} - {{trip.DestinationName}}</h4>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-subway"></i>
+                            Train No.
+                            <span class="pull-right">
+                                {{trip.TrainNumber}} - {{trip.TrainName}}
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-subway"></i>
+                            Coach Type
+                            <span class="pull-right">
+                                {{trip.CoachCode}} - {{trip.CoachName}}
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-clock-o"></i>
+                            Departure
+                            <span class="pull-right">
+                                {{trip.DepartureTime}}
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-clock-o"></i>
+                            Arrival
+                            <span class="pull-right">
+                                {{trip.ArrivalTime}}
+                            </span>
+                        </span><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- </main>  -->
+        <div class="clearfix"></div>
+        <div class="col-md-12" style="padding-right: 8%;">
+            <!--start payment-->
+            <form>
+                <div class="layout_two border-box" ng-init="getUserInfoFromSession()">
+                    <h3>Payment</h3>
+                    <div class="detail_flight_number colors-primary">
+                        <div class="pull-left white">
+                            <div class="font-rail">Total amount to be paid :</div>
+                            <!--<div class="font-rail2">Your payment type:</div>-->
+                        </div>
+                        <div class="pull-right">
+                            <div class="font-rail"><b>{{FinalConfirmation.ConfirmationResult.FINALCHARGE.replace('MYR', '')}} MYR</b></div>
+                        </div>
+                    </div>
+                    <!--<h3>Promo Code</h3>-->
+                    @*<br />&nbsp;&nbsp;
+                    <div class="railway-font col-sm-12" style="font-size: 14px;">
+                        <label for="field-1" class="col-sm-3 control-label">Insert Promo Code</label>
+                        <div class="form-group col-sm-4">
+                            @*<span><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" ng-model="promoCode" placeholder="" required>
+                        </div>
+                        <button type="submit" class="btn col-sm-4" ng-disabled="promoCode == null" data-toggle="modal" data-target="#tncmodal"> Apply Promo Code &raquo;</button>
+                    </div>*@
+                    <!--<h3>Payment</h3>-->
+                    <div class="col-md-12" style="padding-bottom:7px">
+                        <h4>Make payment using:</h4>
+                        <div class="radio-inline" ng-hide="FinalConfirmation.ConfirmationResult.NEWSECURITYTOKEN">
+                            <input type="radio" name="gateway" ng-model="channel" value="CC" required />
+                            <img src="~/Content/master_visa.jpg" height="66">
+                            @*<br><small>Visa & Mastercard</small>*@
+                        </div>
+                        @*<div class="radio-inline" ng-hide="FinalConfirmation.ConfirmationResult.NEWSECURITYTOKEN">
+                            <input type="radio" name="gateway" ng-model="channel" value="M2U" required />
+                            <img src="~/Content/m2u.png" height="66">
+                            <br><small>Maybank</small>
+    </div>*@
+                        <div class="radio-inline" ng-hide="FinalConfirmation.ConfirmationResult.NEWSECURITYTOKEN">
+                            <input type="radio" name="gateway" ng-model="channel" value="BSN" required />
+                            <img src="~/Content/bsn.gif" height="66">
+                            @*<br><small>BSN</small>*@
+                        </div>
+                        <br />
+
+                        <div class="radio-inline" ng-hide="FinalConfirmation.ConfirmationResult.NEWSECURITYTOKEN">
+                            <input type="radio" name="gateway" ng-model="channel" value="88" required />
+                            <img src="~/Content/BANKLIST.jpg" style="width:80%;" height="108">
+                            @*<br><small>ipay88</small>*@
+                        </div>
+                        <div class="radio-inline" ng-show="userinfosession.Ledger || FinalConfirmation.ConfirmationResult.NEWSECURITYTOKEN">
+                            <input type="radio" name="gateway" ng-model="channel" value="L" required />
+                            <img src="~/Content/ktmbledger.jpg" width="163" height="66">
+                        </div>
+                    </div>
+                    <div class="railway-font">
+                        <button type="submit" class="btn btn-proceed-travel btn-lg" ng-disabled="channel == null" data-toggle="modal" data-target="#tncmodal"> Pay &raquo;</button>
+                        <a ng-href="{{UIURL}}" class="btn btn-proceed-travel btn-lg" style="color:white; background-color:red">Cancel &amp; Return to Home</a>
+                        @*<br /><small>Visa & MasterCard  </small><img src="~/Content/bank.png" width="170" height="50">*@
+                    </div>
+                    <!-- Modal Terms & Condition -->
+                    <div id="tncmodal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <center><h4 style="font-size: 14px;;"class="modal-title">TERMS AND CONDITIONS OF KERETAPI TANAH MELAYU BERHAD
+                                                ONLINE TICKETING SERVICE AND MOBILE APPLICATION</h4></center>
+                                </div>
+                                <style>
+                                    .tnc {
+                                        width: auto;
+                                        height: 490px;
+                                        overflow: auto;
+                                        padding: 20px;
+                                        line-height: 1.3em;
+                                    }
+                                </style>
+                                <div class="tnc">
+                                    <div style="text-align: justify; font-size: 12px;">
+                                        This document set out the terms and conditions applicable for reservation of tickets through Keretapi Tanah Melayu Berhad
+                                        (‘KTMB)’s online ticketing service (‘e-Ticket’) and mobile application (‘Mobile App’) which is governed by Malaysian law.
+                                        These terms and conditions are subject to change at any time. You will be deemed to have accepted all terms and conditions
+                                        if you make reservation through the service. If you do not agree to these terms and conditions, you should discontinue your
+                                        transaction.<br /></br>
+                                        <ul style="list-style-type:none; padding-left:0;">
+                                            <li>
+                                                <b>1. Availability of tickets</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>1.1 Tickets are subject to availability and KTMB’s general terms and conditions, and to particular terms and conditions that apply to each ETS and Intercity service.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>2. Accuracy of information</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>2.1 We do our best to ensure that information and fares displayed on the services are correct.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>3. In using E-Ticket/Mobile Apps, you agree that:</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>3.1 You will use this service only for your personal use and not for any unlawful or illegal purpose.</li>
+                                                    <li>3.2 You will not modify, transmit, copy, sell or transfer any information or service you may obtain from this service.</li>
+                                                    <li>3.3 You will be responsible for any charge, cost and/or liability that arise, out of your use of this service.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>4. Copyright</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>4.1 No part of this service may be copied, published, broadcasted or adapted without KTMB’s prior written consent.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>5. Ticket</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>5.1 Purchase of ticket can be done not less than 4 hours before departure.</li>
+                                                    <li>5.2 Tickets for trains departing from Woodlands, Singapore will be charged and payable in Singapore Dollar denomination.</li>
+                                                    <li>5.3 A maximum of 6 tickets can be purchased for each transaction via E-Ticket and a maximum of 2 tickets can be purchased for each transaction via the Mobile Apps.</li>
+                                                    <li>5.4 Purchase of tickets for selected ETS/Intercity trains is subject to terms relating to minimum distance.</li>
+                                                    <li>5.5	The passenger’s name and MyCard or passport number must be registered during purchase of ticket.</li>
+                                                    <li>5.6	Passenger must save the ticket in PDF format via smartphone or tablet or print the ticket for inspection and verification purposes.</li>
+                                                    <li>
+                                                        5.7 Passengers may print the ticket:
+                                                        <ul style="list-style-type:none">
+                                                            <li>i- At their own printer, or</li>
+                                                            <li>ii-	At ETS/Intercity ticket counter at least one (1) hour before train departure and passengers must produce valid ticket ID or ticket reference.</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>6. Type of Ticket</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>
+                                                        6.1 Adult
+                                                        <ul style="list-style-type:none">
+                                                            <li>i- For passengers aged 13 years and above</li>
+                                                        </ul>
+
+                                                    </li>
+                                                    <li>
+                                                        6.2 Child
+                                                        <ul style="list-style-type:none">
+                                                            <li>i- For passengers aged 4 to 12 years </li>
+                                                            <li>i- Passenger below 4 years may travel free of charge (without seat reservation)</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        6.3 VIP
+                                                        <ul style="list-style-type:none">
+                                                            <li>i- For Members of Parliament and wife/escort.</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        6.4 Concession
+
+                                                        <ul style="list-style-type:none">
+                                                            <li>6.4.1 Type of concession.</li>
+
+                                                            <ul style="list-style-type:none">
+                                                                <li>i- Senior Citizen .</li>
+                                                                <li>ii- Government Pensioner</li>
+                                                                <li>iii- Disabled .</li>
+                                                                <li>iv-	1MPC (Army/Police/Firemen).</li>
+                                                                <li>v- KTMB i-Card Student.</li>
+                                                            </ul>
+                                                        </ul>
+                                                        <ul style="list-style-type:none">
+                                                            <li>6.4.2 Terms and conditions.</li>
+
+                                                            <ul style="list-style-type:none">
+                                                                <li>
+                                                                    i- Senior Citizen .
+                                                                    <ul>
+                                                                        <li>a.	Malaysian citizen</li>
+                                                                        <li>b.	60 years and above</li>
+                                                                        <li>c.	Not valid for shuttle service JB Sentral – Woodlands – JB Sentral</li>
+                                                                    </ul>
+                                                                    ii- Government pensioner 
+                                                                    <ul>
+                                                                        <li>a.	Malaysian citizen</li>
+                                                                        <li>b.	Pensioner card issued by Jabatan Perkhidmatan Awam or Jabatan Hal Ehwal Veteran ATM</li>
+                                                                        <li>c.	Eligible for  pensioners’ wife (Malaysian citizen only) </li>
+                                                                        <li>d.	Not valid for shuttle service JB Sentral – Woodlands – JB Sentral</li>
+                                                                    </ul>
+                                                                    iii- Disabled
+                                                                    <ul>
+                                                                        <li>a.	Malaysian citizen</li>
+                                                                        <li>b.	Registered with Jabatan Kebajikan Masyarakat </li>
+                                                                        <li>c.	Not valid for shuttle service JB Sentral – Woodlands – JB Sentral</li>
+                                                                    </ul>
+                                                                    iv-	1MPC (Army / Police / Firemen).
+                                                                    <ul>
+                                                                        <li>a.	Malaysian citizen</li>
+                                                                        <li>b.	Not valid for auxiliary or volunteer army/police/firemen</li>
+                                                                        <li>c.	Not valid for shuttle service JB Sentral – Woodlands – JB Sentral</li>
+                                                                    </ul>
+                                                                    v-	KTMB i-Card Student
+                                                                    <ul>
+                                                                        <li>a.	Malaysian citizen</li>
+                                                                        <li>b.	KTMB i-Card holder only</li>
+                                                                        <li>c.	Not valid for shuttle service JB Sentral – Woodlands – JB Sentral</li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </ul>
+                                                        <ul style="list-style-type:none">
+                                                            <li>6.4.3 Concession tickets are not valid for :-</li>
+
+                                                            <ul style="list-style-type:none">
+                                                                <li>a.	Foreigners and permanent resident</li>
+                                                                <li>b.	Shuttle service JB Sentral – Woodlands – JB Sentral</li>
+                                                            </ul>
+                                                        </ul>
+                                                        <ul style="list-style-type:none">
+                                                            <li>6.4.4 Passenger’s name and MyCard number must be registered during purchase of ticket.</li>
+                                                        </ul>
+                                                        <ul style="list-style-type:none">
+                                                            <li>6.4.5 Tickets are not transferable.</li>
+                                                        </ul>
+                                                        <ul style="list-style-type:none">
+                                                            <li>6.4.6	The terms and conditions are subject to change without prior notice.</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>7.	Payment of Ticket </b>
+                                                <ul style="list-style-type:none">
+                                                    <li>7.1	Visa</li>
+                                                    <li>7.2	Master</li>
+                                                    <li>7.3	Maybank2u</li>
+                                                    <li>7.4	MyBSN</li>
+                                                    <li>7.5	iPay88 (internet banking for selected Malaysian banks)</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>8. Unsuccessful Transaction </b>
+                                                <ul style="list-style-type:none">
+                                                    <li>
+                                                        8.1	If a customer has been charged for ticket fare and ticket reservation was unsuccessful, KTMB shall refund the ticket fares.
+
+                                                    </li>
+                                                    <li>
+                                                        8.2	Process of refund:-
+                                                        <ul style="list-style-type:none">
+                                                            <li>
+                                                                i-	Payment of ticket fare via Visa, Master, Maybank2u or BSN
+                                                                <ul style="list-style-type:none">
+                                                                    <li>
+                                                                        a.	Refund of ticket fare to customers’ account is within 14 working days.
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                ii-	Payment of ticket fare via iPay88
+                                                                <ul style="list-style-type:none">
+                                                                    <li>
+                                                                        a.	Customer must contact Customer Service and submit their payment details (email: callcenter@ktmb.com.my or telephone:  603-22671200).
+                                                                    </li>
+                                                                    <li>
+                                                                        b.	Refund of ticket fare to customers’ accounts is within 14 working days from the date of submission the payment details.
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>8.3	If a customer does not receive any refund after 14 working days, please contact Customer Service (email: callcenter@ktmb.com.my or telephone:  603-22671200</li>
+                                                </ul>
+                                            </li>
+
+                                            <li>
+                                                <b>9. Ticket Inspection</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>9.1	Tickets are not transferable.</li>
+                                                    <li>9.2	A ticket is valid for the passenger whose name and MyCard number (or passport number) was printed on the ticket and in the passengers list.</li>
+                                                    <li>
+                                                        9.3	Passengers traveling with concession ticket must produce an original copy of the following  document(s) during ticket inspection:-
+
+                                                        <ul style="list-style-type:none">
+                                                            <li>
+                                                                i- Senior citizen
+                                                                <ul>
+                                                                    <li>
+                                                                        a.	MyCard
+                                                                    </li>
+                                                                </ul>
+                                                                ii-	Disabled
+                                                                <ul>
+                                                                    <li>
+                                                                        a.	MyCard
+                                                                    </li>
+                                                                    <li>
+                                                                        b.	Registration card Jabatan Kebajikan Masyarakat
+                                                                    </li>
+                                                                </ul>
+                                                                iii.	Government Pensioner (and wife)
+                                                                <ul>
+                                                                    <li>
+                                                                        a.	MyCard
+                                                                    </li>
+                                                                    <li>
+                                                                        b.	Pensioner card
+                                                                    </li>
+                                                                </ul>
+                                                                iv.	Police, army and firemen
+                                                                <ul>
+                                                                    <li>
+                                                                        a.	MyCard
+                                                                    </li>
+                                                                    <li>
+                                                                        b.	Authority Card
+                                                                    </li>
+                                                                </ul>
+                                                                v.	Student
+                                                                <ul>
+                                                                    <li>
+                                                                        a.	MyCard
+                                                                    </li>
+                                                                    <li>
+                                                                        b.	KTMB i-Card
+                                                                    </li>
+                                                                    <li>
+                                                                        c.	Student card
+                                                                    </li>
+                                                                </ul>
+                                                                vi.	VIP
+                                                                <ul>
+                                                                    <li>
+                                                                        a.	MyCard
+                                                                    </li>
+                                                                    <li>
+                                                                        b.	VIP Pass (issued by KTMB)
+                                                                    </li>
+                                                                </ul>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        9.4	Passenger must pay the full fare and a surcharge MYR100.00 (Malaysia Ringgit One Hundred);
+                                                        <ul style="list-style-type:none">
+                                                            <li>i. Unable to produce a valid ticket. </li>
+                                                            <li>ii.	Unable to produce original copy of the above document(s) (refer 9.3). </li>
+                                                            <li>iii. Foreigners or permanent resident travelling with concession tickets.</li>
+                                                            <li>iv.	Passengers travelling with concession ticket on shuttle service JB Sentral – Woodlands – JB Sentral.</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+
+                                            </li>
+                                            <li>
+                                                <b>10.	Reschedule or Amendment of Ticket</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>10.1 Reschedule or amendment of ticket must be submitted at ETS/Intercity ticket counter at least 24 hours before the departure time printed on the ticket.</li>
+                                                    <li>10.2 Reschedule or amendment of ticket for shuttle service JB Sentral – Woodlands – JB Sentral is not permitted.</li>
+                                                    <li>10.3 Passengers must produce a valid printed ticket or ticket ID or ticket reference to ETS/Intercity ticket counter. </li>
+                                                    <li>
+                                                        10.4 Terms and conditions:-
+                                                        <ul style="list-style-type:none">
+                                                            <li>i. Only amendment of travelling date and/or time of departure and/or coach type are allowed.</li>
+                                                            <li>ii.	Amendment of origin or destination station is not allowed.</li>
+                                                            <li>iii. Reschedule or amendment of ticket will be allowed once only.</li>
+                                                            <li>iv.	KTMB may charge administrative fee for each amendment ticket.</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>10.5 No refund will be given for the difference in ticket fare if the passenger downgrades ticket to a lower class.</li>
+                                                    <li>10.6 The terms and conditions are subject to change without prior notice.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>11.	Cancellation of Ticket and Refund of Fares </b>
+                                                <ul style="list-style-type:none">
+                                                    <li>
+                                                        11.1 Terms and conditions for cancellation and refund of ticket fare :-
+                                                        <ul style="list-style-type:none">
+                                                            <li>i. No refund of ticket fares will be given if the cancellation of ticket is submitted less than four (4) hours before departure time. </li>
+                                                            <li>ii.	For any cancellation submitted less than 72 hours prior to train departure; a refund of 50% of the ticket fare will be given.</li>
+                                                            <li>iii. For any cancellation submitted more than 72 hours prior to train departure; a refund of 75% of the ticket fare will be given.</li>
+                                                            <li>iv.	No refund of administrative fee or any other charges.</li>
+                                                        </ul>
+
+                                                    </li>
+                                                    <li>
+                                                        11.2 Refund procedure:-
+                                                        <ul style="list-style-type:none">
+                                                            <li>i. Cancellation of ticket must be submitted at ETS/Intercity ticket counter at least four (4) hours before departure time.</li>
+                                                            <li>ii.	Customer must produce a valid printed ticket or ticket ID or ticket reference and together with their MyCard or Passport.</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        11.3 Term of refund:-
+                                                        <ul style="list-style-type:none">
+                                                            <li>
+                                                                i.	Payment of ticket via Master or Visa;
+                                                                <ul>
+                                                                    <li>
+                                                                        -	Refund of ticket fare will be credit to customers account within 30 days.
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                ii.	Payment of ticket via Maybank2u or MyBSN or iPay88;
+                                                                <ul>
+                                                                    <li>
+                                                                        -	Refund of ticket fare will be pay to customer in cash.
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                iii. For ticket purchase via KTMB ticket agent;
+                                                                <ul>
+                                                                    <li>
+                                                                        -	Customer must cancel their ticket at ETS/Intercity counter, and
+                                                                    </li>
+                                                                    <li>
+                                                                        -	Submit refund application to ticket agent.
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>11.4 The terms and conditions are subject to change without prior notice.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>12. Changes or Cancellation by KTM BERHAD</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>12.1 If any changes or cancellation is made by KTMB to any coaches or train services, KTMB’s maximum liability is to refund the ticket fares only.</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>13. Incorrect Travel Details</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>
+                                                        13.1 KTMB accepts no liability for any error in travel details due to:-
+                                                        <ul style="list-style-type:none">
+                                                            <li>i.	Incorrect information keyed in by the customer during purchasing of ticket.</li>
+                                                            <li>ii.	Force majeure or any matter beyond KTMB’s reasonable control.</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <b>14. Others</b>
+                                                <ul style="list-style-type:none">
+                                                    <li>
+                                                        14.1 KTMB’s Conditions of Carriage:-
+                                                        <ul style="list-style-type:none">
+                                                            <li>i. Animals are not allowed to be carried into ETS or Intercity train. </li>
+                                                            <li>ii.	Bicycles or folding bike or any bicycle components are not allowed to be carried into ETS or Intercity train.</li>
+                                                            <li>iii. Passengers are allowed to bring only one luggage for free of charge. </li>
+                                                            <li>iv.	Service charge will be imposed for every excess luggage or parcel carried on board the train.</li>
+                                                            <li>v. For safety and comfort of passengers, KTMB have right to refuse any excess luggage or parcel to be carried on board the train. </li>
+                                                            <li>vi.	For further details please read KTMB’s Conditions of Carriage or contact Customer Service.</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>14.2 These terms and conditions are subject to change without prior notice.</li>
+                                                    <li>
+                                                        14.3 For inquiry please contact Customer Service:-
+                                                        <ul style="list-style-type:none">
+                                                            <li>i.	Email : callcenter@ktmb.com.my</li>
+                                                            <li>ii.	Telephone:  603-22671200 (operation hour 0700 – 2200)</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                 @*<iframe ng-show="userinfo.UserType != 'Guest'" ng-src="{{userTnC}}" width="595" height="400"><p>Your browser does not support iframes.</p> </iframe>
+                                <iframe ng-show="userinfo.UserType == 'Guest'" ng-src="{{guestTnC}}" width="595" height="400"><p>Your browser does not support iframes.</p> </iframe>*@
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" ng-click="paymentGateway(channel)" data-dismiss="modal">I Agree</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Expiry Modal -->
+    <div class="modal fade" id="expired" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Session expired!</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="booking_detail white-box animate-reveal">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p>We're sorry, your session have been expired. Please start again.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{UIURL}}" class="btn btn-search2-travel">OK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

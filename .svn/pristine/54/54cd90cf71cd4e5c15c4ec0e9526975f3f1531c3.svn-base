@@ -1,0 +1,267 @@
+﻿
+@{
+    ViewBag.Title = "Seating";
+}
+
+<div class="container" ng-controller="TicketController as ticketCtrl" ng-init="getLabels()">
+    <div class="row">
+        <div class="col-md-12" style="margin:5% 0;">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li>
+                        <a href="/" class="active"> <span class="step">1</span> <span class="title">Search Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="/"> <span class="step">2</span> <span class="title">Select Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="/"> <span class="step">3</span> <span class="title">Passenger Info</span> </a>
+                    </li>
+                    <li class="active">
+                        <a href="#"> <span class="step">4</span> <span class="title">Select Seat</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">5</span> <span class="title">Payment</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+
+        <!--wajib ada-->
+        <header></header>
+
+        <form ng-submit="confirmBooking()">
+            <!--start content and scrolling-->
+            <main class="clearfix">
+                <!--start sidebar-->
+                <aside id="sidebar">
+                    <div class="inside">
+                        <div class="flight_detail_sidebar white-box">
+                            <div class="details-text">
+                                <h4>
+                                    Journey Summary
+                                    <br />
+                                    <small ng-show="!BookingInfoWithLabel.IsReturn"> (One Way)</small>
+                                    <small ng-show="BookingInfoWithLabel.IsReturn"> (Return)</small>
+                                    <br />
+                                </h4>
+                            </div>
+                            <div class="railway-font">
+                                <small>TOTAL (MYR)</small>
+                                <div class="alert alert-info"><h2 class="price-info">{{BookingInfoWithLabel.VerificationResult.FINALCHARGE.replace('MYR ', '')}}</h2></div>
+                            </div>
+                            <div ng-repeat="trip in BookingInfoWithLabel.BookingList | orderBy :'+_DepartureTime'">
+                                <hr />
+                                <div class="title-direction">
+                                    <h4 ng-show="trip.OnwardReturn == 'O'">Onward <small>({{trip.OriginName}} - {{trip.DestinationName}})</small></h4>
+                                    <h4 ng-show="trip.OnwardReturn == 'R'">Return <small>({{trip.OriginName}} - {{trip.DestinationName}})</small></h4>
+                                </div>
+                                <div class="LTT">
+                                    <span class="skin-clr">
+                                        <i class="fa fa-subway"></i>
+                                        Train No.
+                                        <span class="pull-right">
+                                            {{trip.TrainNumber}} - {{trip.TrainName}}
+                                        </span>
+                                    </span><br>
+                                </div>
+                                <div class="LTT">
+                                    <span class="skin-clr">
+                                        <i class="fa fa-subway"></i>
+                                        Coach Type
+                                        <span class="pull-right">
+                                            {{trip.CoachCode}} - {{trip.CoachName}}
+                                        </span>
+                                    </span><br>
+                                </div>
+                                <div class="LTT">
+                                    <span class="skin-clr">
+                                        <i class="fa fa-clock-o"></i>
+                                        Departure
+                                        <span class="pull-right">
+                                            {{trip.DepartureTime}}
+                                        </span>
+                                    </span><br>
+                                </div>
+                                <div class="LTT">
+                                    <span class="skin-clr">
+                                        <i class="fa fa-clock-o"></i>
+                                        Arrival
+                                        <span class="pull-right">
+                                            {{trip.ArrivalTime}}
+                                        </span>
+                                    </span><br>
+                                </div>
+                                <br /><br />
+                            </div>
+                            <div class="railway-font">
+                                <input type="submit" class="btn btn-search-travel btn-lg" ng-disabled="!readyToProceed" value="Proceed &raquo;" />
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <!--end sidebar-->
+                <!-- start main content-->
+                <div class="main_content" id="content">
+
+                    <!--start depart content-->
+                    <div class="flight_detail_sidebar white-box animate-reveal" ng-repeat="booking in BookingInfoWithLabel.BookingList">
+                        <div class="details-text">
+                            <div class="pull-left">
+                                <h3 ng-show="booking.OnwardReturn == 'O'"> Onward ({{booking.OriginName}} - {{booking.DestinationName}})</h3>
+                                <h3 ng-show="booking.OnwardReturn == 'R'"> Return ({{booking.OriginName}} - {{booking.DestinationName}})</h3>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <!--start no coach selected-->
+                        <div class="col-md-8 col-sm-12" ng-show="!booking.AllSeats.length">
+                            <div class="plane">
+                                <ol class="cabin fuselage">
+                                    <li class="seat">
+                                        Please select coach...
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <!--end no coach selected-->
+                        <!--start seat on coach-->
+                        <div class="col-md-8 col-sm-12">
+                            <div class="plane">
+                                <ol class="cabin fuselage">
+                                    <li class="row" ng-if="booking.CoachDiagram == '2+2'" ng-repeat="s in booking.AllSeats">
+                                        <ol class="seats" type="A">
+                                            <li class="seat">
+                                                <input type="checkbox" ng-model="selectedSeat[(s.OriginCode)+'_'+(s.DestinationCode)+'_'+(s.LabelCode)+'_'+(s.SeatList[0].SLOT_ID)]"
+                                                       ng-disabled="s.SeatList[0].STATUS == 'L'" id="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[0].SLOT_ID}}" 
+                                                       ng-click="checkSeatCount($event)" />
+                                                <label for="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[0].SLOT_ID}}"><i class="fa fa-arrow-up"></i>{{s.SeatList[0].SLOT_ID}}</label>
+                                            </li>
+                                            <li class="seat2">
+                                                <input type="checkbox" ng-model="selectedSeat[(s.OriginCode)+'_'+(s.DestinationCode)+'_'+(s.LabelCode)+'_'+(s.SeatList[1].SLOT_ID)]"
+                                                       ng-disabled="s.SeatList[1].STATUS == 'L'" id="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[1].SLOT_ID}}" 
+                                                       ng-click="checkSeatCount($event)" />
+                                                <label for="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[1].SLOT_ID}}"><i class="fa fa-arrow-up"></i>{{s.SeatList[1].SLOT_ID}}</label>
+                                            </li>
+                                            <li class="seat2">
+                                                <input type="checkbox" ng-model="selectedSeat[(s.OriginCode)+'_'+(s.DestinationCode)+'_'+(s.LabelCode)+'_'+(s.SeatList[2].SLOT_ID)]"
+                                                       ng-disabled="s.SeatList[2].STATUS == 'L'" id="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[2].SLOT_ID}}" 
+                                                       ng-click="checkSeatCount($event)" />
+                                                <label for="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[2].SLOT_ID}}"><i class="fa fa-arrow-up"></i>{{s.SeatList[2].SLOT_ID}}</label>
+                                            </li>
+                                            <li class="seat">
+                                                <input type="checkbox" ng-model="selectedSeat[(s.OriginCode)+'_'+(s.DestinationCode)+'_'+(s.LabelCode)+'_'+(s.SeatList[3].SLOT_ID)]"
+                                                       ng-disabled="s.SeatList[3].STATUS == 'L'" id="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[3].SLOT_ID}}" 
+                                                       ng-click="checkSeatCount($event)" />
+                                                <label for="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[3].SLOT_ID}}"><i class="fa fa-arrow-up"></i>{{s.SeatList[3].SLOT_ID}}</label>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li class="row" ng-if="booking.CoachDiagram == '0+2'" ng-repeat="s in booking.AllSeats">
+                                        <ol class="seats" type="A">
+                                            <li class="seat">
+                                                &nbsp;
+                                            </li>
+                                            <li class="seat2">
+                                                &nbsp;
+                                            </li>
+                                            <li class="seat2">
+                                                <input type="checkbox" ng-model="selectedSeat[(s.OriginCode)+'_'+(s.DestinationCode)+'_'+(s.LabelCode)+'_'+(s.SeatList[0].SLOT_ID)]"
+                                                       ng-disabled="s.SeatList[0].STATUS == 'L'" id="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[0].SLOT_ID}}" 
+                                                       ng-click="checkSeatCount($event)" />
+                                                <label for="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[0].SLOT_ID}}"><i class="fa fa-arrow-up"></i>{{s.SeatList[0].SLOT_ID}}</label>
+                                            </li>
+                                            <li class="seat">
+                                                <input type="checkbox" ng-model="selectedSeat[(s.OriginCode)+'_'+(s.DestinationCode)+'_'+(s.LabelCode)+'_'+(s.SeatList[1].SLOT_ID)]"
+                                                       ng-disabled="s.SeatList[1].STATUS == 'L'" id="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[1].SLOT_ID}}" 
+                                                       ng-click="checkSeatCount($event)" />
+                                                <label for="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[1].SLOT_ID}}"><i class="fa fa-arrow-up"></i>{{s.SeatList[1].SLOT_ID}}</label>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li class="row" ng-if="booking.CoachDiagram == '2+0'" ng-repeat="s in booking.AllSeats">
+                                        <ol class="seats" type="A">
+                                            <li class="seat">
+                                                <input type="checkbox" ng-model="selectedSeat[(s.OriginCode)+'_'+(s.DestinationCode)+'_'+(s.LabelCode)+'_'+(s.SeatList[0].SLOT_ID)]"
+                                                       ng-disabled="s.SeatList[0].STATUS == 'L'" id="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[0].SLOT_ID}}" 
+                                                       ng-click="checkSeatCount($event)" />
+                                                <label for="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[0].SLOT_ID}}"><i class="fa fa-arrow-up"></i>{{s.SeatList[0].SLOT_ID}}</label>
+                                            </li>
+                                            <li class="seat2">
+                                                <input type="checkbox" ng-model="selectedSeat[(s.OriginCode)+'_'+(s.DestinationCode)+'_'+(s.LabelCode)+'_'+(s.SeatList[1].SLOT_ID)]"
+                                                       ng-disabled="s.SeatList[1].STATUS == 'L'" id="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[1].SLOT_ID}}" 
+                                                       ng-click="checkSeatCount($event)" />
+                                                <label for="{{s.OriginCode}}_{{s.DestinationCode}}_{{s.LabelCode}}_{{s.SeatList[1].SLOT_ID}}"><i class="fa fa-arrow-up"></i>{{s.SeatList[1].SLOT_ID}}</label>
+                                            </li>
+                                            <li class="seat2">
+                                                &nbsp;
+                                            </li>
+                                            <li class="seat">
+                                                &nbsp;
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                                <!--<div class="exit exit--back fuselage"></div>-->
+                            </div>
+                        </div>
+                        <!--end seat on coach-->
+                        <!--start information your seat-->
+                        <div class="col-md-4 col-sm-12">
+                            <!--start detail coach button click to change another coach-->
+                            <div class="pull-right">
+                                <p>Please choose your coach</p>
+                                <div id="coach">
+                                    <ul class="list-unstyled list-inline">
+                                        <li ng-repeat="label in booking.LabelInfo">
+                                            <a href="#" class="btn btn_book2 btn-block" ng-click="getSeats(booking.OriginCode, booking.DestinationCode, booking.DateJourney, booking.TrainNumber, booking.CoachCode, label.LabelName)">{{label.LabelName}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--end detail coach button click to change another coach-->
+                            <div class="pull-right">
+                                <br>
+                                <div class="detail_flight_number" style="border: 1px solid #dddddd;">
+                                    <p>YOUR SEAT(S)</p>
+                                    <div class="pull-left">
+                                        <ul class="list-unstyled">
+                                            <li style="color: #636363; font-weight: 700;">No. of passenger</li>
+                                            <li ng-repeat="person in booking.PaxList track by $index">Passenger {{$index+1}} :</li>
+                                        </ul>
+                                    </div>
+                                    <div class="pull-right">
+                                        <ul class="list-unstyled">
+                                            <li style="color: #636363; font-weight: 700;">Label-Seat</li>
+                                            <li ng-repeat="person in booking.PaxList">{{person.LABELNAME}}-{{person.SLOTID}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="detail_flight_number" style="border: 1px solid #dddddd;">
+                                    <p>LEGENDS</p>
+                                    <div class="pull-left">
+                                        <ul class="list-unstyled">
+                                            <li><i class="fa fa-square hot-seat" aria-hidden="true"></i> Window Seat (Available)</li>
+                                            <li><i class="fa fa-square normal-seat" aria-hidden="true"></i> Aisle Seat (Available)</li>
+                                            <li><i class="fa fa-square occupied-seat" aria-hidden="true"></i> Occupied Seat</li>
+                                            <li><i class="fa fa-square selected-seat" aria-hidden="true"></i> Selected Seat</li>
+                                            <li><i class="fa fa-arrow-up" aria-hidden="true"></i> Facing Forward</li>
+                                            <li><i class="fa fa-arrow-down" aria-hidden="true"></i> Facing Backward</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end information your seat-->
+                    </div>
+                    <!--end depart content-->
+                </div>
+                <!-- end main content-->
+            </main>
+            <!--end content and scrolling-->
+        </form>
+    </div>
+</div>

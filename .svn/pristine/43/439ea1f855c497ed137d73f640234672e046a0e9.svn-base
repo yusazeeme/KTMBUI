@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewBag.Title = "PromoSlider";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+
+<div ng-controller="CMSController as cmsCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="index.html"><i class="fa-home"></i>Home</a>
+        </li>
+        <li>
+            <a href="forms-main.html">Forms</a>
+        </li>
+        <li class="active">
+            <strong>Promotion Slider</strong>
+        </li>
+    </ol>
+    <h2>Promotion Slider</h2>
+    <br />
+
+    <div class="row" ng-init="getCMS('promo_slider', 'promo_content', false)">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Promotion Slider
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="javascript:;" onclick="jQuery('#modal-1').modal('show');" class="btn btn-default">Add New</a>
+                            </div>
+                        </div>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Price (RM)</th>
+                                    <th>Ticket Type</th>
+                                    <th>Promo Code</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="promo_content.length">
+                                <tr ng-repeat="promo in promo_content">
+                                    <td>{{promo.param.origin}}</td>
+                                    <td>{{promo.param.destination}}</td>
+                                    <td>{{promo.param.price}}</td>
+                                    <td>{{promo.param.ticketType}}</td>
+                                    <td>{{promo.param.promoCode}}</td>
+                                    <td>{{promo.param.date}}</td>
+                                    <td>
+                                        <a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" ng-click="getSingleModel('promo_content', promo_content, promo.pkcolumn)">Update</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-1" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(promo_content, 'promo_slider', 'promo_content', false, false)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Promotion Slider</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Origin</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="promo_content.param.origin" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Destination</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="promo_content.param.destination" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Price (RM)</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="promo_content.param.price" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Train Type</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="promo_content.param.ticketType" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Promo Code</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="promo_content.param.promoCode" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Date</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="promo_content.param.date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade" id="modal-2" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(promo_content, 'promo_slider', 'promo_content', true, true)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="getCMS('promo_slider', 'promo_content', false)">&times;</button>
+                        <h4 class="modal-title">Update Promotion Slider</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Origin</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="promo_content.param.origin" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Destination</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="promo_content.param.destination" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Price (RM)</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="promo_content.param.price" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Train Type</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="promo_content.param.ticketType" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Promo Code</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="promo_content.param.promoCode" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Date</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="promo_content.param.date" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="getCMS('promo_slider', 'promo_content', false)">Close</button>
+                        <button type="submit" class="btn btn-info">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

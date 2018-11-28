@@ -1,0 +1,269 @@
+﻿
+@{
+    ViewBag.Title = "Passenger";
+}
+
+<div class="container" ng-controller="TicketController as ticketCtrl" ng-init="getBooking()">
+    <div class="row">
+        <div class="col-md-12" style="margin:5% 0;">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li>
+                        <a href="/" class="active"> <span class="step">1</span> <span class="title">Search Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="/"> <span class="step">2</span> <span class="title">Select Train</span> </a>
+                    </li>
+                    <li class="active">
+                        <a href="#"> <span class="step">3</span> <span class="title">Passenger Info</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">4</span> <span class="title">Select Seat</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">5</span> <span class="title">Payment</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <!--wajib ada-->
+        <header></header>
+        <!--Start Departure-->
+
+        <form ng-submit="">
+            <div class="col-md-12">
+                <!--start content and scrolling-->
+                <main class="clearfix">
+                    <!--start sidebar-->
+                    <aside id="sidebar">
+                        <div class="inside">
+                            <div class="flight_detail_sidebar white-box">
+                                <div class="details-text">
+                                    <h4>
+                                        Journey Summary
+                                        <br />
+                                        <small ng-show="!booked.IsReturn"> (One Way)</small>
+                                        <small ng-show="booked.IsReturn"> (Return)</small>
+                                        <br />
+                                    </h4>
+                                </div>
+                                <div class="railway-font">
+                                    <small>TOTAL (MYR)</small>
+                                    <div class="alert alert-info"><h2 class="price-info">{{booked.totalCost}}</h2></div>                                    
+                                </div>
+                                <div ng-repeat="trip in booked.bookedList | orderBy :'+_DepartureTime'">
+                                    <hr />
+                                    <div class="title-direction">
+                                        <h4 ng-show="trip.TripType == 'O'">Depart <small>({{trip.OriginName}} - {{trip.DestinationName}})</small></h4>
+                                        <h4 ng-show="trip.TripType == 'R'">Return <small>({{trip.OriginName}} - {{trip.DestinationName}})</small></h4>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-subway"></i>
+                                            Train No.
+                                            <span class="pull-right">
+                                                {{trip.TrainNumber}} - {{trip.TrainName}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-subway"></i>
+                                            Coach Type
+                                            <span class="pull-right">
+                                                {{trip.CoachCode}} - {{trip.CoachName}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-clock-o"></i>
+                                            Departure
+                                            <span class="pull-right">
+                                                {{trip.DepartureTime}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <div class="LTT">
+                                        <span class="skin-clr">
+                                            <i class="fa fa-clock-o"></i>
+                                            Arrival
+                                            <span class="pull-right">
+                                                {{trip.ArrivalTime}}
+                                            </span>
+                                        </span><br>
+                                    </div>
+                                    <br /><br />
+                                </div>                                
+                                <div class="railway-font">
+                                    <input type="submit" class="btn btn-search-travel btn-lg" value="Proceed &raquo;" />
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                    <!--end sidebar-->
+                    <!-- start main content-->
+                    <div class="main_content" id="content">
+                        <div class="main_content" id="content">
+                            <div class="booking_detail white-box animate-reveal">
+                                <!---No card / no pass-->
+                                <h4>Guest Info</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter name">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Phone No.">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="Enter Email">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="booking_detail white-box animate-reveal">
+                                <h4>Passenger 1 (Adult)</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Name.." required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter No. IC / Passport.." required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="select_booking">
+                                            <option selected="selected">Type of Ticket</option>
+                                            <option>Free Pass</option>
+                                            <option>Ordinary Pass</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6" style="font-family: 'Raleway', sans-serif; font-size: 14px;">
+                                        <div class="passenger_gender">
+                                            <div class="radio-inline">
+                                                Gender
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" name="optradio">Male
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" name="optradio">Female
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!---Auto checking n default based on type of passenger selected--->
+                                        <select class="select_booking">
+                                            <option selected="selected">Type of passenger</option>
+                                            <option>Adult</option>
+                                            <option>Child</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="booking_detail white-box animate-reveal">
+                                <h4>Passenger 2 (Adult)</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Name.." required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter No. IC / Passport.." required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="select_booking">
+                                            <option selected="selected">Type of Ticket</option>
+                                            <option>Free Pass</option>
+                                            <option>Ordinary Pass</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6" style="font-family: 'Raleway', sans-serif; font-size: 14px;">
+                                        <div class="passenger_gender">
+                                            <div class="radio-inline">
+                                                Gender
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" name="optradio">Male
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" name="optradio">Female
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!---Auto checking n default based on type of passenger selected--->
+                                        <select class="select_booking">
+                                            <option selected="selected">Type of passenger</option>
+                                            <option>Adult</option>
+                                            <option>Child</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="booking_detail white-box animate-reveal">
+                                <h4>Passenger 3 (Child)</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter Name.." required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Enter No. IC / Passport.." required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="select_booking">
+                                            <option selected="selected">Type of Ticket</option>
+                                            <option>Free Pass</option>
+                                            <option>Ordinary Pass</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6" style="font-family: 'Raleway', sans-serif; font-size: 14px;">
+                                        <div class="passenger_gender">
+                                            <div class="radio-inline">
+                                                Gender
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" name="optradio">Male
+                                            </div>
+                                            <div class="radio-inline">
+                                                <input type="radio" name="optradio">Female
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!---Auto checking n default based on type of passenger selected--->
+                                        <select class="select_booking">
+                                            <option selected="selected">Type of passenger</option>
+                                            <option>Adult</option>
+                                            <option>Child</option>
+                                        </select>
+                                        <p style="margin:0;">*Child passenger 4 - 12 years</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end main content-->
+
+                </main>
+                <!--end content and scrolling-->
+                <!--End Departure-->
+            </div>
+            <!--End Departure-->
+        </form>
+    </div>
+</div>
+

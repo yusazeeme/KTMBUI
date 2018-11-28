@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!--inner body start from here-->
+<div class="inner-body" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('contact_us')">
+    <div class="map_v1" ng-repeat="contact in content | filter: {contenttype:'contact_content'}">
+        <div id="map">
+        </div>
+        <div class="map-diraction">
+            <i class="fa fa-caret-down"></i>
+            <!--<img src="assets/img/plane-icon-map.jpg" alt="plane">-->
+            <p>
+                {{contact.param.address1}}<br>
+                {{contact.param.address2}}<br>
+                {{contact.param.address3}}
+            </p>
+        </div>
+    </div>
+    <div class="container" ng-repeat="contact in content | filter: {contenttype:'contact_content'}">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="C_social_v2 animate-reveal">
+                    <div class="pull-left"><span><i class="fa fa-map-marker"></i></span></div>
+                    <div class="pull-right">
+                        <h4>Address</h4>
+                        <p>
+                            {{contact.param.address1}}<br>
+                            {{contact.param.address2}}<br>
+                            {{contact.param.address3}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="C_social_v2 animate-reveal">
+                    <div class="pull-left"><span class="primary"><i class="fa fa-phone"></i></span></div>
+                    <div class="pull-right">
+                        <h4>Phone</h4>
+                        <p>
+                            Office: {{contact.param.phoneNo}} <br>
+                            Call Center: {{contact.param.callcenter}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="C_social_v2 animate-reveal">
+                    <div class="pull-left"><span class="secondry"><i class="fa fa-envelope-o"></i></span></div>
+                    <div class="pull-right">
+                        <h4>Email Address</h4>
+                        <p>{{contact.param.email}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--inner body end from here-->

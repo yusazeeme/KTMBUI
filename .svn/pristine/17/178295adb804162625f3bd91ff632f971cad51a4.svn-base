@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+<!--basic-->
+<title>jQuery Sticky Sidebar Examples</title>
+
+<!--meta-->
+<meta charset="utf-8" />
+<meta name="author" content="Spoiled Milk, www.spoiledmilk.com" />
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<!--style-->
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" />
+<link href="css/styleside.css" rel="stylesheet" />
+
+<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> 
+		<![endif]-->
+
+</head>
+
+<body>
+
+<!--header-->
+<header>
+    <div class="jquery-script-center">
+<ul>
+<li><a href="http://www.jqueryscript.net/layout/Creating-A-Fixed-Position-Sidebar-With-jQuery-Sticky-Sidebar-Plugin.html">Download This Plugin</a></li>
+<li><a href="http://www.jqueryscript.net/">Back To jQueryScript.Net</a></li>
+</ul>
+<div class="jquery-script-ads"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<div class="jquery-script-clear"></div>
+</div></header>
+<!--end header--> 
+
+<!--navigation-->
+<nav>
+<ul>
+<li class="active"><a href="index.html">Normal sidebar</a></li>
+<li><a href="page2.html">Tiny sidebar</a></li>
+<li><a href="page3.html">Huge sidebar</a></li>
+</ul>
+</nav>
+<!--end navigation--> 
+
+<!--main-->
+<main class="clearfix"> 
+
+<!--sidebar-->
+<aside id="sidebar">
+<div class="inside">
+<h2>Title 1</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. Curabitur sed ipsum eget erat mollis luctus. Donec consectetur dui ac diam blandit, sit amet luctus justo fringilla. Pellentesque feugiat enim a mi pulvinar aliquet.</p>
+<h2>Title 2</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<h2>Title 2</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<h2>Title 2</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+
+
+
+
+</div>
+</aside>
+<!--end sidebar--> 
+
+<!--main content-->
+<div class="main_content" id="content">
+<h1>Lorem ipsum dolor sit amet</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. Curabitur sed ipsum eget erat mollis luctus. Donec consectetur dui ac diam blandit, sit amet luctus justo fringilla. Pellentesque feugiat enim a mi pulvinar aliquet. Fusce nisl ante, venenatis id magna a, porttitor euismod urna. Etiam eget ligula vitae tellus consectetur facilisis sed a felis. Nulla velit urna, viverra vel ante sit amet, mollis egestas leo. Nullam dictum quam vel leo hendrerit consectetur.</p>
+<p>Morbi tincidunt, ante a laoreet condimentum, elit tellus eleifend sapien, ut pretium libero nunc sit amet sem. Fusce lacinia erat orci, in molestie nisl ultrices nec. Phasellus placerat quam quis lorem posuere, a mollis diam rutrum. Aenean purus lorem, laoreet ac dui ac, fermentum tempor quam. Integer elementum tortor quis interdum interdum. Duis consequat quis erat in luctus. Fusce vel purus purus. Quisque sed eleifend tellus. Praesent tincidunt quam eu sapien auctor gravida. Pellentesque ac magna arcu. Mauris molestie molestie malesuada. Integer eleifend risus non sapien elementum tempus. Pellentesque bibendum mollis urna sit amet ornare. Morbi in massa commodo, pulvinar ipsum quis, euismod est.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+
+<p>Morbi tincidunt, ante a laoreet condimentum, elit tellus eleifend sapien, ut pretium libero nunc sit amet sem. Fusce lacinia erat orci, in molestie nisl ultrices nec. Phasellus placerat quam quis lorem posuere, a mollis diam rutrum. Aenean purus lorem, laoreet ac dui ac, fermentum tempor quam. Integer elementum tortor quis interdum interdum. Duis consequat quis erat in luctus. Fusce vel purus purus. Quisque sed eleifend tellus. Praesent tincidunt quam eu sapien auctor gravida. Pellentesque ac magna arcu. Mauris molestie molestie malesuada. Integer eleifend risus non sapien elementum tempus. Pellentesque bibendum mollis urna sit amet ornare. Morbi in massa commodo, pulvinar ipsum quis, euismod est.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed convallis mattis tortor sit amet gravida. Curabitur tincidunt tellus bibendum tellus eleifend porttitor. Etiam hendrerit purus a sollicitudin tempor. </p>
+
+
+
+
+</div>
+<!--end main content--> 
+
+</main>
+<!--end main--> 
+
+<!--footer-->
+<footer> </footer>
+<!--end footer--> 
+
+<!--js--> 
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="js/stickySidebar.js"></script> 
+<script>
+		$(document).ready(function() {
+	
+			$('#sidebar').stickySidebar({
+				sidebarTopMargin: 20,
+				footerThreshold: 100
+			});
+		
+		});
+		</script>
+</body>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</html>

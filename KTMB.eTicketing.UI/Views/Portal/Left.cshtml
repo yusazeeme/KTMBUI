@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Article";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    img {
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+
+<div ng-controller="CMSController as cmsCtrl" ng-init="getContent(@ViewBag.Id)">
+    <!--inner body start from here-->
+    <div class="inner-body">
+
+        <div class="team-about-us animate-reveal">
+            <h2 style="font-family: sans-serif; font-size:20px; font-weight: 550;">{{content.SingleContent.TitleEn}}</h2>
+        </div>
+
+        <div class="bread-crumb">
+            <ol class="breadcrumb" style="font-family: sans-serif; font-size:14px; font-weight: 550;">
+                <li><a href="{{UIURL}}">Home</a></li>
+                <li class="active"><a href="{{UIURL}}">{{content.SingleContent.TitleEn}}</a></li>
+            </ol>
+        </div>
+
+        <!--start content-->
+        <div class="container railway-font">
+            <div class="row">
+                <div class="col-md-3 col-xs-12" style="padding-top: 45px;padding-left: 30px;">
+                    <div class="left-group">
+                        <div class="list-group left-menu">
+                            <a ng-class="{ 'list-group-item hvr-skew': sibling.Id != @ViewBag.Id, 'list-group-item hvr-skew active': sibling.Id == @ViewBag.Id }" ng-href="{{UIURL}}/portal/left/{{sibling.Id}}"
+                               ng-repeat="sibling in content.SingleContent.Siblings"><h5 class="nospace"><div style="font-family: sans-serif; font-size:14px; font-weight: 600;">{{sibling.Title}}</div></h5></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style="padding-top:45px; padding-left:30px; padding-right: 30px; text-align:justify;line-height:1.8em; font-family: sans-serif; font-size:14px; font-weight: 550;">
+                    <div ng-bind-html="content.SingleContent.ContentEn"></div>
+                </div>
+            </div>
+        </div>
+        <!--end content-->
+
+    </div>
+
+    <br /><br />
+</div>
+<!--inner body end from here-->

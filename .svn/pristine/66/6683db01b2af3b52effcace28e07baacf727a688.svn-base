@@ -1,0 +1,149 @@
+﻿using KTMB.eTicketing.UI.DataLayer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KTMB.eTicketing.UI.BusinessLayer
+{
+    public class ContentManagement
+    {
+        public static List<ContentObj> GetContent()
+        {
+            var list = new List<ContentObj>();
+            using (var context = new KTMBEntities())
+            {
+                var menu = context.ost_menu.Where(i => i.parent_id == 0).ToList();//Root menu
+                foreach (var m in menu)
+                {
+                    list.Add(GetContent(m.id));
+                }
+            }
+            return list;
+        }
+
+        public static ContentObj GetContent(int id)
+        {
+            using (var context = new KTMBEntities())
+            {
+                var menu = context.ost_menu.Where(i => i.id == id).FirstOrDefault();
+                var submenu = context.ost_menu.Where(i => i.parent_id == menu.id).ToList();
+                var article = context.ost_articles.Where(i => i.menu_id == menu.id);
+                var subContent = new List<ContentObj>();
+
+                foreach (var item in submenu)
+                {
+                    subContent.Add(GetContent(item.id));
+                }
+
+                var content = new ContentObj()
+                {
+                    Menu = menu,
+                    Article = article.FirstOrDefault(),
+                    ArticleFamily = article.ToList(),
+                    SubContent = subContent,
+                    MenuHierarchy = GetMenuHierarchy(menu.id)
+                };
+                return content;
+            }
+        }
+
+        public static List<ost_menu> GetMenuHierarchy(int id)
+        {
+            var list = new List<ost_menu>();
+            using (var context = new KTMBEntities())
+            {
+                var menu = context.ost_menu.Where(i => i.id == id).FirstOrDefault();
+
+                if (menu != null)
+                {
+                    list.Add(menu);
+                    while (menu != null)
+                    {
+                        menu = context.ost_menu.Where(i => i.id == menu.parent_id).FirstOrDefault();
+                        if (menu != null)
+                            list.Add(menu);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public static List<MenuObj> GetMenu()
+        {
+            var list = new List<MenuObj>();
+            using (var context = new KTMBEntities())
+            {
+                var menu = context.ost_menu.Where(i => i.parent_id == 0).Where(c => c.type != "cms").ToList();//Root menu
+                foreach (var m in menu)
+                {
+                    list.Add(GetMenu(m.id));
+                }
+            }
+            return list;
+        }
+
+        public static MenuObj GetMenu(int id)
+        {
+            using (var context = new KTMBEntities())
+            {
+                var menu = context.ost_menu.Where(i => i.id == id).Where(c => c.type != "cms").FirstOrDefault();
+                if (menu != null)
+                {
+                    var _submenu = context.ost_menu.Where(i => i.parent_id == menu.id).Where(c => c.type != "cms").ToList();
+                    var submenu = new List<MenuObj>();
+
+                    foreach (var item in _submenu)
+                    {
+                        submenu.Add(GetMenu(item.id));
+                    }
+
+                    var content = new MenuObj()
+                    {
+                        Menu = menu,
+                        SubMenu = submenu
+                    };
+                    return content;
+                }
+                return null;
+            }
+        }
+
+        public static HomePageContent GetHomepageContent()
+        {
+            var result = new HomePageContent();
+            using (var context = new KTMBEntities())
+            {
+                result.Slider = context.ost_portal_media.Where(i => i.type == "01" && i.publish == 0).ToList();
+                result.Background = context.ost_portal_media.Where(i => i.type == "04" && i.publish == 0).FirstOrDefault();
+                result.Mobile = context.ost_portal_media.Where(i => i.type == "05" && i.publish == 0).FirstOrDefault();
+            }
+            return result;
+        }
+
+    }
+
+    public class ContentObj
+    {
+        public ost_menu Menu { get; set; }
+        public ost_articles Article { get; set; }
+        public ost_board Board { get; set; }
+        public List<ContentObj> SubContent { get; set; }
+        public List<ost_articles> ArticleFamily { get; set; }
+        public List<ost_menu> MenuHierarchy { get; set; }
+    }
+
+    public class MenuObj
+    {
+        public ost_menu Menu { get; set; }
+        public List<MenuObj> SubMenu { get; set; }
+    }
+
+    public class HomePageContent
+    {
+        public List<ost_portal_media> Slider { get; set; }
+        public ost_portal_media Background { get; set; }
+        public ost_portal_media Mobile { get; set; }
+    }
+}

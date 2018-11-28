@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Attach Detach";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="{{UIURL}}/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li>
+        Coach Management
+    </li>
+    <li class="active">
+        <strong>Attach Detach</strong>
+    </li>
+</ol>
+<h2>Attach Detach</h2>
+<br>
+
+
+<div class="row" ng-controller="UserController as userCtrl">
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-primary" data-collapsed="0" style="background-color:#0053a0; border-color: #0053a0; color:whitesmoke;">
+            <div class="panel-body">
+
+                <form role="form" class="form-horizontal" style="margin-top: 15px;">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="from" class="col-sm-4 control-label font-white">Train Number</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="col-sm-offset-4  col-sm-6">
+                                <button type="submit" class="btn btn btn-warning" style="color:black;"><i class="glyphicon glyphicon-search"></i> Search</button>
+                                <button type="reset" class="btn btn-success"><i class="glyphicon glyphicon-refresh"></i>Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table class="table table-bordered font-black">
+            <thead>
+                <tr>
+                    <th>Train Number</th>
+                    <th>Coach</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span>
+                            <br />
+                        </span>
+                    </td>
+                    <td>
+                        <span>
+                            <br />
+                        </span>
+                    </td>
+                    <td>
+                        <span>
+                            <br />
+                        </span>
+                    </td>
+                    <td style="width:70px">
+                        @*<button type="submit" class="btn btn-default">View</button>*@
+                        <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                        @*<button type="submit" class="btn btn-default">Edit</button>*@
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Edit Settings</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label pull-left">Train Number</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" required>
+                                        <option value="">90254</option>
+                                        <option value="">92000</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <table class="table table-bordered font-black">
+                                <thead>
+                                    <tr>
+                                        <th class="col-sm-10">Coach No</th>
+                                        <th class="col-sm-2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="odd gradeX">
+                                        <td class="center"></td>
+                                        <td style="width:97px">
+                                            <button type="button" class="btn btn-red" confirmed-click="" ng-confirm-click=""><i class="fa fa-close"></i></button>
+                                            <button type="button" class="btn btn-green" confirmed-click="" ng-confirm-click=""><i class="fa fa-plus"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-green">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+

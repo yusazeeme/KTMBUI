@@ -1,0 +1,25 @@
+﻿(function () {
+    var app = angular.module('lookup', []);
+
+    app.controller('LookupController', ["$scope", "$http", "apiURL", '$rootScope', function ($scope, $http, apiURL, $rootScope) {
+        console.log("LookupController logged on.");
+
+        $scope.getDestinationList = function () {
+            console.log("LookupController.getDestinationList triggered.");
+            $rootScope.spinnerShow = true;
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/ondlist'
+            }).then(function successCallback(response) {
+                console.log(response);
+                $scope.destinations = response.data;
+                $rootScope.spinnerShow = false;
+            }, function errorCallback(response) {
+                console.log('errorCallback');
+                $rootScope.spinnerShow = false;
+            });            
+        };
+        
+    }]);
+
+})();

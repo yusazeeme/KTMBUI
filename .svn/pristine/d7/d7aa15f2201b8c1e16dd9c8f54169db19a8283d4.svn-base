@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Failure Payment</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="ktmb failure payment" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!-- header -->
+<div class="banner">
+		<div class="container">
+				
+				
+				<div class="banner-info">
+				
+				<div class="logo">
+                                    <img src="./images/ktmb.png">
+				
+				</div>
+                                    <center><img src="./images/icon2.png"></center>
+                                    <h5>Sorry, payment transaction is unsuccessfully.</h5>
+                                    <br>
+                                    <div class="white">
+                                    <p>Reason: ????</p>
+                                     <p>Suggestion: Please try again. explanation..........</p>
+                                     <p><br><br><a class="btn btn-warning" href="#">Try again</a>  <a href="#" class="btn btn-default">Back to Portal KTMB</a></p>
+                                     </div>
+				</div>
+		</div>
+	</div>
+<!-- header -->
+</body>
+</html>

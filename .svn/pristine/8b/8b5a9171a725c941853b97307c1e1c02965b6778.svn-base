@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "CorporateProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body">
+    <div class="container">
+        <!--start breadcrumb-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bread-crumb">
+                    <h2>About Us</h2>
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="javascript:;">About Us</a></li>
+                        <li class="active">Corporate Profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+    </div>
+    <div class="wrapper_about_us">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="vision animate-reveal">
+                        <h2>Our History</h2>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-left" style="text-align: justify;">
+                        Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis. Praesent dapibus eleifend augue, eget sollicitudin velit malesuada eu. Aliquam blandit, diam ac venenatis feugiat, tellus odio malesuada ex, eu luctus lectus nibh et velit.
+                        <br>
+                        Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis. Praesent dapibus eleifend augue, eget sollicitudin velit malesuada eu. Aliquam blandit, diam ac venenatis feugiat, tellus odio malesuada ex, eu luctus lectus nibh et velit.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-left" style="text-align: justify;">
+                        Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis. Praesent dapibus eleifend augue, eget sollicitudin velit malesuada eu. Aliquam blandit, diam ac venenatis feugiat, tellus odio malesuada ex, eu luctus lectus nibh et velit.
+                        <br>
+                        Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis. Praesent dapibus eleifend augue, eget sollicitudin velit malesuada eu. Aliquam blandit, diam ac venenatis feugiat, tellus odio malesuada ex, eu luctus lectus nibh et velit.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <hr class="hr_index no-margin">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <br /><br />
+                    <h3>Our Mission</h3>
+                    <p>Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis. Praesent dapibus eleifend augue, eget sollicitudin velit malesuada eu. Aliquam blandit, diam ac venenatis feugiat, tellus odio malesuada ex, eu luctus lectus nibh et velit.</p>                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <br /><br />
+                    <h3>Our Vission</h3>
+                    <p>Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis. Praesent dapibus eleifend augue, eget sollicitudin velit malesuada eu. Aliquam blandit, diam ac venenatis feugiat, tellus odio malesuada ex, eu luctus lectus nibh et velit.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="hr_index no-margin">
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="team-about-us animate-reveal">
+                    <h2>Board Director</h2>
+                </div>
+                <center><img src="~/Content/assets/img/bod.png" alt="team" class="img-responsive"></center>
+            </div>
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <br><br>
+                    <h4>Y. B. Dato' Ir. Hj Nawawi Bin Hj Ahmad</h4>
+                    <h5> Non - Executive Chairman</h5>
+                    <p>Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis. </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <br><br>
+                    <h4>Y. Bhg. Datuk Ruhaizah Binti Mohamed Rashid</h4>
+                    <h5> Non-Independent Non-Executive Director</h5>
+                    <p>Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <h4>Y. Brs. Dr. Zunika Binti Mohamed</h4>
+                    <h5>Non-Independent Non-Executive Director</h5>
+                    <p>Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis. </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <h4>Y. Bhg Datuk Hj Kamaruzaman Bin Hj Mohd Noor</h4>
+                    <h5> Non-Independent Non-Executive Director</h5>
+                    <p>Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis.</p>
+                    <!--<a href="#">Find out now <span>></span></a>-->
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <h4>Y. Bhg. Dato' Sr. Ahmad Zainuddin Bin Hj Jamaluddin</h4>
+                    <h5>Non-Independent Non-Executive Director</h5>
+                    <p>Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis. </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <h4>Y. Bhg. Datuk Yew Teong Look</h4>
+                    <h5> Non-Independent Non-Executive Director</h5>
+                    <p>Etiam pharetra ut ante eget efficitur. Nullam quis felis at nunc vehicula sollicitudin ut ex. Maecenas eget volutpat turpis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--inner body end from here-->

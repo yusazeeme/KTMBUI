@@ -1,0 +1,492 @@
+﻿
+@{
+    ViewBag.Title = "Select";
+}
+
+<div class="container" ng-controller="TicketController as ticketCtrl">
+    <div class="row" ng-init="getCoach()">
+        <div class="col-md-12" style="margin:5% 0;">
+            <div class="stepwizard col-md-offset-3">
+                <div class="stepwizard-row setup-panel">
+                    <div class="stepwizard-step">
+                        <a href="search_train.html" class="btn btn-default2 btn-circle" disabled="disabled">1</a>
+                        <p>Search Train</p>
+                    </div>
+                    <div class="stepwizard-step">
+                        <a href="select_train.html" type="button" class="btn btn-step btn-circle2">2</a>
+                        <p>Select Train</p>
+                    </div>
+                    <div class="stepwizard-step">
+                        <a href="#step-3" type="button" class="btn btn-default2 btn-circle" disabled="disabled">3</a>
+                        <p>Passenger Info <br>+ Add - ons</p>
+                    </div>
+                    <div class="stepwizard-step">
+                        <a href="#step-4" type="button" class="btn btn-default2 btn-circle" disabled="disabled">4</a>
+                        <p>Select Seat</p>
+                    </div>
+                    <div class="stepwizard-step">
+                        <a href="#step-5" type="button" class="btn btn-default2 btn-circle" disabled="disabled">5</a>
+                        <p>Payment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Start Onward-->
+        <div class="col-md-12">
+            <div class="bread-crumb animate-reveal">
+                <h2>Onward Train <small>(Segamat - Gua Musang)</small></h2>
+                <div class="pull-right">
+                    <a href="search_train.html" class="btn btn-default">Change Travel?</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <!--href="tab1" >> berdasarkan tarikh dan akan hantar data ke content !!!!--->
+            <!-- Nav tabs -->
+            <div id="tabbing">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation"><a href="#tab1" role="tab" data-toggle="tab">17 May, Wed</a></li>
+                    <li role="presentation"><a href="#tab2" role="tab" data-toggle="tab">18 May, Thu</a></li>
+                    <li role="presentation"><a href="#tab3" role="tab" data-toggle="tab">19 May, Fri</a></li>
+                    <li role="presentation" class="active"><a href="#tab4" role="tab" data-toggle="tab">20 May, Sat</a></li>
+                    <li role="presentation"><a href="#tab5" role="tab" data-toggle="tab">21 May, Sun</a></li>
+                    <li role="presentation"><a href="#tab6" role="tab" data-toggle="tab">22 May, Mon</a></li>
+                    <li role="presentation"><a href="#tab7" role="tab" data-toggle="tab">23 May, Tue</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="tab-content" style="margin-top: 3%;">
+                <!---!!!!!! id="tab1" dapat data dari atas-->
+                <div role="tabpanel" class="tab-pane active" id="tab4">
+                    <div class="sort-section-v2">
+                        <div class="row no-margin">
+                            <div class="col-md-3 col-sm-6 col-xs-6 no-padding">
+                                <h4>Sort results by:</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6 no-padding">
+                                <select class="select_sorting no-border-right">
+                                    <option selected="selected">Time</option>
+                                    <option>Acending</option>
+                                    <option>decending</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6 no-padding">
+                                <select class="select_sorting no-border-right">
+                                    <option selected="selected">Available</option>
+                                    <option>Acending</option>
+                                    <option>decending</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3  col-sm-6 col-xs-6 no-padding">
+                                <select class="select_sorting">
+                                    <option selected="selected">Fare</option>
+                                    <option>Acending</option>
+                                    <option>decending</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flight_box_detail white-box animate-reveal tengah">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="details-text">
+                                            <br>
+                                            <h4>
+                                                Ekspress Rakyat Timuran  <a href="#" class="btn btn-stop">Low fare</a><br>
+                                                <small>(26)</small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec" style="margin-bottom: 10px;">
+                                            <a href="passenger_info_register_user_one_way.html" target="_blank" class="btn btn_select">
+                                                Normal Fare <br><br>
+                                                <span class="pri white">MYR 35.00 (Adult) / 15.00 (Child) <br><small>300 seat left</small></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec" style="margin-bottom: 10px;">
+                                            <a href="passenger_info_guest_one_way.html" target="_blank" class="btn btn_select">
+                                                Low Fare <br><br>
+                                                <span class="pri white">MYR 35.00 (Adult) <br><small>5 seat left</small></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-clock-o"></i> Duration</span><br>
+                                            <span class="time">1h 23min</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-share"></i> Departure</span><br>
+                                            <span class="time">7:50 Am</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT no-border">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-flag-checkered"></i> Arrival</span><br>
+                                            <span class="time">17:50 Pm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flight_box_detail white-box animate-reveal tengah">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="details-text">
+                                            <br>
+                                            <h4>
+                                                Ekspress Rakyat<br>
+                                                <small><center>(20)</center></small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec">
+                                            <a href="#" target="_blank" class="btn btn_select">
+                                                Normal Fare <br><br>
+                                                <span class="pri white">MYR 35.00 (Adult) / 15.00 (Child) <br><small>50 seat left</small></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec">
+                                            <a href="#" class="btn btn-default disabled">
+                                                Low Fare <br><br>
+                                                <span class="pri">Not Available <br><br></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-clock-o"></i> Duration</span><br>
+                                            <span class="time">1h 23min</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-share"></i> Departure</span><br>
+                                            <span class="time">7:50 Am</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT no-border">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-flag-checkered"></i> Arrival</span><br>
+                                            <span class="time">17:50 Pm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flight_box_detail white-box animate-reveal tengah">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="details-text">
+                                            <br>
+                                            <h4>
+                                                Ekspress Rakyat Timuran  <a href="#" class="btn btn-stop">Low fare</a><br>
+                                                <small><center>(26)</center></small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec">
+                                            <a href="#" target="_blank" class="btn btn_select">
+                                                Normal Fare <br><br>
+                                                <span class="pri white">MYR 35.00 (Adult) / 15.00 (Child) <br><small>300 seat left</small></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec">
+                                            <a href="#" target="_blank" class="btn btn-default disabled">
+                                                Low Fare <br><br>
+                                                <span class="pris">Sold Out<br><br></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-clock-o"></i> Duration</span><br>
+                                            <span class="time">1h 23min</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-share"></i> Departure</span><br>
+                                            <span class="time">7:50 Am</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT no-border">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-flag-checkered"></i> Arrival</span><br>
+                                            <span class="time">17:50 Pm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Onward-->
+        <!--Start Return-->
+        <div class="col-md-12">
+            <div class="bread-crumb animate-reveal">
+                <h2>Return Train <small>(Segamat - Gua Musang)</small></h2>
+                <div class="pull-right">
+                    <a href="search_train.html" class="btn btn-default">Change Travel?</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <!--href="tab1" >> berdasarkan tarikh dan akan hantar data ke content !!!!--->
+            <!-- Nav tabs -->
+            <div id="tabbing">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation"><a href="#tab1" role="tab" data-toggle="tab">17 May, Wed</a></li>
+                    <li role="presentation"><a href="#tab2" role="tab" data-toggle="tab">18 May, Thu</a></li>
+                    <li role="presentation"><a href="#tab3" role="tab" data-toggle="tab">19 May, Fri</a></li>
+                    <li role="presentation" class="active"><a href="#tab4" role="tab" data-toggle="tab">20 May, Sat</a></li>
+                    <li role="presentation"><a href="#tab5" role="tab" data-toggle="tab">21 May, Sun</a></li>
+                    <li role="presentation"><a href="#tab6" role="tab" data-toggle="tab">22 May, Mon</a></li>
+                    <li role="presentation"><a href="#tab7" role="tab" data-toggle="tab">23 May, Tue</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="tab-content" style="margin-top: 3%;">
+                <!---!!!!!! id="tab1" dapat data dari atas-->
+                <div role="tabpanel" class="tab-pane active" id="tab4">
+                    <div class="sort-section-v2">
+                        <div class="row no-margin">
+                            <div class="col-md-3 col-sm-6 col-xs-6 no-padding">
+                                <h4>Sort results by:</h4>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6 no-padding">
+                                <select class="select_sorting no-border-right">
+                                    <option selected="selected">Time</option>
+                                    <option>Acending</option>
+                                    <option>decending</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-6 no-padding">
+                                <select class="select_sorting no-border-right">
+                                    <option selected="selected">Available</option>
+                                    <option>Acending</option>
+                                    <option>decending</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3  col-sm-6 col-xs-6 no-padding">
+                                <select class="select_sorting">
+                                    <option selected="selected">Fare</option>
+                                    <option>Acending</option>
+                                    <option>decending</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flight_box_detail white-box animate-reveal tengah">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="details-text">
+                                            <br>
+                                            <h4>
+                                                Ekspress Rakyat Timuran  <a href="log_in.html" class="btn btn-stop">Low fare</a><br>
+                                                <small><center>(26)</center></small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec">
+                                            <a href="passenger_info_guest_return.html" target="_blank" class="btn btn_select">
+                                                Normal Fare <br><br>
+                                                <span class="pri white">MYR 35.00 (Adult) / 15.00 (Child) <br><small>300 seat left</small></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec">
+                                            <a href="passenger_info_register_user_return.html" target="_blank" class="btn btn_select">
+                                                Low Fare <br><br>
+                                                <span class="pri white">MYR 35.00 (Adult) <br><small>5 seat left</small></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-clock-o"></i> Duration</span><br>
+                                            <span class="time">1h 23min</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-share"></i> Departure</span><br>
+                                            <span class="time">7:50 Am</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT no-border">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-flag-checkered"></i> Arrival</span><br>
+                                            <span class="time">17:50 Pm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flight_box_detail white-box animate-reveal tengah">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="details-text">
+                                            <br>
+                                            <h4>
+                                                Ekspress Rakyat<br>
+                                                <small><center>(20)</center></small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec" style="margin-bottom: 10px;">
+                                            <a href="log_in.html" target="_blank" class="btn btn_select">
+                                                Normal Fare <br><br>
+                                                <span class="pri white">MYR 35.00 (Adult) / 15.00 (Child) <br><small>50 seat left</small></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec" style="margin-bottom: 10px;">
+                                            <a href="log_in.html" target="_blank" class="btn btn-default disabled">
+                                                Low Fare <br><br>
+                                                <span class="pri">Not Available <br><br></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-clock-o"></i> Duration</span><br>
+                                            <span class="time">1h 23min</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-share"></i> Departure</span><br>
+                                            <span class="time">7:50 Am</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT no-border">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-flag-checkered"></i> Arrival</span><br>
+                                            <span class="time">17:50 Pm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flight_box_detail white-box animate-reveal tengah">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="details-text">
+                                            <br>
+                                            <h4>
+                                                Ekspress Rakyat Timuran  <a href="#" class="btn btn-stop">Low fare</a><br>
+                                                <small><center>(26)</center></small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec" style="margin-bottom: 10px;">
+                                            <a href="log_in.html" target="_blank" class="btn btn_select">
+                                                Normal Fare <br><br>
+                                                <span class="pri white">MYR 35.00 (Adult) / 15.00 (Child) <br><small>300 seat left</small></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="select-sec" style="margin-bottom: 10px;">
+                                            <a href="log_in.html" target="_blank" class="btn btn-default disabled">
+                                                Low Fare <br><br>
+                                                <span class="pri">Sold Out<br><br></span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-clock-o"></i> Duration</span><br>
+                                            <span class="time">1h 23min</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-share"></i> Departure</span><br>
+                                            <span class="time">7:50 Am</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="LTT no-border">
+                                            <span class="skin-clr"> <i class="fa fa-subway"></i><i class="fa fa-flag-checkered"></i> Arrival</span><br>
+                                            <span class="time">17:50 Pm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Return-->
+    </div>
+</div>
+

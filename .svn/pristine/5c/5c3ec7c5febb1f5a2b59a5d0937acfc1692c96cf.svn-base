@@ -1,0 +1,124 @@
+﻿(function () {
+    var app = angular.module('user', []);
+
+    app.controller('UserController', ["$scope", "$http", '$window', 'growl', 'apiURL', '$rootScope', function ($scope, $http, $window, growl, apiURL, $rootScope) {
+        console.log("UserController logged on.");
+
+        $scope.createUser = function (newUser) {
+            console.log("UserController.createUser triggered.");
+            $rootScope.spinnerShow = true;
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/user/create',
+                data: JSON.stringify({ "data": newUser }),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                if (response.data.Success) {
+                    growl.success(response.data.Message, { title: 'SUCCESS!' });
+                }
+                else
+                    growl.error(response.data.Message, { title: 'ERROR!' });
+                $rootScope.spinnerShow = false;
+                //Reset form
+                var newUser = {};
+                $scope.newUser = newUser;
+            }, function errorCallback(response) {
+                $rootScope.spinnerShow = false;
+                growl.error(response.errorCallback, { title: 'ERROR!' });
+            });
+        };
+        
+        $scope.signIn = function (user, usertype) {
+            console.log("UserController.signIn triggered.");
+            console.log(user);
+            console.log(usertype);
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/LOGIN?username=' + user.username + '&password=' + user.password + '&usertype=' + usertype
+            }).then(function onSuccess(response) {
+                if (response.data.ErrorList.length > 0) {
+                    angular.forEach(response.data.ErrorList, function (errorObj) {
+                        growl.error(errorObj, { title: 'ERROR!' });
+                    });                    
+                }
+                else {
+                    growl.success('Login is successful!', { title: 'SUCCESS!' });                    
+                }
+                $rootScope.spinnerShow = false;
+                console.log(response.data);
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+        $scope.signOut = function () {
+            console.log("UserController.signOut triggered.");
+
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/user/logout'
+            }).then(function onSuccess(response) {
+                console.log(response);
+                //Do nothing
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.resetPassword = function (user) {
+            console.log("UserController.resetPassword triggered.");
+
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/user/resetpassword',
+                data: JSON.stringify({ "data": user }),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.Success) {
+                    growl.success('Your credentials have been reset. Please check your email.', { title: 'SUCCESS!' });
+                }
+                else
+                    growl.error(response.data.Message, { title: 'ERROR!' });
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.checkAccess = function (ticketid, action) {
+            //action parameter            
+            //1 = Update
+            //2 = Escalate
+            //3 = Reply
+            //4 = Close
+            //5 = Reopen
+            console.log("UserController.checkAccess triggered.");
+            var param = {};
+            param.ticketid = ticketid;
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/user/checkaccess',
+                data: JSON.stringify({ "data": param }),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (!response.data.Success)
+                    $window.location.href = '/ticket/list';
+
+                //Check only if the user is a "User"
+                if (response.data.Role == 3)
+                    if (action != 3)
+                        $window.location.href = '/ticket/list';
+
+                $scope.ticketAccess = response.data;
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+
+    }]);
+
+})();

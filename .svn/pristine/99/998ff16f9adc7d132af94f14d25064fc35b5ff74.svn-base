@@ -1,0 +1,132 @@
+﻿(function () {
+    var app = angular.module('user', []);
+
+    app.controller('UserController', ["$scope", "$http", '$window', 'growl', 'apiURL', '$rootScope', '$cookies', function ($scope, $http, $window, growl, apiURL, $rootScope, $cookies) {
+        console.log("UserController logged on.");
+
+        $scope.signIn = function (user, usertype, nextdestination) {
+            console.log("UserController.signIn triggered.");
+            $rootScope.spinnerShow = true;
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/LOGIN?Username=' + user.Username + '&Password=' + user.Password + '&UserType=' + usertype
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.ErrorList.length > 0) {
+                    for (var i = 0, len = response.data.ErrorList.length; i < len; i++) {
+                        growl.error(response.data.ErrorList[i], { title: 'ERROR!' });
+                    }
+                }
+                else {
+                    $cookies.put("UI_TOKEN", response.data.SecurityToken, {
+                        path: "/"
+                    });
+                    $window.location.href = nextdestination;
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                growl.error(response.toString(), { title: 'ERROR!' });
+                $rootScope.spinnerShow = false;
+            });
+            return true;
+        };
+
+        $scope.checkAccess = function () {
+            console.log("UserController.checkAccess triggered.");
+            var param = { "securitytoken": $cookies.get('UI_TOKEN') };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/GETTOKENINFO',
+                data: JSON.stringify(param),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+
+        $scope.createUser = function (newUser) {
+            console.log("UserController.createUser triggered.");
+            var data = {
+                Username: newUser.Username,
+                password: newUser.password,
+                UserType: '1',
+                FullName: newUser.FullName,
+                Email: newUser.Email,
+                Phone: newUser.Phone,
+                Address: newUser.Address,
+                Postcode: newUser.Postcode,
+                District: newUser.District,
+                Country: newUser.Country,
+                Gender: newUser.Gender,
+                securitytoken: ''
+            };
+
+            $rootScope.spinnerShow = true;
+            console.log(data);
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/REGISTERNEWUSER',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function successCallback(response) {
+                console.log(response.data);
+                if (response.data.ErrorList.length > 0) {
+                    angular.forEach(response.data.ErrorList, function (error) {
+                        growl.error(error, { title: 'ERROR!' });
+                    });
+                }
+                else//proceed to call T&C API
+                    growl.success({ title: 'SUCCESS!' });
+
+                $rootScope.spinnerShow = false;
+
+            }).catch(function onError(response) {
+                growl.error(response.toString(), { title: 'ERROR!' });
+                $rootScope.spinnerShow = false;
+            });
+            return true;
+        };
+
+
+        /////////////////////////// NOT YET TESTED///////////////////////////////////
+
+        $scope.signOut = function () {
+            console.log("UserController.signOut triggered.");
+
+            $http({
+                method: 'GET',
+                url: apiURL + '/api/user/logout'
+            }).then(function onSuccess(response) {
+                console.log(response);
+                //Do nothing
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+        $scope.resetPassword = function (user) {
+            console.log("UserController.resetPassword triggered.");
+
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/user/resetpassword',
+                data: JSON.stringify({ "data": user }),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.Success) {
+                    growl.success('Your credentials have been reset. Please check your email.', { title: 'SUCCESS!' });
+                }
+                else
+                    growl.error(response.data.Message, { title: 'ERROR!' });
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+            });
+        };
+
+    }]);
+
+})();

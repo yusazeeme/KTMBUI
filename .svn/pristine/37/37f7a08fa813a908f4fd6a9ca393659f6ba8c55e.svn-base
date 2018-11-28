@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewBag.Title = "Train Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Train Schedule</h2>
+

@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "CorporateProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('corporate_profile')">
+    <div class="container">
+        <!--start breadcrumb-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bread-crumb">
+                    <h2>About Us</h2>
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="javascript:;">About Us</a></li>
+                        <li class="active">Corporate Profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+    </div>
+    <div class="wrapper_about_us" ng-repeat="history in content | filter: {contenttype:'history_content'}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="vision animate-reveal">
+                        <h2>{{history.param.title}}</h2>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-left" style="text-align: justify;">
+                        {{history.param.paragraph1}}
+                        <br>
+                        {{history.param.paragraph2}}
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-left" style="text-align: justify;">
+                        {{history.param.paragraph3}}
+                        <br>
+                        {{history.param.paragraph4}}
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <hr class="hr_index no-margin">
+    <div class="container" ng-repeat="mv in content | filter: {contenttype:'mission_vision'}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <br /><br />
+                    <h3>{{mv.param.mission_title}}</h3>
+                    <p>{{mv.param.mission_content}}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="about_mission_v1 animate-reveal">
+                    <br /><br />
+                    <h3>{{mv.param.vision_title}}</h3>
+                    <p>{{mv.param.vision_content}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="hr_index no-margin">
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="team-about-us animate-reveal">
+                    <h2>Board Director</h2>
+                </div>
+                <center><img src="~/Content/assets/img/bod.png" alt="team" class="img-responsive"></center>
+            </div>
+            <div class="col-md-6" ng-repeat="directors in content | filter: {contenttype:'director_list'}">
+                <div class="about_mission_v1 animate-reveal">
+                    <br /><br />
+                    <h4>{{directors.param.name}}</h4>
+                    <h5>{{directors.param.position}}</h5>
+                    <p>{{directors.param.details}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--inner body end from here-->

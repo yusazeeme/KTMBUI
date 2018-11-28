@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a1 {
+        color: #ffffff;
+    }
+</style>
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess(false)"></div>
+
+<div class="container">
+    <div class="row">
+        <div data-js-module="filtering-demo">
+            <div class="grid-view less-margin" style="margin-top:7%; margin-bottom:5%;">
+
+                <div class="col-md-4 hidden-sm">
+                    <div class="tour_pak" style="max-height: none;">
+                        <div class="overflow-outer">
+                            <div class="overflow-inner">
+                                <span class="center adding"><a href="/">New Booking</a></span>
+                            </div>
+                        </div>
+                        <img src="~/Content/assets/img/new-booking.jpg" alt="tour img" class="img-responsive">
+                    </div>
+                </div>
+
+                <div class="col-md-4 hidden-sm">
+                    <div class="tour_pak" style="max-height: none;">
+                        <div class="overflow-outer">
+                            <div class="overflow-inner">
+                                <span class="center adding"><a href="/user/viewbooking">Manage Booking</a></span>
+                            </div>
+                        </div>
+                        <img src="~/Content/assets/img/manage-booking.jpg" alt="tour img" class="img-responsive">
+                    </div>
+                </div>
+
+                <div class="col-md-4 hidden-sm">
+                    <div class="tour_pak" style="max-height: none;">
+                        <div class="overflow-outer">
+                            <div class="overflow-inner">
+                                <span class="center adding"><a href="/cms/index">Admin</a></span>
+                                @*<span class="center">Admin</span>*@
+                            </div>
+                        </div>
+                        <img src="~/Content/assets/img/admin.jpg" alt="tour img" class="img-responsive">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

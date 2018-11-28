@@ -1,0 +1,63 @@
+﻿(function () {
+    var app = angular.module('ticket', []);
+
+    app.controller('TicketController', ["$scope", "$http", 'growl', '$window', 'baseURL', '$rootScope', '$location', function ($scope, $http, growl, $window, baseURL, $rootScope, $location) {
+        console.log("TicketController logged on.");
+
+        //$scope.journey = { departuredate: '' };
+        $scope.journey = {};
+
+        $scope.searchTrain = function (journey) {
+            console.log("TicketController.searchTrain triggered.");
+            console.log(journey);
+
+            $window.location.href = '/ticket/select' +
+                '?origin=' + journey.origin +
+                '&destination=' + journey.destination +
+                '&odate=' + journey.departuredate +
+                '&rdate=' + journey.returndate +
+                '&pcode=' + journey.promocode +
+                '&adult=' + journey.noadult +
+                '&child=' + journey.nochild;
+        };
+
+        $scope.getCoach = function () {
+            //var origin = $location.$absUrl.search().origin;
+            console.log("TicketController.getCoach triggered.");
+            console.log(getUrlParameter('origin', $location.absUrl()));
+            console.log(getUrlParameter('destination', $location.absUrl()));
+            console.log(getUrlParameter('odate', $location.absUrl()));
+
+            var origin = getUrlParameter('origin', $location.absUrl());
+            var destination = getUrlParameter('destination', $location.absUrl());
+            var odate = getUrlParameter('odate', $location.absUrl());
+
+            $http({
+                method: 'GET',
+                url: baseURL + '/api/GETCONNECTING?OriginCode=' + origin + '&DestinationCode=' + destination + '&DateJourney=' + odate + ''
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+            }).catch(function onError(response) {
+                growl.error(response.toString(), { title: 'ERROR!' });
+            });
+        };
+
+        function getUrlParameter(param, path) {
+            var sPageURL = path || window.location.search.substring(1),
+                sURLVariables = sPageURL.split(/[&||?]/),
+                res;
+
+            for (var i = 0; i < sURLVariables.length; i += 1) {
+                var paramName = sURLVariables[i],
+                    sParameterName = (paramName || '').split('=');
+
+                if (sParameterName[0] === param) {
+                    res = sParameterName[1];
+                }
+            }
+            return res;
+        }
+
+    }]);
+
+})();

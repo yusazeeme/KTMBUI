@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Loyalty Setting";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="{{UIURL}}/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li class="active">
+        <strong>Loyalty Setting</strong>
+    </li>
+</ol>
+
+<h2>Loyalty Setting</h2>
+<br />
+
+<div class="row" ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div class="row" ng-controller="MarketingController as marketingCtrl">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-default">Add New Loyalty Setting</a>
+                </div>
+            </div>
+            <table class="table table-bordered font-black">
+                <thead>
+                    <tr>
+                        <th>Point Parameter</th>
+                        <th>Expired Date Setting</th>
+                        <th>Send Email Frequency</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="odd gradeX">
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td class="center"></td>
+                        <td style="width:200px">
+                            <a href="#" data-toggle="modal" data-target="#modal-2" class="btn btn-success"><i class="fa fa-refresh"></i> </a>
+                            <button type="button" class="btn btn-red" confirmed-click="" ng-confirm-click="Are you sure to remove this parameter?"><i class="fa fa-close"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Modal 1 (Basic)-->
+    <div class="modal fade" id="modal-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add New Parameter</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" ">
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Name</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control"  required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Value</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 (Basic)-->
+    <div class="modal fade" id="modal-2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Update Parameter</h4>
+                </div>
+                <form role="form" class="form-horizontal form-groups-bordered" >
+                    <div class="panel panel-primary" data-collapsed="0">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Name</label>
+
+                                <div class="col-sm-9">
+                                    <input class="form-control"  required readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="col-sm-3 control-label">Value</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-green">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+

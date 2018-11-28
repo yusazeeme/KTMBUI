@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Mail;
+using System.Web.Http;
+
+namespace KTMB.eTicketing.UI.API
+{
+    public class MailController : ApiController
+    {
+        [Route("api/mail/sendmail")]
+        [HttpPost]
+        public void SendMail(EmailParameter ep)
+        {
+            try
+            {
+                SmtpClient smtpclient = new SmtpClient("smtp.gmail.com", 587);
+                smtpclient.EnableSsl = true;
+                smtpclient.Credentials = new NetworkCredential("noreplyktmb@gmail.com", "opensoft");
+                smtpclient.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("noreplyktmb@gmail.com", "No-Reply KTMB");
+                mail.To.Add(new MailAddress(ep.Email));
+                mail.Subject = ep.Subject;
+                mail.Body = ep.Body;
+                mail.IsBodyHtml = true;
+
+                smtpclient.Send(mail);
+            }
+            catch (Exception e)
+            {
+                //Do nothing for now
+            }
+        }
+    }
+
+    public class EmailParameter
+    {
+        public string Email { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+    }
+}

@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "Update Profile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div ng-controller="UserController as userCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="{{UIURL}}"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Update Profile</strong>
+        </li>
+    </ol>
+    <h2>Update Profile</h2>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        My Details
+                    </div>
+
+                    <div class="panel-options">
+                    </div>
+                </div>
+
+                <div class="panel-body" ng-init="getProfile()">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="updateProfile(userProfile)">
+                        <div class="form-check pull-right">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" ng-model="userProfile.saveFav">
+                                Save as favorite
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Name</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" ng-model="userProfile.FullName">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">IC Number</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" ng-model="userProfile.IC">
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-controller="DateController">
+                            <label for="field-2" class="col-sm-3 control-label">Date Of Birth</label>
+                            <div class="col-sm-5">
+                                <input class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="userProfile.dob"
+                                       is-open="popup1.opened"  datepicker-options="noFutureDateDOB" required close-text="Close" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-2" class="col-sm-3 control-label">Gender</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" ng-model="userProfile.Gender" required>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Phone</label>
+                            <div class="col-sm-5">
+                                <input type="text" maxlength="12" class="form-control" ng-model="userProfile.Phone">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Email *</label>
+                            <div class="col-sm-5">
+                                <input type="email" class="form-control" ng-model="userProfile.Email" required>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Address</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" ng-model="userProfile.Address">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Postcode</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" ng-model="userProfile.Postcode">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">District</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" ng-model="userProfile.District">
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-controller="LookupController as lookupCtrl" ng-init="getCountryList()">
+                            <label for="field-1" class="col-sm-3 control-label">Country</label>
+
+                            <div class="col-sm-5">
+                                <select class="form-control" ng-model="userProfile.Country"
+                                        ng-options="country.Code as country.Name for country in destinations | orderBy :'+Name'" required>
+                                    <option value=''>Select Country</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-5">
+                                <button type="submit" class="btn btn-default">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

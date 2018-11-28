@@ -1,0 +1,109 @@
+﻿(function () {
+    "use strict";
+    var app = angular.module('KTMB',
+        [
+            'ngCookies',
+            'lookup',
+            'ticket',
+            'user',
+            'angular-growl',
+            'ui.bootstrap',
+            'cms',
+            'angular.filter',
+            'monospaced.qrcode',
+            'ngSanitize',
+            'datatables',
+            'datatables.buttons',
+            'ngAnimate',
+            'datehandler',
+            'naif.base64'
+        ]);
+
+    app.factory('apiURL', ['$window', '$location', function ($window, $location) {
+        return 'https://intranet.ktmb.com.my/e-ticket';
+    }]);
+
+    app.factory('baseURL', ['$window', '$location', function ($window, $location) {
+        //var url = "https://intranet.ktmb.com.my/ktmb_ui";//For deployment only  
+        var url = new $window.URL($location.absUrl()).origin;//For development only
+        return url;
+    }]);
+
+    app.factory('cmsURL', ['$window', '$location', function ($window, $location) {
+        var url = "https://intranet.ktmb.com.my/cms_api";
+        return url;
+    }]);
+
+    app.factory('intranetURL', ['$window', '$location', function ($window, $location) {
+        return 'http://intranet4.ktmb.com.my/';
+    }]);
+
+    app.directive('ngConfirmClick', [function () {
+        return {
+            link: function (scope, element, attr) {
+                var msg = attr.ngConfirmClick || "Are you sure?";
+                var clickAction = attr.confirmedClick;
+                element.bind('click', function (event) {
+                    if (window.confirm(msg)) {
+                        scope.$eval(clickAction)
+                    }
+                });
+            }
+        };
+    }]);
+
+    app.run(function ($rootScope, $window, $location, intranetURL, baseURL) {
+        $rootScope.UIURL = baseURL;
+        $rootScope.intranetURL = intranetURL;
+        $rootScope.spinnerShow = false;
+        $rootScope.tinymceOptions = {
+            plugins: 'link image',
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+        };
+    });
+
+    app.directive('fileModel', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
+                });
+            }
+        };
+    }]);
+
+    app.directive("ngUploadChange", function () {
+        return {
+            scope: {
+                ngUploadChange: "&"
+            },
+            link: function ($scope, $element, $attrs) {
+                $element.on("change", function (event) {
+                    $scope.ngUploadChange({ $event: event })
+                })
+                $scope.$on("$destroy", function () {
+                    $element.off();
+                });
+            }
+        }
+    });
+
+    app.filter('sumByColumn', function () {
+        return function (collection, column) {
+            var total = 0;
+
+            collection.forEach(function (item) {
+                total += parseFloat(item[column].replace('MYR ', ''));
+            });
+
+            return total;
+        };
+    });
+
+})();

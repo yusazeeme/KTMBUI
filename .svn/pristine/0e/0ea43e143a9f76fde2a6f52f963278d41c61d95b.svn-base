@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    a1 {
+        color: #ffffff;
+    }
+</style>
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess(false)"></div>
+
+<div class="wrapper_about_us">
+    <div class="container">
+        <div class="row">
+            <div data-js-module="filtering-demo">
+                <div class="grid-view less-margin">
+                    <a href="/">
+                        <div class="col-md-4 hidden-sm">
+                            <div class="tour_pak" style="max-height: none;" href="/user/viewbooking">
+                                <div class="overflow-outer">
+                                    <div class="overflow-inner">
+                                        <span class="center">New Booking</span>
+                                    </div>
+                                </div>
+                                <img src="~/Content/assets/img/travel.jpg" alt="tour img" class="img-responsive">
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="/user/viewbooking">
+                        <div class="col-md-4 hidden-sm">
+                            <div class="tour_pak" style="max-height: none;">
+                                <div class="overflow-outer">
+                                    <div class="overflow-inner">
+                                        <span class="center">Manage Booking</span>
+                                    </div>
+                                </div>
+                                <img src="~/Content/assets/img/hotseat.jpg" alt="tour img" class="img-responsive">
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="/cms/index">
+                        <div class="col-md-4 hidden-sm">
+                            <div class="tour_pak" style="max-height: none;">
+                                <div class="overflow-outer">
+                                    <div class="overflow-inner">
+                                        <span class="center">Admin</span>
+                                    </div>
+                                </div>
+                                <img src="~/Content/assets/img/extra.jpg" alt="tour img" class="img-responsive">
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Refund History";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div ng-controller="UserController as userCtrl" ng-init="refundHistory()">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="{{UIURL}}"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="active">
+            <strong>Refund Info History</strong>
+        </li>
+    </ol>
+    <h2>Refund Info History</h2>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="panel panel-primary" data-collapsed="0">
+
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Refund Info History
+                    </div>
+                </div>
+                <div class="panel-heading">
+                </div>
+                <div class="clearfix"></div>
+                    <table class="table table-bordered font-black" dt-options="dtOptionsExport">
+                        <thead>
+                            <tr>
+                                <th>Reference ID</th>
+                                <th>Transaction Date</th>
+                                <th>Account Holder's Name</th>
+                                <th>Account Holder's IC No</th>
+                                <th>Bank</th>
+                                <th>Bank's Account No</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="res in refundHistory.detailList">
+                                <td>{{res.Refid}}</td>
+                                <td>{{res.TransactionDate}}</td>
+                                <td>{{res.AccHolderName}}</td>
+                                <td>{{res.AccHolderICNumber}}</td>
+                                <td>{{res.BankName}}</td>
+                                <td>{{res.BankNo}}</td>
+                                <td>{{res.Amount}}</td>
+                                <td>{{res.Status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix"></div>                    
+            </div>
+        </div>
+    </div>
+
+</div>

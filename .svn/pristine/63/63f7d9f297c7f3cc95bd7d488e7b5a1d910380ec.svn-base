@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Receipt";
+}
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<!--inner body start from here-->
+
+<style type="text/css" media="print">
+    .dontprint {
+        display: none;
+    }
+</style>
+
+<style>
+    .title-bold {
+        font-weight: 600;
+    }
+
+    .panel-default {
+        border-color: #4a4a4a;
+    }
+
+        .panel-default .panel-heading {
+            color: #fff;
+            background-color: #4a4a4a;
+            font-weight: 600;
+            border-color: #4a4a4a;
+            font-family: "Open Sans", sans-serif;
+            border-radius: 0;
+        }
+</style>
+<div class="container" ng-controller="TicketController as ticketCtrl" ng-init="getReceipt(); removeFromQueue();">
+
+    <div class="row">
+
+        <div class="dontprint">
+            <div class="col-md-6 pull-left" style="text-align:left; margin:20px; margin-left:0;">
+                
+            </div>
+            <div class="col-md-6 pull-right">
+                <a href="{{UIURL}}/ticket/print/{{FinalConfirmation.ConfirmationResult.REFID}}" target="_blank" class="btn btn-primary btn-md pull-right"><i class="fa fa-ticket fa-lg"></i> View Ticket</a>                
+                <button class="btn btn-primary btn-md pull-right" type="button" onclick="prints()"><i class="fa fa-print fa-lg" style="padding-right:7px"></i> Print Receipt</button>
+            </div>
+        </div>
+        
+        <div class="col-md-12">
+            <h3><center>Booking Receipt</center></h3>
+            <div class="panel panel-default table-panel">
+                <div class="panel-heading"><center>Booking Information</center></div>
+                <div class="panel-body">
+                    <div class="table-content-box">
+                        <table class="table" style="margin-bottom: 5px; border-color:black;">
+                            <thead>
+                                <tr>
+                                    <td colspan="2" class="title-bold">Grand Total :</td>
+                                    <td colspan="2">{{FinalConfirmation.ConfirmationResult.FINALCHARGE}}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" class="title-bold">Reference No. :</td>
+                                    <td colspan="2">{{FinalConfirmation.ConfirmationResult.REFID}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="title-bold">Payment Via :</td>
+                                    <td colspan="2">XXX Bank</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-heading"><center>Passenger Information</center></div>
+                <div class="panel-body" ng-repeat="ticket in ticketData.PrintList">
+                    <div class="table-content-box">
+                        <table class="table" style="margin-bottom: 5px; border-color:black;">
+                            <thead>
+                                <tr>
+                                    <td colspan="2" class="title-bold">Name :</td>
+                                    <td colspan="2">{{ticket.Name}}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" class="title-bold">IC No. :</td>
+                                    <td colspan="2">{{ticket.IC}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="title-bold">Coach/Seat No. :</td>
+                                    <td colspan="2">{{ticket.Label}}/{{ticket.Seat}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="col-md-6" style="padding-left:0; border-top: 1px solid #ddd;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td class="title-bold">Departure :</td>
+                                        <td>{{ticket.Origin}} &#64; {{ticket.Departure}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title-bold">Train :</td>
+                                        <td>{{ticket.Train}}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="title-bold">Class :</td>
+                                        <td>{{ticket.Coach}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6" style="padding-left:0; border-top: 1px solid #ddd;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td class="title-bold">Arrival :</td>
+                                        <td>{{ticket.Destination}} &#64; {{ticket.Arrival}}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="title-bold">Meal :</td>
+                                        <td>{{ticket.Meal}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title-bold">Fare :</td>
+                                        <td>{{ticket.Fare}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function prints() {
+        window.print();
+    }
+</script>

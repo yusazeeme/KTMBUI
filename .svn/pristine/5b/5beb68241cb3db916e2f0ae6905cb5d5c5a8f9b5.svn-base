@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Daily TKT Sales (WRPT 1000)";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="{{UIURL}}/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li>
+        Report Management
+    </li>
+    <li class="active">
+        <strong>Daily TKT Sales (WRPT 1000)</strong>
+    </li>
+</ol>
+<h2>Daily TKT Sales (WRPT 1000)</h2>
+<br>
+
+
+<div class="row" ng-controller="UserController as userCtrl">
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-primary" data-collapsed="0" style="background-color:#0053a0; border-color: #0053a0; color:whitesmoke;">
+            <div class="panel-body">
+
+                <form role="form" class="form-horizontal" style="margin-top: 15px;" ng-submit="getRpt1000(rpt)">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="from" class="col-sm-4 control-label font-white">From Date</label>
+                            <div class="col-sm-8" ng-controller="DateController">
+                                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="rpt.fromDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="to" class="col-sm-4 control-label font-white">To Date</label>
+                            <div class="col-sm-8" ng-controller="DateController">
+                                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-click="open1()" ng-model="rpt.toDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-8 col-sm-4">
+                            <button type="submit" class="btn btn btn-warning" style="color:black;"><i class="glyphicon glyphicon-search"></i> Search</button>
+                            <button type="reset" class="btn btn-success"><i class="glyphicon glyphicon-refresh"></i> Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
+        <table datatable="ng" class="table table-bordered font-black">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Station</th>
+                    <th>Terminal</th>
+                    <th>Type</th>
+                    <th>Owner</th>
+                    <th>Total Ticket</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="odd gradeX" ng-repeat="res in result.rep1000List">
+                    <td class="center">SALES</td>
+                    <td class="center">{{res.LOCATION}}</td>
+                    <td class="center">{{res.COUNTER}}</td>
+                    <td class="center">{{res.PAYMODE}}</td>
+                    <td class="center">{{res.JENIS}}</td>
+                    <td class="center">{{res.TCKTCOUNT}}</td>
+                    <td class="center">{{res.TOTALAMOUNT}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Receipt";
+}
+@*<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>*@
+<!--inner body start from here-->
+
+<style type="text/css" media="print">
+    .dontprint {
+        display: none;
+    }
+</style>
+
+<style>
+    .title-bold {
+        font-weight: 600;
+    }
+
+    .panel-default {
+        border-color: #4a4a4a;
+    }
+
+        .panel-default .panel-heading {
+            color: #fff;
+            background-color: #4a4a4a;
+            font-weight: 600;
+            border-color: #4a4a4a;
+            font-family: "Open Sans", sans-serif;
+            border-radius: 0;
+        }
+</style>
+<div class="container" >
+    <div class="row">
+
+        <div growl></div>
+        <!-- header -->
+        <div class="banner">
+            <div class="container">
+                <div class="banner-info" style="padding-top:2%;">
+                    <center>
+                        <h3><strong>Unfortunately your transaction could not be process. </strong> </h3>
+                    </center>
+                </div>
+                <div class="banner-info" style="padding-top:2%;">
+                    <center >
+                           
+                            <img src="~/Content/payment-failure/images/icon2.png">
+
+                            <h5>We are sorry for this.</h5>
+                            <h5>However you can come back to our main page for a new transaction.</h5>
+                            <h5>Thank you for your patience.</h5>
+
+                            <br>
+                            <div class="white">
+                                <p>
+                                    <br>
+                                    <a ng-href="{{UIURL}}" class="btn btn-default">Back to KTMB Portal</a>
+                                </p>
+                            </div>
+                    </center>
+</div>
+            </div>
+        </div>
+
+        <!--page loader-->
+        <div class="loader" ng-show="spinnerShow">
+            <div class="square-spin">
+                <div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>

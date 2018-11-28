@@ -1,0 +1,101 @@
+﻿(function () {
+    var app = angular.module('ticket', []);
+
+    app.controller('TicketController', ["$scope", "$http", 'growl', '$window', 'baseURL', '$rootScope', '$location', function ($scope, $http, growl, $window, baseURL, $rootScope, $location) {
+        console.log("TicketController logged on.");
+
+        //$scope.journey = { departuredate: '' };
+        $scope.journey = {};
+
+        $scope.searchTrain = function (journey) {
+            console.log("TicketController.searchTrain triggered.");
+            console.log(journey);
+
+            $window.location.href = '/ticket/select' +
+                '?origin=' + journey.origin +
+                '&destination=' + journey.destination +
+                '&odate=' + journey.departuredate +
+                '&rdate=' + journey.returndate +
+                '&pcode=' + journey.promocode +
+                '&adult=' + journey.noadult +
+                '&child=' + journey.nochild;
+        };
+
+        $scope.getCoach = function () {
+            console.log("TicketController.getCoach triggered.");
+            var origin = getUrlParameter('origin', $location.absUrl());
+            var destination = getUrlParameter('destination', $location.absUrl());
+            var odate = getUrlParameter('odate', $location.absUrl());
+            var adult = getUrlParameter('adult', $location.absUrl());
+            var child = getUrlParameter('child', $location.absUrl());
+
+            $http({
+                method: 'GET',
+                url: baseURL + '/api/GETCONNECTING?OriginCode=' + origin + '&DestinationCode=' + destination + '&DateJourney=' + odate
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (response.data.TransitCount > 0) {
+                    angular.forEach(response.data.TransitInfo.Path, function (train) {
+                        if (train.TrainAvailable.length > 0) {
+                            angular.forEach(train.TrainAvailable, function (trainInfo) {
+                                $http({
+                                    method: 'GET',
+                                    url: baseURL + '/api/COACHLIST?OriginCode=' + origin + '&DestinationCode=' + destination + '&DateJourney=' + odate + '&TrainNumber=' + trainInfo.TRAIN_NUMBER + '&Direction=O'
+                                }).then(function onSuccess(response) {
+                                    if (response.data.length > 0) {
+                                        angular.forEach(response.data, function (coachInfo) {
+                                            var PaxType = [];
+                                            PaxType.push({ AdultChild: 'A', TICKETTTYPE: '1', PaxCount: adult })
+                                            PaxType.push({ AdultChild: 'C', TICKETTTYPE: '1', PaxCount: child })
+                                            var Paxinfo = {
+                                                OriginCode: origin,
+                                                DestinationCode: destination,
+                                                DateJourney: odate,
+                                                TrainNumber: trainInfo.TRAIN_NUMBER,
+                                                CoachCode: coachInfo.CoachCode,
+                                                PaxType: PaxType
+                                            }
+                                            $http({
+                                                method: 'POST',
+                                                url: baseURL + '/api/GETFARE',
+                                                data: JSON.stringify({ Paxinfo: Paxinfo }),
+                                                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                                            }).then(function onSuccess(response) {
+                                                console.log(response.data);
+                                                //Create object list for UI here
+                                            }).catch(function onError(response) {
+                                                growl.error(response.toString(), { title: 'ERROR!' });
+                                            });
+                                        });
+                                    }
+                                }).catch(function onError(response) {
+                                    growl.error(response.toString(), { title: 'ERROR!' });
+                                });
+                            });
+                        }
+                    });
+                }
+            }).catch(function onError(response) {
+                growl.error(response.toString(), { title: 'ERROR!' });
+            });
+        };
+
+        function getUrlParameter(param, path) {
+            var sPageURL = path || window.location.search.substring(1),
+                sURLVariables = sPageURL.split(/[&||?]/),
+                res;
+
+            for (var i = 0; i < sURLVariables.length; i += 1) {
+                var paramName = sURLVariables[i],
+                    sParameterName = (paramName || '').split('=');
+
+                if (sParameterName[0] === param) {
+                    res = sParameterName[1];
+                }
+            }
+            return res;
+        }
+
+    }]);
+
+})();

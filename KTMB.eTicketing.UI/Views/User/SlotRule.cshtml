@@ -1,0 +1,217 @@
+﻿
+@{
+    ViewBag.Title = "Slot Rules";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="{{UIURL}}/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li class="active">
+        <strong>Slots Management</strong>
+    </li>
+    <li class="active">
+        <strong>Slot Rules</strong>
+    </li>
+</ol>
+<h2>Slot Rules</h2>
+<br>
+
+<div class="row" ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+    <div class="row" ng-controller="CoachController as coachCtrl">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <a href="#" data-toggle="modal" data-target="#modal-1" class="btn btn-default" ng-click="sr = {}">Add New Slot Rule</a>
+                    </div>
+                </div>
+                <table datatable="ng" class="table table-bordered font-black" ng-init="getSlotRule()">
+                    <thead>
+                        <tr>
+                            <th>Train No.</th>
+                            <th>Coach Code</th>
+                            <th>Label Name</th>
+                            <th>Rule Name</th>
+                            <th>Layout Code</th>
+                            <th>Date From</th>
+                            <th>Date To</th>
+                            <th>is Valid</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd gradeX" ng-repeat="res in slotRule.SlotRuleList">
+                            <td class="center">{{res.TrainNumber}}</td>
+                            <td class="center">{{res.CoachCode}}</td>
+                            <td class="center">{{res.LabelName}}</td>
+                            <td class="center">{{res.RuleName}}</td>
+                            <td class="center">{{res.LayoutCode}}</td>
+                            <td class="center">{{res.DateFrom}}</td>
+                            <td class="center">{{res.DateTo}}</td>
+                            <td class="center">{{res.IsValid}}</td>
+                            <td style="width:80px">
+                                <a href="#" data-toggle="modal" data-target="#modal-2" class="btn btn-success" ng-click="getSlotRuleParam(res.PKcolumn)"><i class="fa fa-edit"></i> </a>
+                                <button type="button" class="btn btn-red" confirmed-click="deleteSlotRule(res.PKcolumn)" ng-confirm-click="Are you sure to remove this rule?"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal 1 (Basic)-->
+        <div class="modal fade" id="modal-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Add New Slot Rule</h4>
+                    </div>
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createUpdateSlotRule(sr)">
+                        <div class="panel panel-primary" data-collapsed="0">
+                            <div class="panel-body">
+                                @*<div hidden ng-model="sr.PKcolumn"></div>*@
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Train Number</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.TrainNumber" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Coach Code</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.CoachCode" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Label Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.LabelName" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Rule Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.RuleName" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Layout Code</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.LayoutCode">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Date From</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" placeholder="DD/MM/YYYY" class="form-control" ng-model="sr.DateFrom">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Date To</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" placeholder="DD/MM/YYYY" class="form-control" ng-model="sr.DateTo">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-2" class="col-sm-3 control-label">Is Valid</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" ng-model="sr.IsValid">
+                                            <option value="">Select Valid Type</option>
+                                            <option value="true">True</option>
+                                            <option value="false">False</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 2 (Basic)-->
+        <div class="modal fade" id="modal-2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Update Slot Rule</h4>
+                    </div>
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createUpdateSlotRule(sr)">
+                        <div class="panel panel-primary" data-collapsed="0">
+                            <div class="panel-body">
+                                <div hidden ng-model="sr.PKcolumn"></div>
+                                <div class="form-group">
+                                    <label for="field-1" class="col-sm-3 control-label">Train Number</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.TrainNumber" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-2" class="col-sm-3 control-label">Coach Code</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.CoachCode" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-2" class="col-sm-3 control-label">Label Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.LabelName" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-2" class="col-sm-3 control-label">Rule Name</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.RuleName" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-2" class="col-sm-3 control-label">Layout Code</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="sr.LayoutCode">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-2" class="col-sm-3 control-label">Date From</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" placeholder="DD/MM/YYYY" class="form-control" ng-model="sr.DateFrom">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-2" class="col-sm-3 control-label">Date To</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" placeholder="DD/MM/YYYY" class="form-control" ng-model="sr.DateTo">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-2" class="col-sm-3 control-label">Is Valid</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" ng-model="sr.IsValid">
+                                            <option value="">Select Valid Type</option>
+                                            <option value="true">True</option>
+                                            <option value="false">False</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-green">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+

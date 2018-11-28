@@ -1,0 +1,74 @@
+﻿(function () {
+    var app = angular.module('KTMB',
+        [
+            'lookup',
+            'ticket',
+            //'user',
+            'angular-growl',
+            'cb.x2js',
+            'cms'            
+        ]);
+
+    //Declaring a service to fetch the base URL of the application - Firdhaus, 03/05/17
+    app.factory('baseURL', ['$window', '$location', function ($window, $location) {
+        //var url = new $window.URL($location.absUrl()).origin;
+        //return url;
+        return 'http://hnfsystems.ddns.net';
+    }]);
+
+    app.factory('devLogin', function ($http, growl, baseURL, $rootScope) {
+        $rootScope.spinnerShow = true;
+        var cms = {};
+        console.log("app.devLogin triggered.");
+        $http({
+            method: 'GET',
+            url: baseURL + '/api/LOGIN?Username=admin5&Password=admin&UserType=4'
+        }).then(function onSuccess(response) {
+            if (response.data.ErrorList.length > 0) {
+                console.log(response.data.ErrorList);
+                for (var i = 0, len = response.data.ErrorList.length; i < len; i++) {
+                    growl.error(response.data.ErrorList[i], { title: 'ERROR!' });
+                }
+            }
+            else
+                cms.token = response.data.SecurityToken;
+
+            console.log(cms.token);
+            $rootScope.spinnerShow = false;
+        }).catch(function onError(response) {
+            growl.error(response.toString(), { title: 'ERROR!' });
+            $rootScope.spinnerShow = false;
+        });
+
+        return cms;
+    });
+
+    app.directive("datepicker", function () {
+        var date = new Date();
+        date.setDate(date.getDate() + 1);
+
+        return {
+            restrict: "A",
+            require: "ngModel",            
+            link: function (scope, elem, attrs, ctrl) {
+                var updateModel = function () {
+                    ctrl.$setViewValue(elem.val());
+                    ctrl.$render();
+                    scope.$apply();
+                };
+                elem.datetimepicker({
+                    format: 'DD/MM/YYYY',
+                    //minDate: date
+                });
+                elem.on("dp.change", function (e) {
+                    updateModel();
+                });
+            }
+        }
+    });
+
+    app.run(function ($rootScope) {
+        $rootScope.spinnerShow = false;
+    });
+
+})();

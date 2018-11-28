@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Corporate Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('corporate_profile')">
+    <div class="container">
+        <!--start breadcrumb-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bread-crumb">
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="javascript:;">About Us</a></li>
+                        <li class="active">Corporate Profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+    </div>
+        <div class="container railway-font">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <div class="left-group">
+                        <div class="list-group left-menu">
+                            <a class="list-group-item hvr-skew active" href="#"><h5 class="nospace"><b>Mengenai ETS</b></h5></a>
+                            <a class="list-group-item hvr-skew " href="#"><h5 class="nospace"><b>Jadual Tren</b></h5></a>
+                            <a class="list-group-item hvr-skew " href="#"><h5 class="nospace"><b>Konsesi</b></h5></a>
+                            <a class="list-group-item hvr-skew " href="#"><h5 class="nospace"><b>Promosi</b></h5></a>
+                            <a class="list-group-item hvr-skew" href="#" target="_blank"><h5 class="nospace"><b>Soalan Lazim</b></h5></a>
+                            <a class="list-group-item hvr-skew " href="#"><h5 class="nospace"><b>Fasiliti</b></h5></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <h2><b>Mengenai ETS</b></h2>
+                    <small>Tarikh disiarkan : 21-04-2016   &nbsp;&nbsp; Disiarkan oleh : Main Administrator <br></small>
+                    <br>
+                    <p style="text-align:justify"><strong><span style="font-size:16px">KTM ETS</span></strong><span style="font-size:14px">&nbsp;adalah satu perkhidmatan kereta api antara bandar dikendalikan oleh Keretapi Tanah Melayu Berhad menggunakan unit berganda elektrik. Ia adalah yang paling pesat perkhidmatan kereta api meter tolok di Malaysia yang kini beroperasi di sepanjang regangan elektrik dan dua dikesan daripada Line Pantai Barat antara Gemas dan Padang Besar di sempadan Malaysia-Thai oleh pengendali kereta api kebangsaan Malaysia, Keretapi Tanah Melayu. &nbsp; Kereta api bergerak sehingga 160 km / h (99 mph) pada elektrik meter tolok landasan kereta api yang boleh dianggap sebagai kereta api berkelajuan tinggi berdasarkan penumpang istilah kereta api dan bukannya kereta api berkelajuan tinggi. Walau bagaimanapun perkhidmatan ini menggunakan 1,067mm (3 ft 6 in) tolok. Memandangkan keadaan ini, ada kemungkinan tinggi perkhidmatan ETS hanya satu landasan kereta api antara bandar yang dirakam di dunia yang menggunakan 1,000 mm (3 kaki 3 3/8 in) meter tolok pada kelajuan maksimum 160 km / j.</span></p>
+
+                    <p>
+                        <br>
+                        <br>
+                        Antara perkhidmatan yang ada dalam KTM ETS ialah :<br>
+                        &nbsp;
+                    </p>
+
+                    <div class="col-lg-12 col-xs-12">
+                        <h3><strong>F&amp;B</strong></h3>
+                        &nbsp;
+
+                        <p style="text-align:justify">Berasa lapar semasa di atas tren atau ingin menikmati secawan kopi? Datanglah ke bar F &amp; B di koc C. Kakitangan kami bersedia untuk membantu anda untuk menikmati makanan, minuman dan makanan ringan dengan bayaran yang berpatutan.</p>
+                        <br>
+                        <img alt="" src="/ktmb/uploads/images/Image_portal/perkhidmatan/ETS/ets2.jpg" style="height:40%; width:60%"><br>
+                        &nbsp;
+                    </div>
+
+                    <div class="col-lg-12 col-xs-12">
+                        <h3><strong>LED TV</strong></h3>
+                        &nbsp;
+
+                        <p style="text-align:justify">Setiap koc terdapat 2 TV LED, yang mempamerkan berita terkini mengenai KTMB dan menayangkan filem cereka menarik untuk tontonan anda.</p>
+                        <br>
+                        <img alt="" src="/ktmb/uploads/images/Image_portal/perkhidmatan/ETS/ets3.jpg" style="height:height:40%; width:60%"><br>
+                        &nbsp;
+                    </div>
+
+                    <div class="col-lg-12 col-xs-12">
+                        <h3><strong>Rak Bagasi</strong></h3>
+                        &nbsp;
+
+                        <p style="text-align:justify">Semua koc kami dilengkapi dengan rak bagasi di mana anda boleh meletakkan beg anda dengan selamat dan mudah digunakan.</p>
+                        <br>
+                        <img alt="" src="/ktmb/uploads/images/Image_portal/perkhidmatan/ETS/ets4.jpg" style="height:height:40%; width:60%"><br>
+                        &nbsp;
+                    </div>
+
+                    <div class="col-lg-12 col-xs-12">
+                        <h3><strong>"Green Train" dengan ETS</strong></h3>
+                        &nbsp;
+
+                        <p style="text-align:justify">ETS adalah tren hijau. Dengan elektrik sebagai sumber kuasa, ia lebih bersih dan mempunyai jejak karbon yang lebih rendah daripada kebanyakan jenis kenderaan motor yang membakar bahan api fosil. Tren ETS juga mampu menjana kuasa regenerasi elektrik semasa membrek, untuk kegunaan tren lain dalam grid kuasa yang sama.</p>
+                        <br>
+                        <img alt="" src="/ktmb/uploads/images/Image_portal/perkhidmatan/ETS/ets5.jpg" style="height:height:40%; width:60%"><br>
+                        &nbsp;
+                    </div>
+
+                    <div class="col-lg-12 col-xs-12">
+                        <h3><strong>Mesra OKU</strong></h3>
+                        &nbsp;
+
+                        <p style="text-align:justify">Kami juga perihatin terhadap golongan warga berusia dan orang kelainan upaya sebagai pengguna istimewa perkhidmatan kami. Kami juga menyediakan kemudahan di atas tren yang direka dengan prasarana untuk golongan kurang upaya, kami juga mempunyai keutamaan tempat duduk khas tersedia untuk warga tua dan orang kelainan upaya. Sila hubungi kami sekurang-kurangnya 24 jam sebelum waktu berlepas bagi kami untuk membuat persiapan awal. Anda juga boleh singgah di mana-mana kaunter kami dan bercakap dengan kakitangan yang ramah untuk membantu.</p>
+                        <br>
+                        <img alt="" src="/ktmb/uploads/images/Image_portal/perkhidmatan/ETS/ets6.jpg" style="height:height:40%; width:60%"><br>
+                        &nbsp;
+                    </div>
+
+                    <div class="col-lg-12 col-xs-12">
+                        <h3><strong>Perkhidmatan Tren ETS</strong></h3>
+                        &nbsp;
+
+                        <p style="text-align:justify">Perkhidmatan tren ETS adalah perkhidmatan terbaharu yang diperkenalkan oleh KTMB. Sebagai memperkenalkan perkhidmatan premium ini, maka ETS akan memastikan anda selesa dan selamat didalam perjalanan ke destinasi pilihan anda dalam masa yang sesingkat mungkin. Pada masa ini, terdapat tiga kelas perkhidmatan telah diperkenalkan.</p>
+                        <br>
+                        <img alt="" src="/ktmb/uploads/images/Image_portal/perkhidmatan/ETS/ets7.jpg" style="height:height:40%; width:60%"><br>
+                        &nbsp;
+                    </div>
+
+                    <div class="col-lg-12 col-xs-12">
+                        <h3><strong>CCTV</strong></h3>
+                        &nbsp;
+
+                        <p style="text-align:justify">Koc kami dipantau rapi dan berterusan melalui sistem CCTV untuk memastikan perjalanan anda akan menjadi salah satu perjalanan yang selamat dan selesa.</p>
+                        <br>
+                        <br>
+                        &nbsp;
+                    </div>
+
+                    <div class="col-lg-12 col-xs-12">
+                        <h3><strong>Tandas</strong></h3>
+                        &nbsp;
+
+                        <p style="text-align:justify">ETS menggunakan tandas vakum moden, disediakan untuk kemudahan anda di koc B &amp; E. Tandas ini telah direka untuk penggunaan kerusi roda dan mesra OKU.</p>
+                        <br>
+                        <img alt="" src="/ktmb/uploads/images/Image_portal/perkhidmatan/ETS/ets1.jpg" style="height:height:40%; width:60%"><br>
+                        &nbsp;
+                    </div>
+                    &nbsp;<br>
+                    &nbsp;
+                    <p>&nbsp;</p>
+                </div>
+            </div>
+        </div>
+
+    <br><br>
+</div>
+<!--inner body end from here-->

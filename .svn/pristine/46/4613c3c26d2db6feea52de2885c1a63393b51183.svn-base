@@ -1,0 +1,247 @@
+﻿(function () {
+    var app = angular.module('cms', []);
+
+    app.controller('CMSController', ["$scope", "$http", 'growl', '$window', 'apiURL', '$rootScope', '$location', 'x2js', '$parse', '$cookies', 'baseURL', function ($scope, $http, growl, $window, apiURL, $rootScope, $location, x2js, $parse, $cookies, baseURL) {
+        console.log("CMSController logged on.");
+
+        var cms = {};
+
+        $scope.testXMLtoJSON = function () {
+            console.log("CMSController.testXMLtoJSON triggered.");
+            var c = {};
+            c.xxx = {};
+            c.xxx.key = 'zahidah';
+            c.xxx.key2 = 'farhanah';
+            var bbb = x2js.json2xml_str(c);//Convert JSON to XML
+            console.log(bbb);
+            console.log(x2js.xml_str2json(bbb));//Convert XML back to JSON
+        };
+
+        $scope.getCMS = function (pagename, contenttype, issingle) {
+            $rootScope.spinnerShow = true;
+            console.log("CMSController.getCMS triggered");
+            var token = $cookies.get('UI_TOKEN');
+
+            var requiredParam = { securitytoken: token, pagename: pagename, contenttype: contenttype };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/GETCMS',
+                data: JSON.stringify(requiredParam),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (!response.data.success) {
+                    growl.error(response.data.error, { title: 'ERROR!' });
+                    $rootScope.spinnerShow = false;
+                }
+                else {
+                    if (response.data.cmsList.length > 0) {
+                        cms.setting = [];
+                        for (var i = 0, len = response.data.cmsList.length; i < len; i++) {
+                            var temp = response.data.cmsList[i];
+                            temp.jsonContent = x2js.xml_str2json(temp.content);
+                            temp.jsonContent.pkcolumn = temp.pkcolumn;
+                            temp.jsonContent.seq = temp.seq;
+                            temp.jsonContent.isshow = temp.isshow;
+                            cms.setting.push(temp.jsonContent);
+                        }
+
+                        //Dinamically creating an angular model based on "contenttype"
+                        console.log(cms.setting);
+                        var model = $parse(contenttype);
+                        if (!issingle) {
+                            model.assign($scope, cms.setting);
+                        }
+                        else
+                            model.assign($scope, cms.setting[0]);
+                    }
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 61 cms.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+        $scope.createCMS = function (content, pagename, contenttype, issingle, islistingupdate) {
+            $rootScope.spinnerShow = true;
+            console.log("CMSController.createCMS triggered.");
+
+            var token = $cookies.get('UI_TOKEN');
+            console.log(token);
+
+            //Only assign uploaded file if the data exist inside the uploadedFile @ rootScope
+            console.log($rootScope.uploadedFile);
+            if ($rootScope.uploadedFile != null || $rootScope.uploadedFile != undefined) {
+                content.param.filePath = $rootScope.uploadedFile.filePath;
+                content.param.fileName = $rootScope.uploadedFile.fileName;
+            }
+
+            console.log(content);
+            var param = { param: content.param };
+            var requiredParam = {
+                pagename: pagename,
+                contenttype: contenttype,
+                content: x2js.json2xml_str(param),
+                seq: content.seq,
+                isshow: content.isshow == undefined ? true : content.isshow
+            };
+
+            var data = { cms: requiredParam, securitytoken: token, pkcolumn: issingle != true ? null : content.pkcolumn }
+            console.log(data);
+
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/CREATECMS',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                if (response.data.success == false) {
+                    growl.error(response.data.error, { title: 'ERROR!' });
+                }
+                else {
+                    angular.element("input[type='file']").val(null);
+                    angular.element('.modal').modal('hide');
+                    growl.success('Content have been updated!', { title: 'SUCCESS!' });
+                    if (islistingupdate) {
+                        $scope.getCMS(pagename, contenttype, !issingle);
+                    }
+                    else
+                        $scope.getCMS(pagename, contenttype, issingle);
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 114 cms.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+        $scope.getSingleModel = function (modelname, targetlist, id) {
+            console.log("CMSController.getSingleModel triggered.");
+            $rootScope.spinnerShow = true;
+            if (targetlist.length > 0) {
+                for (var i = 0, len = targetlist.length; i < len; i++) {
+                    var temp = targetlist[i].param;
+                    if (targetlist[i].pkcolumn == id) {
+                        var model = $parse(modelname);
+                        model.assign($scope, targetlist[i]);
+                    }
+                }
+            }
+            $rootScope.spinnerShow = false;
+        };
+
+        $scope.getPageContent = function (pagename) {
+            console.log("CMSController.getPageContent triggered.");
+            $rootScope.spinnerShow = true;
+            var requiredParam = { pagename: pagename, isshow: true };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/GETCMS',
+                data: JSON.stringify(requiredParam),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (!response.data.success) {
+                    growl.error(response.data.error, { title: 'ERROR!' });
+                    $rootScope.spinnerShow = false;
+                }
+                else {
+                    //Buat keje kat sini
+                    if (response.data.cmsList.length > 0) {
+                        cms.setting = [];
+                        for (var i = 0, len = response.data.cmsList.length; i < len; i++) {
+                            var temp = response.data.cmsList[i];
+                            temp.jsonContent = x2js.xml_str2json(temp.content);
+                            temp.jsonContent.pkcolumn = temp.pkcolumn;
+                            temp.jsonContent.seq = temp.seq;
+                            temp.jsonContent.contenttype = temp.contenttype;
+                            cms.setting.push(temp.jsonContent);
+                        }
+                        console.log(cms.setting);
+                        $scope.content = cms.setting;
+                    }
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 167 cms.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+        $scope.fileUpload = function ($event) {
+            console.log("CMSController.fileUpload triggered.");
+            $rootScope.spinnerShow = true;
+            var files = $event.target.files;
+            console.log(files);
+            if (files.length > 0) {
+                var fd = new FormData(); 
+                fd.append('file', files[0]);//We're only going to upload the first file only - separate method needed for multiple upload
+                $http.post(baseURL + '/api/upload', fd, {
+                    transformRequest: angular.identity,
+                    headers: { 'Content-Type': undefined }
+                }).then(function successCallback(response) {
+                    console.log(response.data);
+                    var uploadedFile = { filePath: response.data, fileName: files[0].name };
+                    $rootScope.uploadedFile = uploadedFile;
+                    $rootScope.spinnerShow = false;
+                }, function errorCallback(response) {
+                    growl.error(response, { title: 'ERROR!' });
+                    $rootScope.spinnerShow = false;
+                });
+            }
+            else
+                $rootScope.uploadedFile = null;
+            $rootScope.spinnerShow = false;
+        };
+
+
+        $scope.deleteCMS = function (pkcolumn, pagename, contenttype, issingle) {
+            console.log("CMSController.deleteCMS triggered.");
+            $rootScope.spinnerShow = true;
+            var token = $cookies.get('UI_TOKEN');
+            var data = { pkcolumn: pkcolumn, securitytoken: token };
+            $http({
+                method: 'POST',
+                url: apiURL + '/api/REMOVECMS',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                if (!response.data.success) {
+                    growl.error(response.data.error, { title: 'ERROR!' });
+                }
+                else {
+                    growl.success('Item has been removed succesfully.', { title: 'SUCCESS!' });
+                    $scope.getCMS(pagename, contenttype, issingle);
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 220 cms.js');
+                $rootScope.spinnerShow = false;
+
+            });
+        };
+
+        ////////////////////////
+
+
+        $scope.getMenu = function () {
+            $rootScope.spinnerShow = true;
+            console.log("CMSController.getMenu triggered");
+            $http({
+                method: 'GET',
+                url: baseURL + '/api/cms/allmenu'
+            }).then(function onSuccess(response) {
+                console.log(response.data);
+                $scope.allMenu = response.data;
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                console.log('ERROR!: ' + response.statusText + ' at line 61 cms.js');
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+    }]);
+
+})();

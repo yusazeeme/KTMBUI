@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="KTMB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Keretapi Tanah Melayu Berhad">
+    <meta name="keywords" content="Keretapi Tanah Melayu Berhad, KTMB, Komuter, Intercity, KTM Komuter, Freight Oline">
+    <meta name="author" content="opensoft.sdn.bhd">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - KTM Berhad</title>
+
+    <!-- FontAwesome CSS -->
+    <link href="~/Content/assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap DateTime Picker CSS -->
+    <link href="~/Content/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- Scrolling Tab CSS -->
+    <link rel="stylesheet" href="~/Content/assets/js/scrollingtabs/jquery.scrolling-tabs.css">
+
+    <!-- Others CSS -->
+    <link href="~/Content/assets/js/jqwidgets/range/ranger.css" rel="stylesheet">
+    <link href="~/Content/assets/js/jqwidgets/styles/jqx.base.css" rel="stylesheet">
+    <link href="~/Content/assets/js/animate/animate.css" rel="stylesheet">
+    <link href="~/Content/assets/js/select2/select2.min.css" rel="stylesheet">
+    <link href="~/Content/assets/css/slick.css" rel="stylesheet">
+    <link href="~/Content/assets/css/style.css" rel="stylesheet" type="text/css">
+
+    <!-- Angular Growl CSS -->
+    <link href="~/Content/assets/css/angular-growl.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Loaders CSS -->
+    <link href="~/Content/assets/css/loaders.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="~/Content/assets/css/custom.css" rel="stylesheet" type="text/css">
+
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/assets/sidefixed/css/styleside.css" rel="stylesheet" />
+
+    <!--favicon-->
+    <link rel="icon" href="~/Content/ktmb_120x120.png">
+    <!--end here-->
+</head>
+<body ng-controller="UserController as userCtrl" ng-init="getUserInfo()">    
+    <div onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload=""></div>
+    <div growl></div>
+    <!--start top-bar-->
+    <div class="top_bar_travel hidden-xs text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    @*<div class="top_search">
+                            <form>
+                                <input type="text" placeholder="Search here...">
+                                <button class="email-btn"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>*@
+                </div>
+                <div class="col-md-5 hidden-sm">
+
+                </div>
+                <div class="col-md-4 col-sm-6" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('other_urlLink')">
+                    <div class="top_email" ng-repeat="url in content | filter: {contenttype:'url_content'}">
+                        <ul class="list-unstyled list-inline">
+                            <li><a href="/user/login" title="Login"><i class="fa fa-sign-in"></i></a></li>
+                            <li><a href="/portal/faq" title="FAQ"><i class="fa fa-question-circle"></i></a></li>
+                            <li><a ng-href={{url.param.facebook}} title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a ng-href={{url.param.twitter}} title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a ng-href={{url.param.instagram}} title="Instragram"><i class="fa fa-instagram"></i></a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--end top-bar-->
+    <!--start navigation bar-->
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><img src="~/Content/assets/img/ktmb_logo.png" alt="logo"></a>
+            </div>
+
+            <!--navbar-collapse-->
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/"><i class="fa fa-home"></i>  Home</a></li>
+                    <!--About KTMB-->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+                            <i class="fa fa-users" aria-hidden="true"></i>About Us
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/portal/corporateprofile">Corporate Profile</a></li>
+                            <li><a href="/portal/contactus">Contact Us</a></li>
+                        </ul>
+                    </li>
+                    <!--Our Services-->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+                            <i class="fa fa-subway" aria-hidden="true"></i>Our Services
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Intercity</a></li>
+                            <li><a href="#">Commuter</a></li>
+                            <li><a href="#">Cargo</a></li>
+                            <li><a href="#">MyRA Academy</a></li>
+                        </ul>
+                    </li>
+                    <!--Account user-->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+                            <i class="fa fa-user" aria-hidden="true"></i> My Account
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li ng-show="!userinfo.UserName"><a href="/user/login">  Login Here!</a></li>
+                            <li ng-show="userinfo.UserName && userinfo.UserType!='Guest'"><a href="/user/menu">  Main Menu</a></li>
+                            <li ng-show="userinfo.UserName"><a href="/user/login">  Log Out</a></li>
+                        </ul>
+                    </li>
+                    <!--to redirect register user-->
+                    <li class="visible-lg" ng-show="!userinfo.UserName && userinfo.UserType != 'Guest'"><span><a href="/user/register" class="btn btn_order_now">Register</a></span></li>
+                    <li class="visible-lg" ng-show="userinfo.UserName && userinfo.UserType != 'Guest'"><span><a href="#" class="btn btn_order_now">Welcome, {{userinfo.UserName}}! </a></span></li>
+                    <li class="visible-lg" ng-show="userinfo.UserType == 'Guest'"><span><a href="#" class="btn btn_order_now">Welcome, {{userinfo.UserType}}! </a></span></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--navigation end here-->
+    <!--inner body start from here-->
+    <div class="inner-body">
+        @RenderBody()
+    </div>
+    <!--inner body end from here-->
+    <!--back_to_top-->
+    <div id="back_to_top">
+        <div class="button">
+            <i class="fa fa-chevron-up"></i>
+        </div>
+    </div>
+    <!--end-->
+    <!--footer start here-->
+    <footer class="main-footer">
+        <!--end button here-->
+        @RenderSection("footer", false)
+        <p class="footer-bottom">copyright &copy; @DateTime.Now.Year - <a href="/">KTM Berhad</a></p>
+        <!--button back to top-->
+    </footer>
+    <!--footer end here-->
+    <!--page loader-->
+    <div class="loader" ng-show="spinnerShow">
+        <div class="square-spin">
+            <div>
+            </div>
+        </div>
+    </div>
+    <!--end here-->
+    <!-- jQuery 2.2.4 -->
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="~/Content/assets/js/bootstrap.min.js"></script>
+
+    <!-- Others JS -->
+    <script src="~/Content/assets/js/jqwidgets/scripts/date-picker.js"></script>
+    <script src="~/Content/assets/js/isotop/isotope-docs.min.js"></script>
+    <script src="~/Content/assets/js/select2/select2.js"></script>
+    <script src="~/Content/assets/js/slick.min.js"></script>
+    <script src="~/Content/assets/js/parallax/parallax.min.js"></script>
+    <script src="~/Content/assets/js/scrollreveal.min.js"></script>
+    <script src="~/Content/assets/js/jqwidgets/range/ranger.js"></script>
+    <script src="~/Content/assets/js/scrollingtabs/jquery.scrolling-tabs.js"></script>
+    <script src="~/Content/assets/sidefixed/js/stickySidebar.js"></script>
+    <script src="~/Content/assets/js/jquery.sticky-kit.min.js"></script>
+
+    <!-- Bootstrap DateTime Picker JS -->
+    <script src="~/Content/assets/js/moment.min.js"></script>
+    <script src="~/Content/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="~/Content/assets/js/custom.js"></script>
+
+    <!-- XML2JS -->
+    <script src="~/Content/cms/assets/js/xml2json.min.js"></script>
+
+    <!-- Angular JS -->
+    <script src="~/Content/assets/js/angular.min.js"></script>
+    <script src="~/Content/assets/js/angular-cookies.js"></script>
+    <script src="~/Content/assets/js/angular-growl.min.js"></script>
+    <script src="~/AppJS/app.js"></script>
+    <script src="~/AppJS/lookup.js"></script>
+    <script src="~/AppJS/ticket.js"></script>
+    <script src="~/AppJS/user.js"></script>
+    <script src="~/AppJS/cms.js"></script>
+    <script src="~/Content/cms/assets/js/x2js.min.js"></script>
+    <script src="~/Content/assets/js/angular-filter.min.js"></script>
+
+    <!-- QR Generator -->
+    <script src="~/Content/assets/qrcode/qrcode.js"></script>
+    <script src="~/Content/assets/qrcode/qrcode_UTF8.js"></script>
+    <script src="~/Content/assets/qrcode/angular-qrcode.js"></script>
+
+    <!-- TinyMCE -->
+    <script src="~/Content/cms/assets/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script src="~/Content/assets/js/angular-tinymce.min.js"></script>
+
+    <!--script end-->
+
+    <script>
+        $(document).ready(function () {
+            $('#sidebar').stickySidebar({
+                sidebarTopMargin: 20,
+                footerThreshold: 100
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('.nav-tabs').scrollingTabs({
+            scrollToTabEdge: true,
+            forceActiveTab: true
+        });
+        // refresh the plugin
+        $('.nav-tabs').scrollingTabs('refresh');
+    </script>
+
+    <script type="text/javascript">
+        window.history.forward();
+        function noBack() {
+            window.history.forward();
+        }
+    </script>
+
+    <!--end script files-->
+</body>
+
+</html>

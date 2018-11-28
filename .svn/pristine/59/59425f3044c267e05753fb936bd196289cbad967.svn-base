@@ -1,0 +1,220 @@
+﻿
+@{
+    ViewBag.Title = "Booking Confirmation";
+}
+<div ng-controller="UserController as userCtrl" ng-init="checkAccess()"></div>
+<div class="container" ng-controller="TicketController as ticketCtrl" ng-init="finalConfirmation()">
+    <div class="row">
+        <div class="col-md-12" style="margin:5% 0;">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li>
+                        <a href="#" class="active"> <span class="step">1</span> <span class="title">Search Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">2</span> <span class="title">Select Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">3</span> <span class="title">Passenger Info</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">4</span> <span class="title">Select Seat</span> </a>
+                    </li>
+                    <li class="active">
+                        <a href="#"> <span class="step">5</span> <span class="title">Payment</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+
+        <!--wajib ada-->
+        <header></header>
+
+        <!--start content and scrolling-->
+        <main class="clearfix">
+
+            <!--start sidebar-->
+            <aside id="sidebar">
+                <div class="inside">
+                    <div class="flight_detail_sidebar white-box">
+                        <div class="details-text">
+                            <h4>
+                                Payment Summary
+                                <br />
+                                <small ng-show="!FinalConfirmation.IsReturn"> (One Way)</small>
+                                <small ng-show="FinalConfirmation.IsReturn"> (Return)</small>
+                                <br />
+                            </h4>
+                        </div>
+                        <div class="railway-font">
+                            <small>TOTAL (MYR)</small>
+                            <div class="alert alert-info">
+                                <h2 class="price-info">{{FinalConfirmation.ConfirmationResult.FINALCHARGE.replace('MYR ', '')}}</h2>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="LTT">
+                            <span class="skin-clr">
+                                Total Fare:
+                                <span class="pull-right">
+                                    {{FinalConfirmation.ConfirmationResult.FINALCHARGE.replace('MYR ', '') - FinalConfirmation.ConfirmationResult.ADMINCHARGE.replace('MYR ', '')}} MYR
+                                </span>
+                            </span><br>
+                        </div>
+                        <div class="LTT">
+                            <span class="skin-clr">
+                                Service Charge
+                                <span class="pull-right">
+                                    {{FinalConfirmation.ConfirmationResult.ADMINCHARGE.replace('MYR ', '')}} MYR
+                                </span>
+                            </span><br>
+                        </div>
+                        <div class="LTT">
+                            <span class="skin-clr">
+                                GST ({{FinalConfirmation.ConfirmationResult.GSTRATEADMIN}}%)
+                                <span class="pull-right">
+                                    {{FinalConfirmation.ConfirmationResult.GSTAMOUNTADMIN.replace('MYR ', '')}} MYR
+                                </span>
+                            </span><br>
+                        </div>
+                        <div class="LTT">
+                            <span class="skin-clr">
+                                <b>Total Price :</b>
+                                <span class="pull-right"><b>{{FinalConfirmation.ConfirmationResult.FINALCHARGE.replace('MYR ', '')}} MYR</b></span>
+                            </span><br>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!--end sidebar-->
+            <!-- start main content-->
+            <div class="col-md-12 main_content" id="content">
+                <!--start depart-->
+                <div class="flight_detail_sidebar white-box animate-reveal" ng-repeat="trip in FinalConfirmation.BookingList | orderBy :'+_DepartureTime'">
+                    <h3 ng-show="trip.OnwardReturn == 'O'">Onward ({{trip.OriginName}} - {{trip.DestinationName}})</h3>
+                    <h3 ng-show="trip.OnwardReturn == 'R'">Return ({{trip.OriginName}} - {{trip.DestinationName}})</h3>
+                    <p>{{trip.DepartureTime}}  <i class="fa fa-long-arrow-right" aria-hidden="true"></i> {{trip.ArrivalTime}} </p>
+                    <div class="clearfix"></div>
+                    <!--default akan open adalah untuk pasenger pertama sahaja yang len close-->
+                    <div class="panel-group">
+                        <div class="panel panel-default panel-default2" ng-repeat="passenger in trip.PaxList track by $index">
+                            <div class="panel-heading panel-heading2">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#{{trip.OriginCode}}_{{trip.DestinationCode}}_{{$index+1}}" aria-expanded="true" ng-show="passenger.ADULTCHILD == 'A'">
+                                        <i class="fa fa-user"></i>
+                                        {{passenger.Name}} (Adult)
+                                        <i class="fa fa-chevron-circle-down pull-right"></i>
+                                    </a>
+                                    <a data-toggle="collapse" href="#{{trip.OriginCode}}_{{trip.DestinationCode}}_{{$index+1}}" aria-expanded="true" ng-show="passenger.ADULTCHILD == 'C'">
+                                        <i class="fa fa-user"></i>
+                                        {{passenger.Name}} (Child)
+                                        <i class="fa fa-chevron-circle-down pull-right"></i>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div ng-class="{'collapse in': ($index+1===1), 'collapse': ($index+1!==1)}" id="{{trip.OriginCode}}_{{trip.DestinationCode}}_{{$index+1}}" aria-expanded="true" role="button">
+                                <div class="panel-body">
+                                    <div class="pull-left">
+                                        <div class="table-content-box">
+                                            <table class="table2">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Name</td>
+                                                        <td>:</td>
+                                                        <td>{{passenger.Name}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>No. IC / Passport</td>
+                                                        <td>:</td>
+                                                        <td>{{passenger.IC}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Type Of Ticket</td>
+                                                        <td>:</td>
+                                                        <td ng-repeat="type in ticketTypeList" ng-show="type.CODE === passenger.TICKETTTYPE">{{type.DESCRIPTION}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Gender</td>
+                                                        <td>:</td>
+                                                        <td ng-show="passenger.GENDER=='M'">Male</td>
+                                                        <td ng-show="passenger.GENDER=='F'">Female</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="pull-right">
+                                        <!--status new / amend-->
+                                        <div class="label-status" style="">Label/Seat</div>
+                                        <div class="label-payment">
+                                            <!--coach label / seat-->
+                                            {{passenger.LABELNAME}}/{{passenger.SLOTID}}
+                                        </div>
+                                        <div class="label-train">{{trip.TrainNumber}} - {{trip.TrainName}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--end depart-->
+            </div>
+            <!-- end main content-->
+        </main>
+        <div class="clearfix"></div>
+        <!--start payment-->
+        <form>
+            <div class="col-md-12">
+                <div class="layout_two border-box">
+                    <h3>Payment</h3>
+                    <div class="detail_flight_number colors-primary">
+                        <div class="pull-left white">
+                            <div class="font-rail">Total overall to be paid :</div>
+                            <!--<div class="font-rail2">Your payment type:</div>-->
+                        </div>
+                        <div class="pull-right">
+                            <div class="font-rail"><b>{{FinalConfirmation.ConfirmationResult.FINALCHARGE.replace('MYR', '')}} MYR</b></div>
+                        </div>
+                    </div>
+                    <!--<h3>Payment</h3>-->
+                    <div class="pull-left">
+                        @*<div class="checkbox">
+                            <label style="padding-left: 20px;"><input type="checkbox" value="" /> SMS Itinerary</label>
+                            <small class="rail-way-font"><br>Praesent dolor lectus, rutrum sit amet risus vitae, imperdiet cursus neque. Nulla tempor nec lorem eu suscipit. Donec dignissim lectus a nunc molestie consectetur. Nulla eu urna in nisi adipiscing placerat. Nam vel scelerisque magna. Donec justo urna, posuere ut dictum quis.</small>
+                        </div>*@
+                        @*<div class="checkbox">
+                            <label style="padding-left: 20px;"><input type="checkbox" value="" required />I agree with KTMB Term & Conditions</label>
+                            <br><b><a target="_blank" href="https://intranet.ktmb.com.my/e-ticket/Images/TNC.pdf"><p class="rail-way-font">Please click here to read terms &amp; conditions</p></a></b>
+                            <ul>
+                               <li> Terms & Condition for Low Fare</li>
+                               <li> * All fares are subject to change until purchased. </li>
+                               <li> * Seats offered at this fare are limited and may not be available on all trains.</li>
+                               <li> * Refund is not permitted. Reservations cannot be cancelled once confirmed.</li>
+                               <li> * Amendments is not permitted.</li>
+                                <li>* For general term and conditions, please refer to KTMB Passenger Terms & Conditions </li>
+                            </ul>
+                        </div>*@
+                    </div>
+                    <div class="col-md-12" style="padding-bottom:7px">
+                        <h4>Make payment using:</h4>
+                        <div class="radio-inline">
+                            <input type="radio" name="gateway" ng-model="channel" value="CC" required ng-init="channel='CC'" />
+                            <img src="~/Content/master_visa.jpg" height="66">
+                        </div>
+                        @*<div class="radio-inline">
+                            <input type="radio" name="gateway" ng-model="channel" value="IB" required />
+                            <img src="~/Content/fpx2.png" height="66">
+                        </div>*@
+                    </div>
+                    <div class="railway-font">
+                        <button type="submit" class="btn btn-search-travel btn-lg" confirmed-click="paymentGateway(channel)" ng-confirm-click="By clicking on OK you are agree with our terms and conditions." ng-disabled="channel == null"> Pay &raquo;</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

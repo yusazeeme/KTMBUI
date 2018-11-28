@@ -1,0 +1,1933 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ktmbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ost_album_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="album_id" Type="int" Nullable="false" />
+          <Property Name="img" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="sort" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_announce">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="desc" Type="varchar(max)" />
+          <Property Name="start_dt" Type="date" />
+          <Property Name="end_dt" Type="date" />
+          <Property Name="created_dt" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_application">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="group_app" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="img_url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="sort" Type="int" Nullable="false" />
+          <Property Name="created_dt" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="sort2" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ost_arahan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ref_no" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="upload_dt" Type="date" />
+          <Property Name="start_dt" Type="date" />
+          <Property Name="end_dt" Type="date" />
+          <Property Name="notes" Type="varchar(max)" />
+          <Property Name="cat" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="doc_url" Type="varchar" MaxLength="255" />
+          <Property Name="article" Type="varchar(max)" Nullable="false" />
+          <Property Name="approval_status" Type="int" Nullable="false" />
+          <Property Name="created_dt" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_arahan2">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ref_no" Type="varchar" MaxLength="50" />
+          <Property Name="upload_dt" Type="date" />
+          <Property Name="start_dt" Type="date" />
+          <Property Name="end_dt" Type="date" />
+          <Property Name="notes" Type="text" />
+          <Property Name="cat" Type="varchar" MaxLength="50" />
+          <Property Name="type" Type="varchar" MaxLength="50" />
+          <Property Name="doc_url" Type="varchar(max)" />
+          <Property Name="article" Type="text" />
+          <Property Name="approval_status" Type="int" />
+          <Property Name="created_dt" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="50" />
+          <Property Name="updated_dt" Type="datetime" />
+          <Property Name="updated_by" Type="varchar" MaxLength="50" />
+          <Property Name="title" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="ost_articles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menu_type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="title_en" Type="varchar" MaxLength="255" />
+          <Property Name="type" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="url_en" Type="varchar" MaxLength="255" />
+          <Property Name="content_my" Type="varchar(max)" Nullable="false" />
+          <Property Name="content_en" Type="varchar(max)" Nullable="false" />
+          <Property Name="publish_status" Type="int" Nullable="false" />
+          <Property Name="tag" Type="varchar(max)" />
+          <Property Name="hits" Type="int" Nullable="false" />
+          <Property Name="title_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="doc_date" Type="date" />
+          <Property Name="created_dt" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_role" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_role" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="start_dt" Type="date" />
+          <Property Name="end_dt" Type="date" />
+        </EntityType>
+        <EntityType Name="ost_articles_malam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menu_type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="start_dt" Type="varchar" MaxLength="10" />
+          <Property Name="end_dt" Type="varchar" MaxLength="10" />
+          <Property Name="title_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="title_en" Type="varchar" MaxLength="255" />
+          <Property Name="url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="publish_status" Type="int" Nullable="false" />
+          <Property Name="url_en" Type="varchar" MaxLength="255" />
+          <Property Name="content_my" Type="varchar(max)" Nullable="false" />
+          <Property Name="content_en" Type="varchar(max)" Nullable="false" />
+          <Property Name="tag" Type="varchar(max)" />
+          <Property Name="hits" Type="int" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_role" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_role" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_audit_trail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="action_datetime" Type="datetime" />
+          <Property Name="action_type" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="data_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_board">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="img" Type="varchar" MaxLength="255" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="position_my" Type="varchar" MaxLength="255" />
+          <Property Name="position_en" Type="varchar" MaxLength="255" />
+          <Property Name="descr_my" Type="varchar(max)" />
+          <Property Name="descr_en" Type="varchar(max)" />
+          <Property Name="sort" Type="int" />
+          <Property Name="publish" Type="int" />
+          <Property Name="hits" Type="int" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="ost_board_director">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="title_en" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="pic" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="hits" Type="int" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_board_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="parent_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="position_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="position_en" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="desc_my" Type="varchar(max)" Nullable="false" />
+          <Property Name="desc_en" Type="varchar(max)" Nullable="false" />
+          <Property Name="sort" Type="int" Nullable="false" />
+          <Property Name="publish" Type="int" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_bulletin_intranet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="cat" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="bul_dt" Type="date" />
+          <Property Name="article" Type="varchar(max)" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="approval_status" Type="int" />
+        </EntityType>
+        <EntityType Name="ost_calendar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="title_en" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="start_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="end_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="descr_my" Type="varchar(max)" Nullable="false" />
+          <Property Name="descr_en" Type="varchar(max)" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_calendar_event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="start_dt" Type="date" Nullable="false" />
+          <Property Name="end_dt" Type="date" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="desc" Type="varchar(max)" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="message" Type="varchar(max)" Nullable="false" />
+          <Property Name="dt_send" Type="date" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_media">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="img_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="title_en" Type="varchar" MaxLength="255" />
+          <Property Name="type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="parent_id" Type="int" Nullable="false" />
+          <Property Name="sort" Type="int" Nullable="false" />
+          <Property Name="display_status" Type="int" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="255" />
+          <Property Name="created_dt" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_menu_access">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="role_code" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_misc">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="cat" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="article" Type="varchar(max)" Nullable="false" />
+          <Property Name="misc_dt" Type="date" />
+          <Property Name="start_dt" Type="date" />
+          <Property Name="end_dt" Type="date" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="approval_status" Type="int" />
+        </EntityType>
+        <EntityType Name="ost_photo_album">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="title_en" Type="varchar" MaxLength="255" />
+          <Property Name="descr_my" Type="varchar(max)" Nullable="false" />
+          <Property Name="descr_en" Type="varchar(max)" />
+          <Property Name="event_dt" Type="date" Nullable="false" />
+          <Property Name="cat" Type="varchar" MaxLength="20" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_photo_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="album_id" Type="int" Nullable="false" />
+          <Property Name="img" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="sort" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_poll_answer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question_id" Type="int" Nullable="false" />
+          <Property Name="answer_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="answer_en" Type="varchar" MaxLength="255" />
+          <Property Name="num" Type="int" />
+        </EntityType>
+        <EntityType Name="ost_poll_answeredby">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question_id" Type="int" Nullable="false" />
+          <Property Name="answer_id" Type="int" Nullable="false" />
+          <Property Name="answer_datetime" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="answer_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_poll_question">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="question_en" Type="varchar" MaxLength="255" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_portal_album">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="title_en" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="descr_my" Type="varchar(max)" Nullable="false" />
+          <Property Name="descr_en" Type="varchar(max)" Nullable="false" />
+          <Property Name="event_dt" Type="date" Nullable="false" />
+          <Property Name="hits" Type="int" Nullable="false" />
+          <Property Name="created_role" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_role" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_portal_media">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="title_en" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="img_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="img_en" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="desc_my" Type="varchar(max)" Nullable="false" />
+          <Property Name="desc_en" Type="varchar(max)" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="publish" Type="int" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_ref_cat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cat" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="descr" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_ref_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="label_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="label_en" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="cat" Type="int" Nullable="false" />
+          <Property Name="sort" Type="int" Nullable="false" />
+          <Property Name="created_dt" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_report">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="report_dt" Type="date" Nullable="false" />
+          <Property Name="doc_url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="notes" Type="varchar(max)" Nullable="false" />
+          <Property Name="created_dt" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_staff_move">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="month" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="year" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="lantikan_pdf" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="kenaikan_pdf" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="pertukaran_pdf" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="meninggalkan_pdf" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_statistic_graph">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="img_url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="upload_dt" Type="date" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_train_schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="sort" Type="int" Nullable="false" />
+          <Property Name="hits" Type="int" />
+          <Property Name="upload_doc" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="location" Type="varchar" MaxLength="10" />
+          <Property Name="date_change_password" Type="date" Nullable="false" />
+          <Property Name="block_password" Type="int" Nullable="false" />
+          <Property Name="block_trial3" Type="int" />
+          <Property Name="created_dt" Type="datetime" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_user_group">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="varchar" MaxLength="25" />
+          <Property Name="group_code" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="ost_user_online">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="login_time" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="ip_address" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_user_poll">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="poll_id" Type="int" />
+          <Property Name="user_id" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ost_user_poll2">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="poll_id" Type="int" />
+          <Property Name="user_id" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="ost_visitor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="web" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="dtvisit" Type="date" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityType Name="ost_vote_answer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question_id" Type="int" Nullable="false" />
+          <Property Name="answer_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="answer_en" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="num" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_vote_answeredby">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question_id" Type="int" Nullable="false" />
+          <Property Name="answer_id" Type="int" Nullable="false" />
+          <Property Name="answer_datetime" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="answer_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_vote_question">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question_my" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="question_en" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="created_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="updated_dt" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated_by" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ktmbModelStoreContainer">
+          <EntitySet Name="ost_album_list" EntityType="Self.ost_album_list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_announce" EntityType="Self.ost_announce" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_application" EntityType="Self.ost_application" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_arahan" EntityType="Self.ost_arahan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_arahan2" EntityType="Self.ost_arahan2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_articles" EntityType="Self.ost_articles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_articles_malam" EntityType="Self.ost_articles_malam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_audit_trail" EntityType="Self.ost_audit_trail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_board" EntityType="Self.ost_board" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_board_director" EntityType="Self.ost_board_director" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_board_list" EntityType="Self.ost_board_list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_bulletin_intranet" EntityType="Self.ost_bulletin_intranet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_calendar" EntityType="Self.ost_calendar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_calendar_event" EntityType="Self.ost_calendar_event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_feedback" EntityType="Self.ost_feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_media" EntityType="Self.ost_media" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_menu" EntityType="Self.ost_menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_menu_access" EntityType="Self.ost_menu_access" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_misc" EntityType="Self.ost_misc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_photo_album" EntityType="Self.ost_photo_album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_photo_list" EntityType="Self.ost_photo_list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_poll_answer" EntityType="Self.ost_poll_answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_poll_answeredby" EntityType="Self.ost_poll_answeredby" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_poll_question" EntityType="Self.ost_poll_question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_portal_album" EntityType="Self.ost_portal_album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_portal_media" EntityType="Self.ost_portal_media" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_ref_cat" EntityType="Self.ost_ref_cat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_ref_list" EntityType="Self.ost_ref_list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_report" EntityType="Self.ost_report" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_staff_move" EntityType="Self.ost_staff_move" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_statistic_graph" EntityType="Self.ost_statistic_graph" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_train_schedule" EntityType="Self.ost_train_schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_user" EntityType="Self.ost_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_user_group" EntityType="Self.ost_user_group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_user_online" EntityType="Self.ost_user_online" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_user_poll" EntityType="Self.ost_user_poll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_user_poll2" EntityType="Self.ost_user_poll2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_visitor" EntityType="Self.ost_visitor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_vote_answer" EntityType="Self.ost_vote_answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_vote_answeredby" EntityType="Self.ost_vote_answeredby" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ost_vote_question" EntityType="Self.ost_vote_question" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ktmbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ost_album_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="album_id" Type="Int32" Nullable="false" />
+          <Property Name="img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sort" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_announce">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="start_dt" Type="DateTime" Precision="0" />
+          <Property Name="end_dt" Type="DateTime" Precision="0" />
+          <Property Name="created_dt" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_application">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="group_app" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="img_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sort" Type="Int32" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sort2" Type="Int64" />
+        </EntityType>
+        <EntityType Name="ost_arahan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ref_no" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="upload_dt" Type="DateTime" Precision="0" />
+          <Property Name="start_dt" Type="DateTime" Precision="0" />
+          <Property Name="end_dt" Type="DateTime" Precision="0" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cat" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="doc_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="article" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="approval_status" Type="Int32" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_arahan2">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ref_no" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="upload_dt" Type="DateTime" Precision="0" />
+          <Property Name="start_dt" Type="DateTime" Precision="0" />
+          <Property Name="end_dt" Type="DateTime" Precision="0" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="doc_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="article" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="approval_status" Type="Int32" />
+          <Property Name="created_dt" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ost_articles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menu_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="menu_id" Type="Int32" Nullable="false" />
+          <Property Name="title_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="content_my" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="content_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="publish_status" Type="Int32" Nullable="false" />
+          <Property Name="tag" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="hits" Type="Int32" Nullable="false" />
+          <Property Name="title_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="doc_date" Type="DateTime" Precision="0" />
+          <Property Name="created_dt" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_role" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_role" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="start_dt" Type="DateTime" Precision="0" />
+          <Property Name="end_dt" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="ost_articles_malam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menu_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="menu_id" Type="Int32" Nullable="false" />
+          <Property Name="start_dt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="end_dt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="title_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="publish_status" Type="Int32" Nullable="false" />
+          <Property Name="url_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="content_my" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="content_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tag" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="hits" Type="Int32" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_role" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_role" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_audit_trail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="menu_id" Type="Int32" Nullable="false" />
+          <Property Name="action_datetime" Type="DateTime" Precision="3" />
+          <Property Name="action_type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_board">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="position_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="position_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="descr_my" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="descr_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sort" Type="Int32" />
+          <Property Name="publish" Type="Int32" />
+          <Property Name="hits" Type="Int32" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_dt" Type="DateTime" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="ost_board_director">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pic" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hits" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="ost_board_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="parent_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="position_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="position_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="desc_my" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="desc_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sort" Type="Int32" Nullable="false" />
+          <Property Name="publish" Type="Int32" Nullable="false" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="ost_bulletin_intranet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cat" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="bul_dt" Type="DateTime" Precision="0" />
+          <Property Name="article" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="approval_status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ost_calendar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="start_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="descr_my" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descr_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_calendar_event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="start_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="type" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="ost_feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dt_send" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_media">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="img_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="parent_id" Type="Int32" Nullable="false" />
+          <Property Name="sort" Type="Int32" Nullable="false" />
+          <Property Name="display_status" Type="Int32" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_dt" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_menu_access">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menu_id" Type="Int32" Nullable="false" />
+          <Property Name="role_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_misc">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cat" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="article" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="misc_dt" Type="DateTime" Precision="0" />
+          <Property Name="start_dt" Type="DateTime" Precision="0" />
+          <Property Name="end_dt" Type="DateTime" Precision="0" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="approval_status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ost_photo_album">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="descr_my" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descr_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="event_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="cat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_photo_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="album_id" Type="Int32" Nullable="false" />
+          <Property Name="img" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sort" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_poll_answer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question_id" Type="Int32" Nullable="false" />
+          <Property Name="answer_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="answer_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="num" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ost_poll_answeredby">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question_id" Type="Int32" Nullable="false" />
+          <Property Name="answer_id" Type="Int32" Nullable="false" />
+          <Property Name="answer_datetime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="answer_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_poll_question">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_portal_album">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descr_my" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descr_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="event_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="hits" Type="Int32" Nullable="false" />
+          <Property Name="created_role" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_role" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_portal_media">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="img_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="img_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="desc_my" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="desc_en" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="publish" Type="Int32" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_ref_cat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cat" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descr" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_ref_list">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="label_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="label_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cat" Type="Int32" Nullable="false" />
+          <Property Name="sort" Type="Int32" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_report">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="report_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="doc_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_staff_move">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="month" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="year" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lantikan_pdf" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="kenaikan_pdf" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pertukaran_pdf" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="meninggalkan_pdf" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_statistic_graph">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="img_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="upload_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_train_schedule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="sort" Type="Int32" Nullable="false" />
+          <Property Name="hits" Type="Int32" />
+          <Property Name="upload_doc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="ost_user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="date_change_password" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="block_password" Type="Int32" Nullable="false" />
+          <Property Name="block_trial3" Type="Int32" />
+          <Property Name="created_dt" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Precision="3" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_user_group">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="group_code" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ost_user_online">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="login_time" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ip_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_user_poll">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="poll_id" Type="Int32" />
+          <Property Name="user_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ost_user_poll2">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="poll_id" Type="Int32" />
+          <Property Name="user_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ost_visitor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="web" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dtvisit" Type="DateTime" Precision="0" />
+          <Property Name="total" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ost_vote_answer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question_id" Type="Int32" Nullable="false" />
+          <Property Name="answer_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="answer_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="num" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_vote_answeredby">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question_id" Type="Int32" Nullable="false" />
+          <Property Name="answer_id" Type="Int32" Nullable="false" />
+          <Property Name="answer_datetime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="answer_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ost_vote_question">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question_my" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="question_en" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="created_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="updated_dt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_by" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="KTMBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ost_album_list" EntityType="Self.ost_album_list" />
+          <EntitySet Name="ost_announce" EntityType="Self.ost_announce" />
+          <EntitySet Name="ost_application" EntityType="Self.ost_application" />
+          <EntitySet Name="ost_arahan" EntityType="Self.ost_arahan" />
+          <EntitySet Name="ost_arahan2" EntityType="Self.ost_arahan2" />
+          <EntitySet Name="ost_articles" EntityType="Self.ost_articles" />
+          <EntitySet Name="ost_articles_malam" EntityType="Self.ost_articles_malam" />
+          <EntitySet Name="ost_audit_trail" EntityType="Self.ost_audit_trail" />
+          <EntitySet Name="ost_board" EntityType="Self.ost_board" />
+          <EntitySet Name="ost_board_director" EntityType="Self.ost_board_director" />
+          <EntitySet Name="ost_board_list" EntityType="Self.ost_board_list" />
+          <EntitySet Name="ost_bulletin_intranet" EntityType="Self.ost_bulletin_intranet" />
+          <EntitySet Name="ost_calendar" EntityType="Self.ost_calendar" />
+          <EntitySet Name="ost_calendar_event" EntityType="Self.ost_calendar_event" />
+          <EntitySet Name="ost_feedback" EntityType="Self.ost_feedback" />
+          <EntitySet Name="ost_media" EntityType="Self.ost_media" />
+          <EntitySet Name="ost_menu" EntityType="Self.ost_menu" />
+          <EntitySet Name="ost_menu_access" EntityType="Self.ost_menu_access" />
+          <EntitySet Name="ost_misc" EntityType="Self.ost_misc" />
+          <EntitySet Name="ost_photo_album" EntityType="Self.ost_photo_album" />
+          <EntitySet Name="ost_photo_list" EntityType="Self.ost_photo_list" />
+          <EntitySet Name="ost_poll_answer" EntityType="Self.ost_poll_answer" />
+          <EntitySet Name="ost_poll_answeredby" EntityType="Self.ost_poll_answeredby" />
+          <EntitySet Name="ost_poll_question" EntityType="Self.ost_poll_question" />
+          <EntitySet Name="ost_portal_album" EntityType="Self.ost_portal_album" />
+          <EntitySet Name="ost_portal_media" EntityType="Self.ost_portal_media" />
+          <EntitySet Name="ost_ref_cat" EntityType="Self.ost_ref_cat" />
+          <EntitySet Name="ost_ref_list" EntityType="Self.ost_ref_list" />
+          <EntitySet Name="ost_report" EntityType="Self.ost_report" />
+          <EntitySet Name="ost_staff_move" EntityType="Self.ost_staff_move" />
+          <EntitySet Name="ost_statistic_graph" EntityType="Self.ost_statistic_graph" />
+          <EntitySet Name="ost_train_schedule" EntityType="Self.ost_train_schedule" />
+          <EntitySet Name="ost_user" EntityType="Self.ost_user" />
+          <EntitySet Name="ost_user_group" EntityType="Self.ost_user_group" />
+          <EntitySet Name="ost_user_online" EntityType="Self.ost_user_online" />
+          <EntitySet Name="ost_user_poll" EntityType="Self.ost_user_poll" />
+          <EntitySet Name="ost_user_poll2" EntityType="Self.ost_user_poll2" />
+          <EntitySet Name="ost_visitor" EntityType="Self.ost_visitor" />
+          <EntitySet Name="ost_vote_answer" EntityType="Self.ost_vote_answer" />
+          <EntitySet Name="ost_vote_answeredby" EntityType="Self.ost_vote_answeredby" />
+          <EntitySet Name="ost_vote_question" EntityType="Self.ost_vote_question" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ktmbModelStoreContainer" CdmEntityContainer="KTMBEntities">
+          <EntitySetMapping Name="ost_album_list">
+            <EntityTypeMapping TypeName="ktmbModel.ost_album_list">
+              <MappingFragment StoreEntitySet="ost_album_list">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="album_id" ColumnName="album_id" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="sort" ColumnName="sort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_announce">
+            <EntityTypeMapping TypeName="ktmbModel.ost_announce">
+              <MappingFragment StoreEntitySet="ost_announce">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="desc" ColumnName="desc" />
+                <ScalarProperty Name="start_dt" ColumnName="start_dt" />
+                <ScalarProperty Name="end_dt" ColumnName="end_dt" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_application">
+            <EntityTypeMapping TypeName="ktmbModel.ost_application">
+              <MappingFragment StoreEntitySet="ost_application">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="group_app" ColumnName="group_app" />
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
+                <ScalarProperty Name="sort" ColumnName="sort" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="sort2" ColumnName="sort2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_arahan">
+            <EntityTypeMapping TypeName="ktmbModel.ost_arahan">
+              <MappingFragment StoreEntitySet="ost_arahan">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ref_no" ColumnName="ref_no" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="upload_dt" ColumnName="upload_dt" />
+                <ScalarProperty Name="start_dt" ColumnName="start_dt" />
+                <ScalarProperty Name="end_dt" ColumnName="end_dt" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="cat" ColumnName="cat" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="doc_url" ColumnName="doc_url" />
+                <ScalarProperty Name="article" ColumnName="article" />
+                <ScalarProperty Name="approval_status" ColumnName="approval_status" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_arahan2">
+            <EntityTypeMapping TypeName="ktmbModel.ost_arahan2">
+              <MappingFragment StoreEntitySet="ost_arahan2">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ref_no" ColumnName="ref_no" />
+                <ScalarProperty Name="upload_dt" ColumnName="upload_dt" />
+                <ScalarProperty Name="start_dt" ColumnName="start_dt" />
+                <ScalarProperty Name="end_dt" ColumnName="end_dt" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="cat" ColumnName="cat" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="doc_url" ColumnName="doc_url" />
+                <ScalarProperty Name="article" ColumnName="article" />
+                <ScalarProperty Name="approval_status" ColumnName="approval_status" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_articles">
+            <EntityTypeMapping TypeName="ktmbModel.ost_articles">
+              <MappingFragment StoreEntitySet="ost_articles">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="menu_type" ColumnName="menu_type" />
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="title_en" ColumnName="title_en" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="url_en" ColumnName="url_en" />
+                <ScalarProperty Name="content_my" ColumnName="content_my" />
+                <ScalarProperty Name="content_en" ColumnName="content_en" />
+                <ScalarProperty Name="publish_status" ColumnName="publish_status" />
+                <ScalarProperty Name="tag" ColumnName="tag" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+                <ScalarProperty Name="title_my" ColumnName="title_my" />
+                <ScalarProperty Name="doc_date" ColumnName="doc_date" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_role" ColumnName="created_role" />
+                <ScalarProperty Name="updated_role" ColumnName="updated_role" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="start_dt" ColumnName="start_dt" />
+                <ScalarProperty Name="end_dt" ColumnName="end_dt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_articles_malam">
+            <EntityTypeMapping TypeName="ktmbModel.ost_articles_malam">
+              <MappingFragment StoreEntitySet="ost_articles_malam">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="menu_type" ColumnName="menu_type" />
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="start_dt" ColumnName="start_dt" />
+                <ScalarProperty Name="end_dt" ColumnName="end_dt" />
+                <ScalarProperty Name="title_my" ColumnName="title_my" />
+                <ScalarProperty Name="title_en" ColumnName="title_en" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="publish_status" ColumnName="publish_status" />
+                <ScalarProperty Name="url_en" ColumnName="url_en" />
+                <ScalarProperty Name="content_my" ColumnName="content_my" />
+                <ScalarProperty Name="content_en" ColumnName="content_en" />
+                <ScalarProperty Name="tag" ColumnName="tag" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_role" ColumnName="created_role" />
+                <ScalarProperty Name="updated_role" ColumnName="updated_role" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_audit_trail">
+            <EntityTypeMapping TypeName="ktmbModel.ost_audit_trail">
+              <MappingFragment StoreEntitySet="ost_audit_trail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="action_datetime" ColumnName="action_datetime" />
+                <ScalarProperty Name="action_type" ColumnName="action_type" />
+                <ScalarProperty Name="data_id" ColumnName="data_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_board">
+            <EntityTypeMapping TypeName="ktmbModel.ost_board">
+              <MappingFragment StoreEntitySet="ost_board">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="position_my" ColumnName="position_my" />
+                <ScalarProperty Name="position_en" ColumnName="position_en" />
+                <ScalarProperty Name="descr_my" ColumnName="descr_my" />
+                <ScalarProperty Name="descr_en" ColumnName="descr_en" />
+                <ScalarProperty Name="sort" ColumnName="sort" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_board_director">
+            <EntityTypeMapping TypeName="ktmbModel.ost_board_director">
+              <MappingFragment StoreEntitySet="ost_board_director">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title_my" ColumnName="title_my" />
+                <ScalarProperty Name="title_en" ColumnName="title_en" />
+                <ScalarProperty Name="pic" ColumnName="pic" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_board_list">
+            <EntityTypeMapping TypeName="ktmbModel.ost_board_list">
+              <MappingFragment StoreEntitySet="ost_board_list">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="position_my" ColumnName="position_my" />
+                <ScalarProperty Name="position_en" ColumnName="position_en" />
+                <ScalarProperty Name="desc_my" ColumnName="desc_my" />
+                <ScalarProperty Name="desc_en" ColumnName="desc_en" />
+                <ScalarProperty Name="sort" ColumnName="sort" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_bulletin_intranet">
+            <EntityTypeMapping TypeName="ktmbModel.ost_bulletin_intranet">
+              <MappingFragment StoreEntitySet="ost_bulletin_intranet">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="cat" ColumnName="cat" />
+                <ScalarProperty Name="bul_dt" ColumnName="bul_dt" />
+                <ScalarProperty Name="article" ColumnName="article" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="approval_status" ColumnName="approval_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_calendar">
+            <EntityTypeMapping TypeName="ktmbModel.ost_calendar">
+              <MappingFragment StoreEntitySet="ost_calendar">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title_my" ColumnName="title_my" />
+                <ScalarProperty Name="title_en" ColumnName="title_en" />
+                <ScalarProperty Name="start_dt" ColumnName="start_dt" />
+                <ScalarProperty Name="end_dt" ColumnName="end_dt" />
+                <ScalarProperty Name="descr_my" ColumnName="descr_my" />
+                <ScalarProperty Name="descr_en" ColumnName="descr_en" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_calendar_event">
+            <EntityTypeMapping TypeName="ktmbModel.ost_calendar_event">
+              <MappingFragment StoreEntitySet="ost_calendar_event">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="start_dt" ColumnName="start_dt" />
+                <ScalarProperty Name="end_dt" ColumnName="end_dt" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="desc" ColumnName="desc" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_feedback">
+            <EntityTypeMapping TypeName="ktmbModel.ost_feedback">
+              <MappingFragment StoreEntitySet="ost_feedback">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="dt_send" ColumnName="dt_send" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_media">
+            <EntityTypeMapping TypeName="ktmbModel.ost_media">
+              <MappingFragment StoreEntitySet="ost_media">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title_my" ColumnName="title_my" />
+                <ScalarProperty Name="img_my" ColumnName="img_my" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_menu">
+            <EntityTypeMapping TypeName="ktmbModel.ost_menu">
+              <MappingFragment StoreEntitySet="ost_menu">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title_my" ColumnName="title_my" />
+                <ScalarProperty Name="title_en" ColumnName="title_en" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+                <ScalarProperty Name="sort" ColumnName="sort" />
+                <ScalarProperty Name="display_status" ColumnName="display_status" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_menu_access">
+            <EntityTypeMapping TypeName="ktmbModel.ost_menu_access">
+              <MappingFragment StoreEntitySet="ost_menu_access">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="role_code" ColumnName="role_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_misc">
+            <EntityTypeMapping TypeName="ktmbModel.ost_misc">
+              <MappingFragment StoreEntitySet="ost_misc">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="cat" ColumnName="cat" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="article" ColumnName="article" />
+                <ScalarProperty Name="misc_dt" ColumnName="misc_dt" />
+                <ScalarProperty Name="start_dt" ColumnName="start_dt" />
+                <ScalarProperty Name="end_dt" ColumnName="end_dt" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="approval_status" ColumnName="approval_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_photo_album">
+            <EntityTypeMapping TypeName="ktmbModel.ost_photo_album">
+              <MappingFragment StoreEntitySet="ost_photo_album">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title_my" ColumnName="title_my" />
+                <ScalarProperty Name="title_en" ColumnName="title_en" />
+                <ScalarProperty Name="descr_my" ColumnName="descr_my" />
+                <ScalarProperty Name="descr_en" ColumnName="descr_en" />
+                <ScalarProperty Name="event_dt" ColumnName="event_dt" />
+                <ScalarProperty Name="cat" ColumnName="cat" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_photo_list">
+            <EntityTypeMapping TypeName="ktmbModel.ost_photo_list">
+              <MappingFragment StoreEntitySet="ost_photo_list">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="album_id" ColumnName="album_id" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="sort" ColumnName="sort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_poll_answer">
+            <EntityTypeMapping TypeName="ktmbModel.ost_poll_answer">
+              <MappingFragment StoreEntitySet="ost_poll_answer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="question_id" ColumnName="question_id" />
+                <ScalarProperty Name="answer_my" ColumnName="answer_my" />
+                <ScalarProperty Name="answer_en" ColumnName="answer_en" />
+                <ScalarProperty Name="num" ColumnName="num" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_poll_answeredby">
+            <EntityTypeMapping TypeName="ktmbModel.ost_poll_answeredby">
+              <MappingFragment StoreEntitySet="ost_poll_answeredby">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="question_id" ColumnName="question_id" />
+                <ScalarProperty Name="answer_id" ColumnName="answer_id" />
+                <ScalarProperty Name="answer_datetime" ColumnName="answer_datetime" />
+                <ScalarProperty Name="answer_by" ColumnName="answer_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_poll_question">
+            <EntityTypeMapping TypeName="ktmbModel.ost_poll_question">
+              <MappingFragment StoreEntitySet="ost_poll_question">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="question_my" ColumnName="question_my" />
+                <ScalarProperty Name="question_en" ColumnName="question_en" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_portal_album">
+            <EntityTypeMapping TypeName="ktmbModel.ost_portal_album">
+              <MappingFragment StoreEntitySet="ost_portal_album">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title_my" ColumnName="title_my" />
+                <ScalarProperty Name="title_en" ColumnName="title_en" />
+                <ScalarProperty Name="descr_my" ColumnName="descr_my" />
+                <ScalarProperty Name="descr_en" ColumnName="descr_en" />
+                <ScalarProperty Name="event_dt" ColumnName="event_dt" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+                <ScalarProperty Name="created_role" ColumnName="created_role" />
+                <ScalarProperty Name="updated_role" ColumnName="updated_role" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_portal_media">
+            <EntityTypeMapping TypeName="ktmbModel.ost_portal_media">
+              <MappingFragment StoreEntitySet="ost_portal_media">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title_my" ColumnName="title_my" />
+                <ScalarProperty Name="title_en" ColumnName="title_en" />
+                <ScalarProperty Name="img_my" ColumnName="img_my" />
+                <ScalarProperty Name="img_en" ColumnName="img_en" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="desc_my" ColumnName="desc_my" />
+                <ScalarProperty Name="desc_en" ColumnName="desc_en" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_ref_cat">
+            <EntityTypeMapping TypeName="ktmbModel.ost_ref_cat">
+              <MappingFragment StoreEntitySet="ost_ref_cat">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cat" ColumnName="cat" />
+                <ScalarProperty Name="descr" ColumnName="descr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_ref_list">
+            <EntityTypeMapping TypeName="ktmbModel.ost_ref_list">
+              <MappingFragment StoreEntitySet="ost_ref_list">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="label_my" ColumnName="label_my" />
+                <ScalarProperty Name="label_en" ColumnName="label_en" />
+                <ScalarProperty Name="cat" ColumnName="cat" />
+                <ScalarProperty Name="sort" ColumnName="sort" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_report">
+            <EntityTypeMapping TypeName="ktmbModel.ost_report">
+              <MappingFragment StoreEntitySet="ost_report">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="report_dt" ColumnName="report_dt" />
+                <ScalarProperty Name="doc_url" ColumnName="doc_url" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_staff_move">
+            <EntityTypeMapping TypeName="ktmbModel.ost_staff_move">
+              <MappingFragment StoreEntitySet="ost_staff_move">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="lantikan_pdf" ColumnName="lantikan_pdf" />
+                <ScalarProperty Name="kenaikan_pdf" ColumnName="kenaikan_pdf" />
+                <ScalarProperty Name="pertukaran_pdf" ColumnName="pertukaran_pdf" />
+                <ScalarProperty Name="meninggalkan_pdf" ColumnName="meninggalkan_pdf" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_statistic_graph">
+            <EntityTypeMapping TypeName="ktmbModel.ost_statistic_graph">
+              <MappingFragment StoreEntitySet="ost_statistic_graph">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="img_url" ColumnName="img_url" />
+                <ScalarProperty Name="upload_dt" ColumnName="upload_dt" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_train_schedule">
+            <EntityTypeMapping TypeName="ktmbModel.ost_train_schedule">
+              <MappingFragment StoreEntitySet="ost_train_schedule">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="sort" ColumnName="sort" />
+                <ScalarProperty Name="hits" ColumnName="hits" />
+                <ScalarProperty Name="upload_doc" ColumnName="upload_doc" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_user">
+            <EntityTypeMapping TypeName="ktmbModel.ost_user">
+              <MappingFragment StoreEntitySet="ost_user">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="date_change_password" ColumnName="date_change_password" />
+                <ScalarProperty Name="block_password" ColumnName="block_password" />
+                <ScalarProperty Name="block_trial3" ColumnName="block_trial3" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_user_group">
+            <EntityTypeMapping TypeName="ktmbModel.ost_user_group">
+              <MappingFragment StoreEntitySet="ost_user_group">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="group_code" ColumnName="group_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_user_online">
+            <EntityTypeMapping TypeName="ktmbModel.ost_user_online">
+              <MappingFragment StoreEntitySet="ost_user_online">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="login_time" ColumnName="login_time" />
+                <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_user_poll">
+            <EntityTypeMapping TypeName="ktmbModel.ost_user_poll">
+              <MappingFragment StoreEntitySet="ost_user_poll">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="poll_id" ColumnName="poll_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_user_poll2">
+            <EntityTypeMapping TypeName="ktmbModel.ost_user_poll2">
+              <MappingFragment StoreEntitySet="ost_user_poll2">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="poll_id" ColumnName="poll_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_visitor">
+            <EntityTypeMapping TypeName="ktmbModel.ost_visitor">
+              <MappingFragment StoreEntitySet="ost_visitor">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="web" ColumnName="web" />
+                <ScalarProperty Name="dtvisit" ColumnName="dtvisit" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_vote_answer">
+            <EntityTypeMapping TypeName="ktmbModel.ost_vote_answer">
+              <MappingFragment StoreEntitySet="ost_vote_answer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="question_id" ColumnName="question_id" />
+                <ScalarProperty Name="answer_my" ColumnName="answer_my" />
+                <ScalarProperty Name="answer_en" ColumnName="answer_en" />
+                <ScalarProperty Name="num" ColumnName="num" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_vote_answeredby">
+            <EntityTypeMapping TypeName="ktmbModel.ost_vote_answeredby">
+              <MappingFragment StoreEntitySet="ost_vote_answeredby">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="question_id" ColumnName="question_id" />
+                <ScalarProperty Name="answer_id" ColumnName="answer_id" />
+                <ScalarProperty Name="answer_datetime" ColumnName="answer_datetime" />
+                <ScalarProperty Name="answer_by" ColumnName="answer_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ost_vote_question">
+            <EntityTypeMapping TypeName="ktmbModel.ost_vote_question">
+              <MappingFragment StoreEntitySet="ost_vote_question">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="question_my" ColumnName="question_my" />
+                <ScalarProperty Name="question_en" ColumnName="question_en" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_dt" ColumnName="created_dt" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="updated_dt" ColumnName="updated_dt" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

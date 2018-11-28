@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "KTMB - Payment Fail";
+    Layout = null;
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>KTMB - Payment Fail</title>
+    <link href="/Content/payment-failure/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/Content/payment-failure/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="ktmb failure payment" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <!-- header -->
+    <div class="banner">
+        <div class="container">
+
+
+            <div class="banner-info">
+
+                <div class="logo">
+                    <img src="/Content/payment-failure/images/ktmb.png">
+                </div>
+                <center><img src="/Content/payment-failure/images/icon2.png"></center>
+                <h5>Sorry, your payment is unsuccessful...</h5>
+                <br>
+                <div class="white">
+                    <p>
+                        <br>
+                        <br>
+                        <a href="/" class="btn btn-default">Go Back to Portal KTMB</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- header -->
+</body>
+</html>
+

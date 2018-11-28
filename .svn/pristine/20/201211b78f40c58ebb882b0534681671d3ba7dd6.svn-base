@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Waiting";
+}
+<div class="waiting" ng-controller="TicketController as ticketCtrl" ng-init="lookingForAccess()">
+
+    <div class="wait-loader">
+        <div class="wait-loader-inner">
+            <div class="loading one"></div>
+        </div>
+        <div class="wait-loader-inner">
+            <div class="loading two"></div>
+        </div>
+        <div class="wait-loader-inner">
+            <div class="loading three"></div>
+        </div>
+        <div class="wait-loader-inner">
+            <div class="loading four"></div>
+        </div>
+    </div>
+
+    <div class="patience">
+        Thank you for your patience. <br /> We will redirect you to the next step in few minutes...
+    </div>
+
+</div>

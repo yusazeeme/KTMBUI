@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="inner-body" ng-controller="UserController as userCtrl">
+    <div class="Signup_wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6 col-md-offset-3">
+                    <div class="login-widget">
+
+                        <div class="sec-img">
+                            <h3>User Registration here</h3>
+                        </div>
+
+                        <div class="login-box-v2" style="padding: 30px 30px 30px 30px;">
+                            <form class="form-horizontal ng-pristine ng-valid" name="registerForm" ng-submit="createUser(newUser)">
+                                @*<div class="form-group" style="margin: 3%;">
+                                    <center><a href="#"> <img src="/Content/assets/img/fb2.jpg" alt="facebook"></a></center>
+                                </div>*@
+                                <hr>
+                                <h4>Login Information</h4>
+                                <br>
+
+                                <div class="form-group">
+                                    <div class="col-xs-5">
+                                        <label for="username" class="control-label"><i class="fa fa-user"></i> Username</label>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <input type="text" class="form-control" ng-model="newUser.Username" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-5">
+                                        <label for="password" class="control-label"><i class="fa fa-unlock"></i> Password*</label>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <input type="password" class="form-control" ng-model="newUser.password" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-5">
+                                        <label for="password" class="control-label"><i class="fa fa-unlock"></i>Confirm Password*</label>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <input type="password" class="form-control" ng-model="newUser.confirmPassword" required />
+                                        <br />
+                                        <h5 ng-show="newUser.confirmPassword != newUser.password">Password not match!</h5>
+                                    </div>
+                                </div>
+
+                                <h4>Personal Information</h4>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="name" class="control-label"><i class="fa fa-user"></i> Name*</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" ng-model="newUser.FullName"  required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="email" class="control-label"><i class="fa fa-envelope"></i> Email*</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="email" class="form-control" ng-model="newUser.Email" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="phone_no" class="control-label"><i class="fa fa-phone"></i> Phone No.*</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="number" class="form-control" ng-model="newUser.Phone" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="address" class="control-label"><i class="fa fa-home"></i> Address</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" ng-model="newUser.Address" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="postcode" class="control-label"><i class="fa fa-home"></i> Postcode</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="number" class="form-control" ng-model="newUser.Postcode" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                        <label for="district" class="control-label"><i class="fa fa-home"></i> District</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control" ng-model="newUser.District" required />
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-controller="LookupController as lookupCtrl" ng-init="getCountryList()">
+                                    <div class="col-xs-3">
+                                        <label for="state" class="control-label"><i class="fa fa-home"></i> Country</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <select class="form-control"
+                                                ng-model="newUser.Country"
+                                                ng-options="destination.Code as destination.Name for destination in destinations" required>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group" >
+                                    <div class="col-xs-3">
+                                        <label for="gender" class="control-label"><i class="fa fa-venus-mars"></i> Gender</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div class="radio-inline">
+                                            <label><input type="radio" ng-model="newUser.Gender" value="M" >Male</label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <label><input type="radio" ng-model="newUser.Gender" value="F" >Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions clearfix">
+                                    <div class="remember-me pull-left">
+                                            <input type="checkbox" ng-model="" > 
+                                                <span>Terms & condition</span>
+                                            <small><br>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout</small>
+                                            <br><br>
+                                            <input type="checkbox"> 
+                                            <span>Get information promotion & newsletter using email</span>
+
+                                    </div>
+                                    <div class="submit-form pull-right">
+                                        <br>
+                                        @*<a href="#" button class="btn submit-btn">Register Now!</a>*@
+                                        <button class="btn submit-btn" ng-disabled="newUser.confirmPassword != newUser.password"  >Register</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        <!--                                <div class="register">
+                                                            <p>Already have an account? <a href="../../html/pages/log_in.html"> log In</a> </p>
+                                                        </div>-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "TenderQuotation";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+<div ng-controller="CMSController as cmsCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="index.html"><i class="fa-home"></i>Home</a>
+        </li>
+        <li>
+            <a href="forms-main.html">Forms</a>
+        </li>
+        <li class="active">
+            <strong>Tender & Quotation</strong>
+        </li>
+    </ol>
+
+    <h2>Tender & Quotation</h2>
+    <br />
+
+    <div class="row" ng-init="getCMS('tender_quotation', 'tender_content', false)">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Tender & Quotation
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="javascript:;" onclick="jQuery('#modal-1').modal('show');" class="btn btn-default">Add New</a>
+                            </div>
+                        </div>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Title </th>
+                                    <th>Date Closing</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="tender_content.length">
+                                <tr ng-repeat="tender in tender_content">
+                                    <td>{{tender.param.title}}</td>
+                                    <td>{{tender.param.date}}</td>
+                                    <td>
+                                        <a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" ng-click="getSingleModel('tender_content', tender_content, tender.pkcolumn)">Update</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-1" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(tender_content, 'tender_quotation', 'tender_content', false, false)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Tender & Quotation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Title</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="tender_content.param.title" ></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Date Closing</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="tender_content.param.date" datepicker required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">File Upload</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" ng-upload-change="fileUpload($event)" required />
+                                    <label for="field-1" class="col-sm-3 control-label">{{uploadedFile.fileName}}</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-2" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(tender_content, 'tender_quotation', 'tender_content', true, true)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="getCMS('tender_quotation', 'tender_content', false)">&times;</button>
+                        <h4 class="modal-title">Update Board of Director</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Title Media</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ng-model="tender_content.param.title"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Document Date</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="tender_content.param.date" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">File Upload</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" ng-upload-change="fileUpload($event)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Uploaded File</label>
+                            <div class="col-sm-9">
+                                <a ng-href="{{tender_content.param.filePath}}">
+                                    <label for="field-1" class="col-sm-3 control-label">{{tender_content.param.fileName}}</label>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="getCMS('tender_quotation', 'tender_content', false)">Close</button>
+                        <button type="submit" class="btn btn-info">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

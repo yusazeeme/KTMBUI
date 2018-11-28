@@ -1,0 +1,299 @@
+﻿
+@{
+    ViewBag.Title = "Print Ticket";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <br>
+                <button class="btn btn_select" type="button" onclick="prints()"><i class="fa fa-print"></i> Print</button>
+            </p>
+        </div>
+        <!--pilih salah satu kalo success green kalo red no success-->
+        <div class="col-md-12" style="border: 1px solid #e1e1e1; margin-bottom: 20px;">
+            <div id="print-ticket">
+                <div class="print-header">
+                    <div class="col-md-12" style="padding-top: 20px;">
+                        <ul class="list-unstyled list-inline">
+                            <li><img class="jarak" src="~/Content/assets/img/ktmb_logo.png" alt="logo"></li>
+                            <li>
+                                Keretapi Tanah Melayu Berhad,<br>
+                                Jalan Sultan Hishamudin,<br>
+                                50621 Kuala Lumpur, Malaysia.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="print-body">
+                    <div class="col-md-9 col-xs-9">
+                        <!--ticket id, tarikh beli ticket, waktu beli tiket-->
+                        <div class="p-ticketid">(170000002-00332033-01 26/5/2017 17:20 303154NA 19100)</div>
+                        <div class="p-direction">kuala lumpur - segamat</div>
+                        <div class="clearfix"></div>
+                        <table class="table" style="text-transform: capitalize;">
+                            <tr class="p-font-size1">
+                                <td>Departure</td>
+                                <td>Arrival</td>
+                            </tr>
+                            <tr class="p-font-size2">
+                                <td>28/05/2017 0944</td>
+                                <td>28/05/2017 1427</td>
+                            </tr>
+                            <tr class="p-font-size1">
+                                <td>train </td>
+                                <td></td>
+                            </tr>
+                            <tr class="p-font-size2">
+                                <td>95 - ets gemas - pdg besar</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">norsureya binti zakaria</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">911211045098</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Adult</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Ordinary Ticket / One - way</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Fare (MYR 70.00)</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Admin charge (MYR 2.00)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-3 col-xs-3">
+                        <div class="pull-right2">
+                            <!--status new / amend-->
+                            <div class="label-status" style="">New</div>
+                            <center><img src="~/Content/assets/img/testing.png" class="img-responsive" width="150" alt="logo"></center>
+                            <div class="label-train">
+                                <br> <small>PREMIER CLASS (ETS)(CMB)</small>
+                            </div>
+                            <div class="label-payment">
+                                <!--coach label / seat-->
+                                A14/F5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12" style="text-align: center;">
+                    <br><br>
+                    <small>
+                        CALL CENTER +603 - 2267 1200<br>
+                        Please be at the station 30 minutes before train departure<br>
+                        Subject to <i>SPAD 2010 &</i><br>
+                        <i> Syarat Pengangkutan Pennumpang KTMB</i><br>
+                        <!--<img src="assets/img/ads.jpg" class="img-responsive">-->
+                    </small>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="border: 1px solid #e1e1e1; margin-bottom: 20px;">
+            <div id="print-ticket">
+                <div class="print-header">
+                    <div class="col-md-12" style="padding-top: 20px;">
+                        <ul class="list-unstyled list-inline">
+                            <li><img class="jarak" src="~/Content/assets/img/ktmb_logo.png" alt="logo"></li>
+                            <li>
+                                Keretapi Tanah Melayu Berhad,<br>
+                                Jalan Sultan Hishamudin,<br>
+                                50621 Kuala Lumpur, Malaysia.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="print-body">
+                    <div class="col-md-9 col-xs-9">
+                        <!--ticket id, tarikh beli ticket, waktu beli tiket-->
+                        <div class="p-ticketid">(170000002-00332033-01 26/5/2017 17:20 303154NA 19100)</div>
+                        <div class="p-direction">kuala lumpur - segamat</div>
+                        <div class="clearfix"></div>
+                        <table class="table" style="text-transform: capitalize;">
+                            <tr class="p-font-size1">
+                                <td>Departure</td>
+                                <td>Arrival</td>
+                            </tr>
+                            <tr class="p-font-size2">
+                                <td>28/05/2017 0944</td>
+                                <td>28/05/2017 1427</td>
+                            </tr>
+                            <tr class="p-font-size1">
+                                <td>train </td>
+                                <td></td>
+                            </tr>
+                            <tr class="p-font-size2">
+                                <td>95 - ets gemas - pdg besar</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">norsureya binti zakaria</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">911211045098</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Adult</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Ordinary Ticket / One - way</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Fare (MYR 70.00)</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Admin charge (MYR 2.00)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-3 col-xs-3">
+                        <div class="pull-right2">
+                            <!--status new / amend-->
+                            <div class="label-status" style="">New</div>
+                            <center><img src="~/Content/assets/img/testing.png" class="img-responsive" width="150" alt="logo"></center>
+                            <div class="label-train">
+                                <br> <small>PREMIER CLASS (ETS)(CMB)</small>
+                            </div>
+                            <div class="label-payment">
+                                <!--coach label / seat-->
+                                A14/F5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12" style="text-align: center;">
+                    <br><br>
+                    <small>
+                        CALL CENTER +603 - 2267 1200<br>
+                        Please be at the station 30 minutes before train departure<br>
+                        Subject to <i>SPAD 2010 &</i><br>
+                        <i> Syarat Pengangkutan Pennumpang KTMB</i><br>
+                        <!--<img src="assets/img/ads.jpg" class="img-responsive">-->
+                    </small>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="border: 1px solid #e1e1e1; margin-bottom: 20px;">
+            <div id="print-ticket">
+                <div class="print-header">
+                    <div class="col-md-12" style="padding-top: 20px;">
+                        <ul class="list-unstyled list-inline">
+                            <li><img class="jarak" src="~/Content/assets/img/ktmb_logo.png" alt="logo"></li>
+                            <li>
+                                Keretapi Tanah Melayu Berhad,<br>
+                                Jalan Sultan Hishamudin,<br>
+                                50621 Kuala Lumpur, Malaysia.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="print-body">
+                    <div class="col-md-9 col-xs-9">
+                        <!--ticket id, tarikh beli ticket, waktu beli tiket-->
+                        <div class="p-ticketid">(170000002-00332033-01 26/5/2017 17:20 303154NA 19100)</div>
+                        <div class="p-direction">kuala lumpur - segamat</div>
+                        <div class="clearfix"></div>
+                        <table class="table" style="text-transform: capitalize;">
+                            <tr class="p-font-size1">
+                                <td>Departure</td>
+                                <td>Arrival</td>
+                            </tr>
+                            <tr class="p-font-size2">
+                                <td>28/05/2017 0944</td>
+                                <td>28/05/2017 1427</td>
+                            </tr>
+                            <tr class="p-font-size1">
+                                <td>train </td>
+                                <td></td>
+                            </tr>
+                            <tr class="p-font-size2">
+                                <td>95 - ets gemas - pdg besar</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">norsureya binti zakaria</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">911211045098</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Adult</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Ordinary Ticket / One - way</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Fare (MYR 70.00)</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Admin charge (MYR 2.00)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-3 col-xs-3">
+                        <div class="pull-right2">
+                            <!--status new / amend-->
+                            <div class="label-status" style="">New</div>
+                            <center><img src="~/Content/assets/img/testing.png" class="img-responsive" width="150" alt="logo"></center>
+                            <div class="label-train">
+                                <br> <small>PREMIER CLASS (ETS)(CMB)</small>
+                            </div>
+                            <div class="label-payment">
+                                <!--coach label / seat-->
+                                A14/F5
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12" style="text-align: center;">
+                    <br><br>
+                    <small>
+                        CALL CENTER +603 - 2267 1200<br>
+                        Please be at the station 30 minutes before train departure<br>
+                        Subject to <i>SPAD 2010 &</i><br>
+                        <i> Syarat Pengangkutan Pennumpang KTMB</i><br>
+                        <!--<img src="assets/img/ads.jpg" class="img-responsive">-->
+                    </small>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <br />
+    </div>
+</div>
+
+<script type="text/javascript">
+    function prints() {
+        window.print();
+    }
+</script>

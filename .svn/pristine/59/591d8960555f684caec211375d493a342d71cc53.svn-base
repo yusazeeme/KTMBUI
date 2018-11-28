@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Agent Report";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<ol class="breadcrumb bc-3">
+    <li>
+        <a href="/user/AdminDashboard"><i class="fa fa-home"></i>Home</a>
+    </li>
+    <li>
+        Report Management
+    </li>
+    <li class="active">
+        <strong>Agent Report</strong>
+    </li>
+</ol>
+
+<h2>Agent Report</h2>
+<br>
+
+
+<div class="row" ng-controller="UserController as userCtrl">
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-primary" data-collapsed="0" style="background-color:#0053a0; border-color: #0053a0; color:whitesmoke;">
+            <div class="panel-body">
+
+                <form role="form" class="form-horizontal" style="margin-top: 15px;" ng-submit="getAgentReport(rpt)">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="from" class="col-sm-4 control-label font-white">Date (From)</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" ng-model="rpt.fromDate" datepicker required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="to" class="col-sm-4 control-label font-white">Date (To)</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" ng-model="rpt.toDate" datepicker required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="payment-type" class="col-sm-4 control-label font-white">Payment Type</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="rpt.paymentType">
+                                    <option value="C">Credit Card</option>
+                                    <option value="U">Maybank2U</option>
+                                    <option value="B">MyBSN</option>
+                                    <option value="L">Ledger</option>
+                                    <option value="D">Mobile</option>
+                                    <option value="A">All</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" ng-controller="LookupController as lookupCtrl" ng-init="getAgentList()">
+                        <div class="form-group">
+                            <label for="status" class="col-sm-4 control-label font-white">Agent Name</label>
+                            <div class="col-sm-8">
+                                <select class="form-control"
+                                        ng-model="rpt.agent"
+                                        ng-options="ejen.AGENTCODE as ejen.AGENTNAME for ejen in agent.agentList | orderBy :'+AGENTNAME'" required>
+                                    <option value=''>Select Agent</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-8 col-sm-4">
+                            <button type="submit" class="btn btn btn-warning" style="color:black;"><i class="glyphicon glyphicon-search"></i>Search</button>
+                            <a href="user-report.html" class="btn btn-success"><i class="glyphicon glyphicon-refresh"></i>Reset</a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+        <table datatable="ng" class="table table-bordered font-black">
+            <thead>
+                <tr>
+                    <th>Tran. Date</th>
+                    <th>Ref.id</th>
+                    <th>Train No.</th>
+                    <th>Fare (MYR)</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Agent Id</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="odd gradeX" ng-repeat="res in result.userRepList">
+                    <td class="center">20-01-2017 00:00:14</td>
+                    <td class="center">17012000814786</td>
+                    <td class="center">9412</td>
+                    <td class="center">33.00</td>
+                    <td class="center">03-02-2017 18:36:00</td>
+                    <td class="center">03-02-2017 20:24:00</td>
+                    <td class="center"></td>
+                    <td class="center">
+                        <!--contoh tiket print-->
+                        <a href="#" class="btn btn-info btn-sm btn-icon icon-left">
+                            <i class="entypo-info"></i>
+                            info
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <br />
+
+
+
+    </div>
+
+
+
+</div>

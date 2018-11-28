@@ -1,0 +1,1036 @@
+﻿
+@{
+    ViewBag.Title = "Seating";
+}
+
+<div class="container" ng-controller="TicketController as ticketCtrl" ng-init="getSeats()">
+    <div class="row">
+        <div class="col-md-12" style="margin:5% 0;">
+            <div class="form-bootstrapWizard">
+                <ul class="bootstrapWizard form-wizard">
+                    <li>
+                        <a href="/" class="active"> <span class="step">1</span> <span class="title">Search Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="/"> <span class="step">2</span> <span class="title">Select Train</span> </a>
+                    </li>
+                    <li>
+                        <a href="/"> <span class="step">3</span> <span class="title">Passenger Info</span> </a>
+                    </li>
+                    <li class="active">
+                        <a href="#"> <span class="step">4</span> <span class="title">Select Seat</span> </a>
+                    </li>
+                    <li>
+                        <a href="#"> <span class="step">5</span> <span class="title">Payment</span> </a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+
+        <!--wajib ada-->
+        <header></header>
+
+
+        <!--start content and scrolling-->
+        <main class="clearfix">
+            <!--start sidebar-->
+            <aside id="sidebar">
+                <div class="flight_detail_sidebar white-box">
+                    <div class="details-text">
+                        <h4>
+                            <!--title-->
+                            Journey Summary
+                            <br>
+                            <small>
+                                <!--journey type-->
+                                (Return)
+                                <br>
+                            </small>
+                        </h4>
+                    </div>
+                    <!--total overall (fare, charges ,etc...) auto calculation for information user-->
+                    <div class="railway-font">
+                        <small>TOTAL MYR</small>
+                        <div class="alert alert-info"><h2 class="price-info">99999.99</h2></div>
+                    </div>
+                    <hr>
+                    <!--journey type - direction-->
+                    <div class="title-direction">
+                        <h4>Depart <small>(Segamat - JB Sentral)</small></h4>
+                    </div>
+                    <!--train no. & name of train-->
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-subway"></i>
+                            Train No.
+                            <span class="pull-right">
+                                26 - Ekspres Rakyat Timuran
+                            </span>
+                        </span><br>
+                    </div>
+                    <!--coach type-->
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-subway"></i>
+                            Coach Type
+                            <span class="pull-right">
+                                ASC - Superior Timuran
+                            </span>
+                        </span><br>
+                    </div>
+                    <!--datetime departure and arrival-->
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-clock-o"></i>
+                            Departure
+                            <span class="pull-right">
+                                30 NOV 2013 09:50
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-clock-o"></i>
+                            Arrival
+                            <span class="pull-right">
+                                30 NOV 2013 19:50
+                            </span>
+                        </span><br>
+                    </div>
+                    <!--your seat number-->
+                    <div class="details-text">
+                        <h4> Your seat number:</h4>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr pull-right">
+                            Passenger 1 : 2A / A1 <br>
+                            Passenger 1 : 5C / A1 <br>
+                            Passenger 1 : 8B / A1
+                        </span><br>
+                    </div>
+                    <!--fare & admin charges-->
+                    <div class="details-text">
+                        <h4> Fare, Admin Charges</h4>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            Fare:
+                            <span class="pull-right">
+                                Adult : 2 x ##.## MYR <br>
+                                Child : 1 x ##.## MYR
+
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            Admin Charge
+                            <span class="pull-right">
+                                3 x #.## MYR
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            GST
+                            <span class="pull-right">
+                                3 x #.## MYR
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="details-text">
+                        <h4>
+                            <!--title-->
+                            Journey Summary
+                            <br>
+                            <small>
+                                <!--journey type-->
+                                (Return)
+                                <br>
+                            </small>
+                        </h4>
+                    </div>
+                    <hr>
+                    <!--type of journey - direction-->
+                    <div class="title-direction">
+                        <h4>Return <small>(JB Sentral - Segamat)</small></h4>
+                    </div>
+                    <!--train no. & name of train-->
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-subway"></i>
+                            Train No.
+                            <span class="pull-right">
+                                26 - Ekspres Rakyat Timuran
+                            </span>
+                        </span><br>
+                    </div>
+                    <!--coach type-->
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-subway"></i>
+                            Coach Type
+                            <span class="pull-right">
+                                ASC - Superior Timuran
+                            </span>
+                        </span><br>
+                    </div>
+                    <!--datetime departure & arrival-->
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-clock-o"></i>
+                            Departure
+                            <span class="pull-right">
+                                30 NOV 2013 09:50
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            <i class="fa fa-clock-o"></i>
+                            Arrival
+                            <span class="pull-right">
+                                30 NOV 2013 19:50
+                            </span>
+                        </span><br>
+                    </div>
+                    <!--seat number & coach number-->
+                    <div class="details-text">
+                        <h4> Your seat number:</h4>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr pull-right">
+                            Passenger 1 : 2A / A1 <br>
+                            Passenger 1 : 5C / A1 <br>
+                            Passenger 1 : 8B / A1
+                        </span><br>
+                    </div>
+                    <!--fare & charges-->
+                    <div class="details-text">
+                        <h4> Fare, Admin Charges</h4>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            Fare:
+                            <span class="pull-right">
+                                Adult : 2 x ##.## MYR <br>
+                                Child : 1 x ##.## MYR
+
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            Admin Charge
+                            <span class="pull-right">
+                                3 x #.## MYR
+                            </span>
+                        </span><br>
+                    </div>
+                    <div class="LTT">
+                        <span class="skin-clr">
+                            GST
+                            <span class="pull-right">
+                                3 x #.## MYR
+                            </span>
+                        </span><br>
+                    </div>
+                    <!--button proceed ni sama je function antara return ataupun depart...sekiranya user xnk scrolling boleh proceed salah satu-->
+                    <div class="railway-font">
+                        <a href="payment.html" class="btn btn-search-travel btn-lg">Proceed &raquo;</a>
+                    </div>
+                </div>
+            </aside>
+            <!--end sidebar-->
+            <!-- start main content-->
+            <div class="main_content" id="content">
+
+
+                <!--start depart content-->
+                <div class="flight_detail_sidebar white-box animate-reveal">
+                    <div class="details-text">
+                        <div class="pull-left"> <h3> Depart</h3></div>
+
+                    </div>
+                    <hr>
+                    <!--start seat on coach-->
+                    <div class="col-md-8 col-sm-12">
+                        <div class="plane">
+                            <!--start head train-->
+                            <div class="cockpit">
+                                <h4><i class="fa fa-arrow-up" aria-hidden="true"></i><br>Driver Cabin</h4>
+                                <!--<p> Your captain here and direction forward</p>-->
+                            </div>
+                            <!--                                    <div class="exit exit--front fuselage">
+                                                                </div>-->
+                            <!--end head train-->
+                            <ol class="cabin fuselage">
+                                <li class="row row--1">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <!--<span class=""></span>-->
+                                            <input type="checkbox" id="1A" />
+                                            <label for="1A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><span data-toggle="tooltip" data-html="true" title="Test Tool Tip"><i class="fa fa-arrow-up" aria-hidden="true"></i>1A</span></label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="1B" />
+                                            <label for="1B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>1B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" disabled id="1C" />
+                                            <label for="1C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>1C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="1D" />
+                                            <label for="1D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>1D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--2">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="2A" checked />
+                                            <label for="2A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>2A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="2B" />
+                                            <label for="2B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>2B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="2C" />
+                                            <label for="2C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>2C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="2D" />
+                                            <label for="2D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>2D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--3">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="3A" />
+                                            <label for="3A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>3A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="3B" />
+                                            <label for="3B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>3B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="3C" />
+                                            <label for="3C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>3C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="3D" />
+                                            <label for="3D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>3D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--4">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="4A" />
+                                            <label for="4A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>4A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="4B" />
+                                            <label for="4B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>4B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="4C" />
+                                            <label for="4C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>4C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="4D" />
+                                            <label for="4D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>4D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--5">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="5A" />
+                                            <label for="5A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>5A</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="5B" />
+                                            <label for="5B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>5B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="5C" checked />
+                                            <label for="5C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>5C</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="5D" />
+                                            <label for="5D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>5D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--6">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="6A" />
+                                            <label for="6A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>6A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="6B" />
+                                            <label for="6B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>6B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="6C" />
+                                            <label for="6C"><i class="fa fa-arrow-up" aria-hidden="true"></i>6C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="6D" />
+                                            <label for="6D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>6D</label>
+                                        </li>
+
+                                    </ol>
+                                </li>
+                                <li class="row row--7">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="7A" />
+                                            <label for="7A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>7A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="7B" />
+                                            <label for="7B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>7B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="7C" />
+                                            <label for="7C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>7C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="7D" />
+                                            <label for="7D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>7D</label>
+                                        </li>
+
+                                    </ol>
+                                </li>
+                                <li class="row row--8">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="8A" />
+                                            <label for="8A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>8A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="8B" checked />
+                                            <label for="8B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>8B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="8C" />
+                                            <label for="8C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>8C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="8D" />
+                                            <label for="8D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>8D</label>
+                                        </li>
+
+                                    </ol>
+                                </li>
+                                <li class="row row--9">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="9A" />
+                                            <label for="9A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>9A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="9B" />
+                                            <label for="9B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>9B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="9C" />
+                                            <label for="9C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>9C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="9D" />
+                                            <label for="9D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>9D</label>
+                                        </li>
+
+                                    </ol>
+                                </li>
+                                <li class="row row--10">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="10A" />
+                                            <label for="10A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>10A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="10B" />
+                                            <label for="10B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>10B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="10C" />
+                                            <label for="10C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>10C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="10D" />
+                                            <label for="10D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>10D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--11">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="11A" />
+                                            <label for="10A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>11A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="11B" />
+                                            <label for="11B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>11B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="11C" />
+                                            <label for="11C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>11C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="11D" />
+                                            <label for="11D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>11D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--12">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="12A" />
+                                            <label for="12A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>12A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="12B" />
+                                            <label for="12B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>12B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="12C" />
+                                            <label for="12C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>12C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="12D" />
+                                            <label for="12D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>12D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--13">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="13A" />
+                                            <label for="13A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>13A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="13B" />
+                                            <label for="13B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>13B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="10C" />
+                                            <label for="13C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>13C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="13D" />
+                                            <label for="13D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>13D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--10">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="14A" />
+                                            <label for="14A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>14A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="14B" />
+                                            <label for="14B"><i class="fa fa-arrow-down" aria-hidden="true"></i>14B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="14C" />
+                                            <label for="14C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>14C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="14D" />
+                                            <label for="14D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>14D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--15">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="15A" />
+                                            <label for="15A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>15A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="15B" />
+                                            <label for="15B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>15B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="15C" />
+                                            <label for="15C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>15C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="15D" />
+                                            <label for="15D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>15D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                            <!--<div class="exit exit--back fuselage"></div>-->
+                        </div>
+                    </div>
+                    <!--end seat on coach-->
+                    <!--start information your seat-->
+                    <div class="col-md-4 col-sm-12">
+                        <!--start detail coach button click to change another coach-->
+                        <div class="pull-right">
+                            <p>Please choose your coach</p>
+                            <div id="coach">
+                                <ul class="list-unstyled list-inline">
+                                    <li><a href="#" class="btn btn_book3 btn-block">A1</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A2</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A3</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A4</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A5</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A6</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A7</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--end detail coach button click to change another coach-->
+                        <div class="pull-right">
+                            <br>
+                            <div class="detail_flight_number" style="border: 1px solid #dddddd;">
+                                <p>YOUR SEAT</p>
+                                <div class="railway-font">
+                                    <input type="checkbox"> <span>Tick to manual selection</span><br>
+                                </div>
+                                <div class="pull-left">
+
+                                    <ul class="list-unstyled">
+                                        <li style="color: #636363; font-weight: 700;">No. of passenger</li>
+                                        <li>Passenger 1 :</li>
+                                        <li>Passenger 2 :</li>
+                                        <li>Passenger 3 :</li>
+                                    </ul>
+                                </div>
+                                <div class="pull-right">
+                                    <ul class="list-unstyled">
+                                        <li style="color: #636363; font-weight: 700;">No. Seat</li>
+                                        <li>2A</li>
+                                        <li>5C</li>
+                                        <li>8B</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="detail_flight_number" style="border: 1px solid #dddddd;">
+                                <p>Reference</p>
+                                <div class="pull-left">
+                                    <ul class="list-unstyled">
+                                        <li><i class="fa fa-square hot-seat" aria-hidden="true"></i> Window / Hot Seat (Available)</li>
+                                        <li><i class="fa fa-square normal-seat" aria-hidden="true"></i> Aisle Seat (Available)</li>
+                                        <li><i class="fa fa-square occupied-seat" aria-hidden="true"></i> Occupied Seat</li>
+                                        <li><i class="fa fa-square selected-seat" aria-hidden="true"></i> Selected Seat</li>
+                                        <li><i class="fa fa-arrow-up" aria-hidden="true"></i> Facing Forward</li>
+                                        <li><i class="fa fa-arrow-down" aria-hidden="true"></i> Facing Backward</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end information your seat-->
+                </div>
+                <!--end depart content-->
+                <!--start return content-->
+                <div class="flight_detail_sidebar white-box animate-reveal">
+                    <div class="details-text">
+                        <div class="pull-left"> <h3> Return</h3></div>
+                    </div>
+                    <hr>
+                    <!--start seat on coach-->
+                    <div class="col-md-8 col-sm-12">
+                        <div class="plane">
+                            <!--start head train-->
+                            <div class="cockpit">
+                                <h4><i class="fa fa-arrow-up" aria-hidden="true"></i><br>Driver Cabin</h4>
+                                <!--<p> Your captain here and direction forward</p>-->
+                            </div>
+                            <!--                                    <div class="exit exit--front fuselage">
+                                                                </div>-->
+                            <!--end head train-->
+                            <ol class="cabin fuselage">
+                                <li class="row row--1">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="1A" />
+                                            <label for="1A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>1A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="1B" />
+                                            <label for="1B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>1B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" disabled id="1D" />
+                                            <label for="1C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>1C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="1F" />
+                                            <label for="1D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>1D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--2">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="2A" checked />
+                                            <label for="2A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>2A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="2B" checked />
+                                            <label for="2B"><i class="fa fa-arrow-up" aria-hidden="true"></i>2B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="2C" checked />
+                                            <label for="2C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>2C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="2D" />
+                                            <label for="2D"><i class="fa fa-arrow-up" aria-hidden="true"></i>2D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--3">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="3A" />
+                                            <label for="3A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>3A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="3B" />
+                                            <label for="3B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>3B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="3C" />
+                                            <label for="3C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>3C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="3D" />
+                                            <label for="3D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>3D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--4">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="4A" />
+                                            <label for="4A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>4A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="4B" />
+                                            <label for="4B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>4B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="4C" />
+                                            <label for="4C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>4C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="4D" />
+                                            <label for="4D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>4D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--5">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="5A" />
+                                            <label for="5A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>5A</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="5B" />
+                                            <label for="5B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>5B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="5C" />
+                                            <label for="5C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>5C</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="5D" />
+                                            <label for="5D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>5D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--6">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="6A" />
+                                            <label for="6A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>6A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="6B" />
+                                            <label for="6B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>6B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="6C" />
+                                            <label for="6C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>6C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="6D" />
+                                            <label for="6D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>6D</label>
+                                        </li>
+
+                                    </ol>
+                                </li>
+                                <li class="row row--7">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="7A" />
+                                            <label for="7A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>7A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="7B" />
+                                            <label for="7B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>7B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="7C" />
+                                            <label for="7C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>7C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="7D" />
+                                            <label for="7D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>7D</label>
+                                        </li>
+
+                                    </ol>
+                                </li>
+                                <li class="row row--8">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="8A" />
+                                            <label for="8A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>8A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="8B" />
+                                            <label for="8B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>8B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="8C" />
+                                            <label for="8C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>8C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="8D" />
+                                            <label for="8D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-up" aria-hidden="true"></i>8D</label>
+                                        </li>
+
+                                    </ol>
+                                </li>
+                                <li class="row row--9">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="9A" />
+                                            <label for="9A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>9A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="9B" />
+                                            <label for="9B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>9B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="9C" />
+                                            <label for="9C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>9C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="9D" />
+                                            <label for="9D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>9D</label>
+                                        </li>
+
+                                    </ol>
+                                </li>
+                                <li class="row row--10">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="10A" />
+                                            <label for="10A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>10A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="10B" />
+                                            <label for="10B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>10B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="10C" />
+                                            <label for="10C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>10C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="10D" />
+                                            <label for="10D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>10D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--11">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="11A" />
+                                            <label for="11A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>11A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="11B" />
+                                            <label for="11B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>11B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="11C" />
+                                            <label for="11C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>11C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="11D" />
+                                            <label for="11D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>11D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--12">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="12A" />
+                                            <label for="12A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>12A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="12B" />
+                                            <label for="12B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>12B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="12C" />
+                                            <label for="12C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>12C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="12D" />
+                                            <label for="12D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>12D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--13">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="13A" />
+                                            <label for="13A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>13A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="13B" />
+                                            <label for="13B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>13B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="10C" />
+                                            <label for="13C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>13C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="13D" />
+                                            <label for="13D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>13D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--10">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="14A" />
+                                            <label for="14A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>14A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="14B" />
+                                            <label for="14B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>14B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="14C" />
+                                            <label for="14C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>14C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="14D" />
+                                            <label for="14D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>14D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="row row--15">
+                                    <ol class="seats" type="A">
+                                        <li class="seat">
+                                            <input type="checkbox" id="15A" />
+                                            <label for="15A" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>15A</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="15B" />
+                                            <label for="15B" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>15B</label>
+                                        </li>
+                                        <li class="seat2">
+                                            <input type="checkbox" id="15C" />
+                                            <label for="15C" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>15C</label>
+                                        </li>
+                                        <li class="seat">
+                                            <input type="checkbox" id="15D" />
+                                            <label for="15D" data-toggle="tooltip" title="Fare (MYR): 39.00(Adult) / 29.00(Child)"><i class="fa fa-arrow-down" aria-hidden="true"></i>15D</label>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                            <!--<div class="exit exit--back fuselage"></div>-->
+                        </div>
+                    </div>
+                    <!--end seat on coach-->
+                    <!--start information your seat-->
+                    <div class="col-md-4 col-sm-12">
+                        <!--start detail coach button click to change another coach-->
+                        <div class="pull-right">
+                            <p>Please choose your coach</p>
+                            <div id="coach">
+                                <ul class="list-unstyled list-inline">
+                                    <li><a href="#" class="btn btn_book2 btn-block">A1</a></li>
+                                    <li><a href="#" class="btn btn_book3 btn-block">A2</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A3</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A4</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A5</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A6</a></li>
+                                    <li><a href="#" class="btn btn_book2 btn-block">A7</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--end detail coach button click to change another coach-->
+                        <div class="pull-right">
+                            <br>
+                            <div class="detail_flight_number" style="border: 1px solid #dddddd;">
+                                <p>YOUR SEAT</p>
+                                <div class="railway-font">
+                                    <input type="checkbox" checked> <span>Tick to manual selection</span><br>
+                                </div>
+                                <div class="pull-left">
+                                    <ul class="list-unstyled">
+                                        <li style="color: #636363; font-weight: 700;">No. of passenger</li>
+                                        <li>Passenger 1 :</li>
+                                        <li>Passenger 2 :</li>
+                                        <li>Passenger 3 :</li>
+                                    </ul>
+                                </div>
+                                <div class="pull-right">
+                                    <ul class="list-unstyled">
+                                        <li style="color: #636363; font-weight: 700;">No. Seat</li>
+                                        <li>2A</li>
+                                        <li>2B</li>
+                                        <li>2C</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="detail_flight_number" style="border: 1px solid #dddddd;">
+                                <p>Reference</p>
+                                <div class="pull-left">
+                                    <ul class="list-unstyled">
+                                        <li><i class="fa fa-square hot-seat" aria-hidden="true"></i> Window / Hot Seat (Available)</li>
+                                        <li><i class="fa fa-square normal-seat" aria-hidden="true"></i> Aisle Seat (Available)</li>
+                                        <li><i class="fa fa-square occupied-seat" aria-hidden="true"></i> Occupied Seat</li>
+                                        <li><i class="fa fa-square selected-seat" aria-hidden="true"></i> Selected Seat</li>
+                                        <li><i class="fa fa-arrow-up" aria-hidden="true"></i> Facing Forward</li>
+                                        <li><i class="fa fa-arrow-down" aria-hidden="true"></i> Facing Backward</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end information your seat-->
+                </div>
+                <!--end return content-->
+            </div>
+            <!-- end main content-->
+        </main>
+        <!--end content and scrolling-->
+
+    </div>
+</div>

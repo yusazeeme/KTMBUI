@@ -1,0 +1,111 @@
+﻿(function () {
+    var app = angular.module('cms', []);
+
+    app.controller('CMSController', ["$scope", "$http", 'growl', '$window', 'baseURL', '$rootScope', '$location', 'x2js', 'devLogin', '$parse', '$cookies', function ($scope, $http, growl, $window, baseURL, $rootScope, $location, x2js, devLogin, $parse, $cookies) {
+        console.log("CMSController logged on.");
+
+        var cms = {};
+
+        $scope.testXMLtoJSON = function () {
+            console.log("CMSController.testXMLtoJSON triggered.");
+            var c = {};
+            c.xxx = {};
+            c.xxx.key = 'zahidah';
+            c.xxx.key2 = 'farhanah';
+            var bbb = x2js.json2xml_str(c);//Convert JSON to XML
+            console.log(bbb);
+            console.log(x2js.xml_str2json(bbb));//Convert XML back to JSON
+        };
+
+        $scope.getCMS = function (pagename, contenttype, issingle) {
+            $rootScope.spinnerShow = true;
+            console.log("CMSController.getCMS triggered");
+            devLogin;
+            var token = $cookies.get('UI_TOKEN');
+            if (devLogin != undefined) {
+                var requiredParam = { securitytoken: token, pagename: pagename, contenttype: contenttype };
+                console.log(requiredParam);
+                $http({
+                    method: 'POST',
+                    url: baseURL + '/api/GETCMS',
+                    data: JSON.stringify(requiredParam),
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' }
+                }).then(function onSuccess(response) {
+                    console.log(response.data);
+                    if (!response.data.success) {
+                        growl.error(response.data.error, { title: 'ERROR!' });
+                        $rootScope.spinnerShow = false;
+                    }
+                    else {
+                        if (response.data.cmsList.length > 0) {
+                            cms.setting = [];
+                            for (var i = 0, len = response.data.cmsList.length; i < len; i++) {
+                                var temp = response.data.cmsList[i];
+                                temp.jsonContent = x2js.xml_str2json(temp.content);
+                                temp.jsonContent.pkcolumn = temp.pkcolumn;
+                                temp.jsonContent.seq = temp.seq;
+                                temp.jsonContent.isshow = temp.isshow;
+                                cms.setting.push(temp.jsonContent);
+                            }
+
+                            //Dinamically creating an angular model based on "contenttype"
+                            console.log(cms.setting);
+                            var model = $parse(contenttype);
+                            if (!issingle) {
+                                model.assign($scope, cms.setting);
+                            }
+                            else
+                                model.assign($scope, cms.setting[0]);
+                        }
+                    }
+                    $rootScope.spinnerShow = false;
+                }).catch(function onError(response) {
+                    growl.error(response.statusText, { title: 'ERROR!' });
+                    $rootScope.spinnerShow = false;
+                });
+            }
+        };
+
+        $scope.createCMS = function (content, pagename, contenttype, issingle) {
+            $rootScope.spinnerShow = true;
+            console.log("CMSController.createCMS triggered.");
+
+            var token = $cookies.get('UI_TOKEN');
+            console.log(token);
+
+            console.log(content);
+            var param = { param: content.param };
+            var requiredParam = {
+                pagename: pagename,
+                contenttype: contenttype,
+                content: x2js.json2xml_str(param),
+                seq: content.seq,
+                isshow: content.isshow == undefined ? true : content.isshow
+            };
+
+            var data = { cms: requiredParam, securitytoken: token, pkcolumn: issingle != true ? null : content.pkcolumn }
+            console.log(data);
+
+            $http({
+                method: 'POST',
+                url: baseURL + '/api/CREATECMS',
+                data: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            }).then(function onSuccess(response) {
+                if (response.data.success == false) {
+                    growl.error(response.data.error, { title: 'ERROR!' });
+                }
+                else {
+                    growl.success('Content have been updated!', { title: 'SUCCESS!' });              
+                    $scope.getCMS(pagename, contenttype, issingle);
+                }
+                $rootScope.spinnerShow = false;
+            }).catch(function onError(response) {
+                growl.error(response.statusText, { title: 'ERROR!' });
+                $rootScope.spinnerShow = false;
+            });
+        };
+
+    }]);
+
+})();

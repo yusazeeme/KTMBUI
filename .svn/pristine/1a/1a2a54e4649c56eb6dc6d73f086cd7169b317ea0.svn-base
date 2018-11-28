@@ -1,0 +1,582 @@
+﻿
+@{
+    ViewBag.Title = "Corporate Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--inner body start from here-->
+<div class="inner-body" ng-controller="CMSController as cmsCtrl" ng-init="getPageContent('corporate_profile')">
+    <div class="container">
+        <!--start breadcrumb-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bread-crumb">
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="javascript:;">About Us</a></li>
+                        <li class="active">Corporate Profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+    </div>
+    <div class="container railway-font">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="faq_section box_show_faq">
+                    <div class="faq_widget_heading">
+                        <h3 class="railway-font">frequently ask question(S)</h3>
+                    </div>
+                    <hr class="hr_index no-margin">
+                    <div class="faq_widget_detail railway-font">
+                        <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas ipsum quis viverra vehicula. Proin est tortor, tristique eu finibus et</h5>
+                        <p> Pellentesqu Quisque tincidunt facilisis tortor, id vestibulum erat fringilla a. Suspendisse accumsan quam a hendrerit tristique. Suspendisse convallis, dui egestas congue aliquam, odio diam cursus quam, vitae accumsan mi ipsum nec lorem. Nunc iaculis s, dui egestas congue aliquam, odio diam cursus quam, vitae accumsan mi ipsum nec lorem. Nunc iaculis s, odio diam cursus quam, vitae accumsan mi ipsum nec lorem. Nunc iaculis sollicitudin lobortis.</p>
+                    </div>
+                    <hr class="hr_index no-margin">
+                    <div class="faq_tabs railway-font">
+                        <!--tabs-->
+                        <div class="panel">                  
+                            <!--panel-body-->
+                            <div class="panel-body">
+                                <!--tab-content-->
+                                <div class="tab-content">
+                                    <!--tabtravel-->
+                                    <div class="tab-pane fade in active" id="all">
+                                        <div id="accordion-first001" class="clearfix">
+                                            <div class="accordion" id="accordion1">
+                                                <div class="accordion-group">
+                                                    <div class="accordion-heading">
+                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                                            <span class="hidden-xs"><i class="fa fa-question"></i></span><h5>How does the payment process work?</h5>
+                                                        </a>
+                                                    </div>
+                                                    <div style="height: 0px;" id="collapseTwo" class="accordion-body collapse">
+                                                        <div class="accordion-inner">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-group">
+                                                    <div class="accordion-heading">
+                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree" aria-expanded="true">
+                                                            <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What kind of businesses do you work with?</h5>
+                                                        </a>
+                                                    </div>
+                                                    <div id="collapseThree" class="accordion-body collapse in" aria-expanded="true" role="button">
+                                                        <div class="accordion-inner">
+                                                            Anim pariatur cliche reprehenderit,hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-group">
+                                                    <div class="accordion-heading">
+                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+                                                            <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                        </a>
+                                                    </div>
+                                                    <div style="height: 0px;" id="collapseFour" class="accordion-body collapse">
+                                                        <div class="accordion-inner ">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-group">
+                                                    <div class="accordion-heading">
+                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse0">
+                                                            <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Can you help me write content for my website</h5>
+                                                        </a>
+                                                    </div>
+                                                    <div style="height: 0px;" id="collapse0" class="accordion-body collapse">
+                                                        <div class="accordion-inner padding">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. Brunch 3 wolf moon tempor...
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-group">
+                                                    <div class="accordion-heading">
+                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse5">
+                                                            <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                        </a>
+                                                    </div>
+                                                    <div style="height: 0px;" id="collapse5" class="accordion-body collapse">
+                                                        <div class="accordion-inner ">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-group">
+                                                    <div class="accordion-heading no-border">
+                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse6">
+                                                            <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Maecenas bibendum lectus vitae gravida ornare. </h5>
+                                                        </a>
+                                                    </div>
+                                                    <div style="height: 0px;" id="collapse6" class="accordion-body collapse">
+                                                        <div class="accordion-inner ">
+                                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- end accordion -->
+                                        </div>
+
+                                    </div>
+                                    <!--tabhotel-->
+                                    <div class="tab-pane fade in" id="Web">
+
+                                        <div class="accordion" id="accordion2">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c1">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5>How does the payment process work?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c1" class="accordion-body collapse">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#c2" aria-expanded="true">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What kind of businesses do you work with?</h5>
+                                                    </a>
+                                                </div>
+                                                <div id="c2" class="accordion-body collapse in" aria-expanded="true" role="button">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit,hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c3">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c3" class="accordion-body collapse" role="button">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c4">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Can you help me write content for my website</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c4" class="accordion-body collapse">
+                                                    <div class="accordion-inner padding">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c5">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c5" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading no-border">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c6">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Maecenas bibendum lectus vitae gravida ornare. </h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c6" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- end accordion -->
+                                    </div>
+                                    <!--tabtour-->
+                                    <div class="tab-pane fade in" id="Services">
+
+                                        <div class="accordion" id="accordion3">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c7">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5>How does the payment process work?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c7" class="accordion-body collapse">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#c8" aria-expanded="true">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What kind of businesses do you work with?</h5>
+                                                    </a>
+                                                </div>
+                                                <div id="c8" class="accordion-body collapse in" aria-expanded="true" role="button">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit,hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c9">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c9" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c11">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Can you help me write content for my website</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c10" class="accordion-body collapse">
+                                                    <div class="accordion-inner padding">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c12">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c12" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading no-border">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c13">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Maecenas bibendum lectus vitae gravida ornare. </h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c13" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- end accordion -->
+                                    </div>
+                                    <div class="tab-pane fade in" id="Travel">
+
+                                        <div class="accordion" id="accordion4">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c15">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5>How does the payment process work?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c15" class="accordion-body collapse">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#c16" aria-expanded="true">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What kind of businesses do you work with?</h5>
+                                                    </a>
+                                                </div>
+                                                <div id="c16" class="accordion-body collapse in" aria-expanded="true" role="button">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit,hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c17">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c17" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c18">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Can you help me write content for my website</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c18" class="accordion-body collapse">
+                                                    <div class="accordion-inner padding">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c19">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c19" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading no-border">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c20">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Maecenas bibendum lectus vitae gravida ornare. </h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c20" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- end accordion -->
+                                    </div>
+                                    <div class="tab-pane fade in" id="Flight">
+
+                                        <div class="accordion" id="accordion5">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion5" href="#c2">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5>How does the payment process work?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c21" class="accordion-body collapse">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#c22" aria-expanded="true">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What kind of businesses do you work with?</h5>
+                                                    </a>
+                                                </div>
+                                                <div id="c22" class="accordion-body collapse in" aria-expanded="true" role="button">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit,hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c23">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c23" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c24">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Can you help me write content for my website</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c24" class="accordion-body collapse">
+                                                    <div class="accordion-inner padding">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c25">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c25" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading no-border">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c26">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Maecenas bibendum lectus vitae gravida ornare. </h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c26" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- end accordion -->
+                                    </div>
+                                    <div class="tab-pane fade in" id="Hotel">
+
+                                        <div class="accordion" id="accordion6">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c27">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5>How does the payment process work?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c27" class="accordion-body collapse">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#c28" aria-expanded="true">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What kind of businesses do you work with?</h5>
+                                                    </a>
+                                                </div>
+                                                <div id="c28" class="accordion-body collapse in" aria-expanded="true" role="button">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit,hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c29">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c29" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c30">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Can you help me write content for my website</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c30" class="accordion-body collapse">
+                                                    <div class="accordion-inner padding">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c31">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c31" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading no-border">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c32">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Maecenas bibendum lectus vitae gravida ornare. </h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c32" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- end accordion -->
+                                    </div>
+                                    <div class="tab-pane fade in" id="About">
+
+                                        <div class="accordion" id="accordion7">
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c33">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5>How does the payment process work?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c33" class="accordion-body collapse">
+                                                    <div class="accordion-inner">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c34">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> What platform do you build your websites on?</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c34" class="accordion-body collapse">
+                                                    <div class="accordion-inner ">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh.aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#c35">
+                                                        <span class="hidden-xs"><i class="fa fa-question"></i></span><h5> Can you help me write content for my website</h5>
+                                                    </a>
+                                                </div>
+                                                <div style="height: 0px;" id="c35" class="accordion-body collapse">
+                                                    <div class="accordion-inner padding">
+                                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.hasellus accumsan, felis nec congue dignissim, enim elit mollis dui, eget pulvinar sem libero vitae mi. Maecenas justo enim, varius vitae egestas a, efficitur vel nibh. Brunch 3 wolf moon tempor...
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <!-- end accordion -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end panel body-->
+                        </div>
+                        <!--end tabs-->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+</div>
+<!--inner body end from here-->

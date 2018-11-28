@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "StaticAds";
+    Layout = "~/Views/Shared/_CMSLayout.cshtml";
+}
+
+<div ng-controller="CMSController as cmsCtrl">
+    <ol class="breadcrumb bc-3">
+        <li>
+            <a href="index.html"><i class="fa-home"></i>Home</a>
+        </li>
+        <li>
+            <a href="forms-main.html">Forms</a>
+        </li>
+        <li class="active">
+            <strong>Static Advertisement</strong>
+        </li>
+    </ol>
+    <br />
+
+    <div class="row" ng-init="getCMS('static_ads', 'static_content', false)">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-collapsed="0">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Static Advertisement
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="javascript:;" onclick="jQuery('#modal-1').modal('show');" class="btn btn-default">Add New</a>
+                            </div>
+                        </div>
+                        <br />
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Content</th>
+                                    <th>URL Link</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-show="static_content.length">
+                                <tr ng-repeat="static in static_content">
+                                    <td>{{static.param.title}}</td>
+                                    <td>{{static.param.content}}</td>
+                                    <td>{{static.param.urlLink}}</td>
+                                    <td>
+                                        <a href="javascript:;" onclick="jQuery('#modal-2').modal('show');" ng-click="getSingleModel('static_content', static_content, static.pkcolumn)">Update</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-1" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(static_content, 'static_ads', 'static_content', false, false)">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Static Advertisement</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Title</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="static_content.param.title"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">Content</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" ng-model="static_content.param.content"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="col-sm-3 control-label">URL Link</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" ng-model="static_content.param.urlLink">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-2" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createCMS(static_content, 'static_ads', 'static_content', true, true)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="getCMS('static_ads', 'static_content', false)">&times;</button>
+                        <h4 class="modal-title">Update Static Advertisement</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Title</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ng-model="static_content.param.title"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">Content</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" ng-model="static_content.param.content"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-1" class="col-sm-3 control-label">URL Link</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" ng-model="static_content.param.urlLink" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="getCMS('tender_quotation', 'tender_content', false)">Close</button>
+                        <button type="submit" class="btn btn-info">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

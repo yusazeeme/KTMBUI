@@ -1,0 +1,8 @@
+﻿(function () {
+    var app = angular.module('cms', []);
+
+    app.controller('CMSController', ["$scope", "$http", 'growl', '$window', 'baseURL', '$rootScope', '$location', function ($scope, $http, growl, $window, baseURL, $rootScope, $location) {
+        console.log("CMSController logged on.");
+    }]);
+
+})();
